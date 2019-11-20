@@ -1,6 +1,6 @@
 const playArea = document.getElementById("playArea");
 
-const registerClick = (event) => {
+const playAreaClick = (event) => {
 // First, detect where the cursor is
   let cursorX = event.clientX;
   let cursorY = event.clientY;
@@ -34,4 +34,4 @@ const drawMunro = (x,y) => {
 // The "app" per se starts here.
 
 
-playArea.addEventListener('click',registerClick,false);
+playArea.addEventListener('click',playAreaClick,false);

@@ -34,3 +34,10 @@
   left: -32px;
   color:#000;
 }
+
+/*   The idea is to append this class to the classlist of an inner triangle
+   when the task is finished*/
+
+.done {
+  border-color: #000;
+}
