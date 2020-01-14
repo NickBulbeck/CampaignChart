@@ -31,7 +31,13 @@ const drawMunro = (x,y) => {
   playArea.innerHTML += html;
 }
 
-// The "app" per se starts here.
+/*****************************************************************************************
+Data persistence. So, we have an array of objects, which is searched by something in 
+dataAccess.js, which in turn is called from here.
+*****************************************************************************************/
 
+
+
+// The "app" per se starts here.
 
 playArea.addEventListener('click',playAreaClick,false);

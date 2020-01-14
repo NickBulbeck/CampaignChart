@@ -13,3 +13,8 @@ need to be captured. This means there has to be:
 - we're already partway there, in that the Munros are drawn using a function that
    takes x and y co-ordinates as parameters so that we can easily iterate through
    a list of them read in from outside.
+
+TODAY IS: Tuesday
+
+1) Create a chart object in app.js
+2) Create a function in dataAccess that loads it into 

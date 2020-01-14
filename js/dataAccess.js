@@ -4,6 +4,7 @@
 //  - any data processing [NTS: may have to define 'data-processing' carefully at some future point]
 //  - any actual data
 //
-// The data itself is - as at 23rd November 2019 - in data/data.js; this will change at some point and 
-// it'll go into a true database.
+// HOWEVER: it is tech-specific. It interacts specifically with the data as it is stored 
+// in data.js, and does the usual CRUD stuff on it. Actually, it probably just needs to
+// read and overwrite at this point.
 
