@@ -14,7 +14,9 @@ need to be captured. This means there has to be:
    takes x and y co-ordinates as parameters so that we can easily iterate through
    a list of them read in from outside.
 
-TODAY IS: Tuesday
+TODAY IS: Thursday
 
-1) Create a chart object in app.js
-2) Create a function in dataAccess that loads it into 
+1) Add a chart title to the playArea
+1) Populate the chartLoad div with a paragraph tag containing the name of everything in dataBase
+1) Add an event hondler that retrieves the chart by name
+1) Add a function (called fae above) that loads all the munros fae the chart into playArea

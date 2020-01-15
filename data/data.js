@@ -2,4 +2,4 @@
 // Eventually it should be replaced by a database, but it'll work as a basic tool for
 // creating a data layer with properly separated concerns.
 
-let dataBase = {};
+let dataBase = [];

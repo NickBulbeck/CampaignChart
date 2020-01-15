@@ -1,4 +1,9 @@
 const playArea = document.getElementById("playArea");
+const saveButton = document.getElementById("saveButton");
+let campaignChart = {
+  name: "",
+  munroList: []
+}
 
 const playAreaClick = (event) => {
 // First, detect where the cursor is
@@ -24,12 +29,28 @@ const playAreaClick = (event) => {
 
 const drawMunro = (x,y) => {
 // draws a triangle, of size set in triangles.css, centered x and y pixels 
-// from the left/top of the playArea div.
+// from the left/top of the playArea div. Then it adds it to campaignChart
   let html = '<div class="triangle munro" style="top:' + y + 'px; left:' + x + 'px">' 
              + '<div class="triangle munro-inner">' + '</div>'
              + '</div>';
   playArea.innerHTML += html;
+  let munro = {
+    munroX: x,
+    munroY: y
+  }
+  campaignChart.munroList.push(munro);
 }
+
+const saveButtonClick = (event) => {
+  const nameField = document.getElementById('nameField');
+  campaignChart.name = nameField.value;
+  nameField.value = '';
+  data_save(campaignChart);
+  campaignChart.name = '';
+  campaignChart.munroList = [];
+  playArea.innerHTML = '';
+}
+
 
 /*****************************************************************************************
 Data persistence. So, we have an array of objects, which is searched by something in 
@@ -39,5 +60,5 @@ dataAccess.js, which in turn is called from here.
 
 
 // The "app" per se starts here.
-
+saveButton.addEventListener('click',saveButtonClick,false);
 playArea.addEventListener('click',playAreaClick,false);
