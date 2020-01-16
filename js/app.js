@@ -5,6 +5,10 @@ let campaignChart = {
   name: "",
   munroList: []
 }
+function CampaignChart() {
+  this.name = name;
+  this.munroList = munroList;
+}
 
 const playAreaClick = (event) => {
 // First, detect where the cursor is
@@ -54,8 +58,11 @@ const saveButtonClick = (event) => {
   campaignChart.name = nameField.value;
   nameField.value = '';
   data_save(campaignChart);
-  campaignChart.name = '';
-  campaignChart.munroList = [];
+  // HERE IS THE PROBLEM:
+  // campaignChart.name = '';
+  // campaignChart.munroList = [];
+  // The object is passed by reference, not value, and I've blanked it out here. I need
+  // to create a **new object** each time...
   playArea.innerHTML = '';
   loadCharts();
 }

@@ -14,7 +14,7 @@ need to be captured. This means there has to be:
    takes x and y co-ordinates as parameters so that we can easily iterate through
    a list of them read in from outside.
 
-TODAY IS: Thursday
+TODAY IS: Friday
 
 1) Add a chart title to the playArea
 1) Populate the chartLoad div with a paragraph tag containing the name of everything in dataBase
@@ -22,3 +22,4 @@ TODAY IS: Thursday
 1) Add a function (called fae above) that loads all the munros fae the chart into playArea
 1) Go through the debugging in the browser tutorial (and maybe the one fae the make a website course?)
 1) Get the retrieval system, that is already there noo, to actually work!
+1) Write the business logic that'll drive the behaviour, now that you know you'll need to instantiate campaignChart objects...

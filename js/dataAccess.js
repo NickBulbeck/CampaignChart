@@ -18,6 +18,8 @@ const data_save = (campaignChart) => {
 
 const data_getAll = () => {
 	console.log(`In data_getAll: first item is ${dataBase[0].name}`);
+	let blub = JSON.stringify(dataBase[0])
+	console.log(`And again: now trying stringify... ${blub}`)
 	return dataBase;
 }
 
