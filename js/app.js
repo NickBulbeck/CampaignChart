@@ -1,5 +1,6 @@
 const playArea = document.getElementById("playArea");
 const saveButton = document.getElementById("saveButton");
+const chartLoadDiv = document.getElementById("chartLoad");
 let campaignChart = {
   name: "",
   munroList: []
@@ -41,6 +42,13 @@ const drawMunro = (x,y) => {
   campaignChart.munroList.push(munro);
 }
 
+
+
+
+/*****************************************************************************************
+Data persistence. So, we have an array of objects, which is searched by something in 
+dataAccess.js, which in turn is called from here.
+*****************************************************************************************/
 const saveButtonClick = (event) => {
   const nameField = document.getElementById('nameField');
   campaignChart.name = nameField.value;
@@ -49,16 +57,34 @@ const saveButtonClick = (event) => {
   campaignChart.name = '';
   campaignChart.munroList = [];
   playArea.innerHTML = '';
+  loadCharts();
 }
 
+const chartLoadClick = (event) => {
+  const loadMe = event.target;
+  const name = loadMe.textContent;
+  const chart = data_getByName(name);
+  console.log(chart.munroList);
+}
 
 /*****************************************************************************************
-Data persistence. So, we have an array of objects, which is searched by something in 
-dataAccess.js, which in turn is called from here.
+App setup. So, we have a list of items in chartLoad that is refreshed 
 *****************************************************************************************/
+const loadCharts = () => {
+  const chartList = data_getAll();
+  console.log(`In loadCharts function: length is ${chartList.length} items`);
+  console.log(chartList[chartList.length -1]);
+  for (let i=0; i<chartList.length; i++) {
+    chartName = chartList[i].name;
+    chartLoadDiv.innerHTML += `<p>${chartName}</p>`
+  }
+}
 
-
-
+//****************************************************************************************
 // The "app" per se starts here.
+// loadCharts();
+chartLoadDiv.addEventListener('click',chartLoadClick,false);
 saveButton.addEventListener('click',saveButtonClick,false);
 playArea.addEventListener('click',playAreaClick,false);
+
+

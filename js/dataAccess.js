@@ -13,9 +13,11 @@ const data_save = (campaignChart) => {
 	const last = dataBase.length -1;
 	const munros = campaignChart.munroList.length;
 	console.log(`${dataBase[last].name} added with ${munros} munros, ${last+1} charts.`);
+	console.log(dataBase[last].name);
 }
 
 const data_getAll = () => {
+	console.log(`In data_getAll: first item is ${dataBase[0].name}`);
 	return dataBase;
 }
 

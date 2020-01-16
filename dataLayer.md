@@ -20,3 +20,5 @@ TODAY IS: Thursday
 1) Populate the chartLoad div with a paragraph tag containing the name of everything in dataBase
 1) Add an event hondler that retrieves the chart by name
 1) Add a function (called fae above) that loads all the munros fae the chart into playArea
+1) Go through the debugging in the browser tutorial (and maybe the one fae the make a website course?)
+1) Get the retrieval system, that is already there noo, to actually work!
