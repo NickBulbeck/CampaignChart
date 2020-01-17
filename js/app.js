@@ -1,14 +1,9 @@
 const playArea = document.getElementById("playArea");
 const saveButton = document.getElementById("saveButton");
-const chartLoadDiv = document.getElementById("chartLoad");
-let campaignChart = {
-  name: "",
-  munroList: []
-}
-function CampaignChart() {
-  this.name = name;
-  this.munroList = munroList;
-}
+const chartListDiv = document.getElementById("chartList");
+let campaignChart = [];
+let munroList = [];
+
 
 const playAreaClick = (event) => {
 // First, detect where the cursor is
@@ -39,15 +34,18 @@ const drawMunro = (x,y) => {
              + '<div class="triangle munro-inner">' + '</div>'
              + '</div>';
   playArea.innerHTML += html;
-  let munro = {
-    munroX: x,
-    munroY: y
-  }
-  campaignChart.munroList.push(munro);
+  let munro = [x,y];
+  munroList.push(munro);
 }
 
-
-
+const drawChart = (list) => {
+  playArea.innerHTML = "";
+  for (let i=0; i<list.length; i++) {
+    const x = list[i][0];
+    const y = list[i][1];
+    drawMunro(x,y);
+  }
+}
 
 /*****************************************************************************************
 Data persistence. So, we have an array of objects, which is searched by something in 
@@ -55,42 +53,41 @@ dataAccess.js, which in turn is called from here.
 *****************************************************************************************/
 const saveButtonClick = (event) => {
   const nameField = document.getElementById('nameField');
-  campaignChart.name = nameField.value;
+  campaignChart.push(nameField.value);
   nameField.value = '';
+  campaignChart.push(munroList);
   data_save(campaignChart);
-  // HERE IS THE PROBLEM:
-  // campaignChart.name = '';
-  // campaignChart.munroList = [];
-  // The object is passed by reference, not value, and I've blanked it out here. I need
-  // to create a **new object** each time...
   playArea.innerHTML = '';
-  loadCharts();
+  campaignChart = [];
+  munroList = [];
+  loadChartList();
 }
 
-const chartLoadClick = (event) => {
+const chartListClick = (event) => {
   const loadMe = event.target;
-  const name = loadMe.textContent;
-  const chart = data_getByName(name);
-  console.log(chart.munroList);
+  const chartID = parseInt(loadMe.dataset.id);
+  console.log(`chartID: ${chartID}`);
+  const chart = data_getByID(chartID);
+  const list = chart[1];
+  drawChart(list);
 }
 
 /*****************************************************************************************
-App setup. So, we have a list of items in chartLoad that is refreshed 
+App setup. So, we have a list of items in chartList that is refreshed 
 *****************************************************************************************/
-const loadCharts = () => {
+const loadChartList = () => {
+  chartListDiv.innerHTML = "";
   const chartList = data_getAll();
-  console.log(`In loadCharts function: length is ${chartList.length} items`);
-  console.log(chartList[chartList.length -1]);
   for (let i=0; i<chartList.length; i++) {
-    chartName = chartList[i].name;
-    chartLoadDiv.innerHTML += `<p>${chartName}</p>`
+    let html = `<p data-id="${i}">${chartList[i][0]}</p>`;
+    chartListDiv.innerHTML += html;
   }
 }
 
 //****************************************************************************************
 // The "app" per se starts here.
-// loadCharts();
-chartLoadDiv.addEventListener('click',chartLoadClick,false);
+loadChartList();
+chartListDiv.addEventListener('click',chartListClick,false);
 saveButton.addEventListener('click',saveButtonClick,false);
 playArea.addEventListener('click',playAreaClick,false);
 

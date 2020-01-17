@@ -16,6 +16,7 @@ need to be captured. This means there has to be:
 
 TODAY IS: Friday
 
+1) Refactor the campaignChart into an array
 1) Add a chart title to the playArea
 1) Populate the chartLoad div with a paragraph tag containing the name of everything in dataBase
 1) Add an event hondler that retrieves the chart by name
@@ -23,3 +24,8 @@ TODAY IS: Friday
 1) Go through the debugging in the browser tutorial (and maybe the one fae the make a website course?)
 1) Get the retrieval system, that is already there noo, to actually work!
 1) Write the business logic that'll drive the behaviour, now that you know you'll need to instantiate campaignChart objects...
+
+SO: 
+You open the app. You want to be able to click stuff and save it... but objects are no good because you can't create an object. So, for now,
+re-factor app.js so that campaignChart is just an array, not an object. There's probably a way to JSON-ise it and stringify it in reverse,
+but we'll cross that bridge when we come to it.
