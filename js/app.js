@@ -1,6 +1,7 @@
 const playArea = document.getElementById("playArea");
 const saveButton = document.getElementById("saveButton");
 const chartListDiv = document.getElementById("chartList");
+const chartActionList = document.getElementById("chartActionList");
 let campaignChart = [];
 let munroList = [];
 
@@ -36,15 +37,25 @@ const drawMunro = (x,y) => {
   playArea.innerHTML += html;
   let munro = [x,y];
   munroList.push(munro);
+  addChartListLine();
 }
 
 const drawChart = (list) => {
-  playArea.innerHTML = "";
+  playArea.innerHTML = '';
+  chartActionList.innerHTML = '';
   for (let i=0; i<list.length; i++) {
     const x = list[i][0];
     const y = list[i][1];
     drawMunro(x,y);
   }
+}
+
+const addChartListLine = () => {
+  let li = document.createElement('li');
+  // hard-coded stuff to begin with...
+  html = "Some details about the Munro";
+  li.innerHTML = html;
+  chartActionList.appendChild(li);
 }
 
 /*****************************************************************************************
@@ -58,6 +69,7 @@ const saveButtonClick = (event) => {
   campaignChart.push(munroList);
   data_save(campaignChart);
   playArea.innerHTML = '';
+  chartActionList.innerHTML = '';
   campaignChart = [];
   munroList = [];
   loadChartList();
@@ -76,7 +88,7 @@ const chartListClick = (event) => {
 App setup. So, we have a list of items in chartList that is refreshed 
 *****************************************************************************************/
 const loadChartList = () => {
-  chartListDiv.innerHTML = "";
+  chartListDiv.innerHTML = '';
   const chartList = data_getAll();
   for (let i=0; i<chartList.length; i++) {
     let html = `<p data-id="${i}">${chartList[i][0]}</p>`;

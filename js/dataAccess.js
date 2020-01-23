@@ -33,6 +33,14 @@ const data_getByID = (id) => {
 	return null;
 }
 
+const data_deleteMunro = (chartID,munroID) => {
+	// can't remember how to remove an item from an array!
+}
+
+const data_updateMunro = (chartID,munroID,taskDescription) => {
+	dataBase[chartID][munroID][2] = taskDescription;
+}
+
 /* Scaffolding function to seed the database for testing and development purposes
 ********************************************************************************/
 
@@ -40,21 +48,22 @@ const seedTheDatabase = () => {
 	let dummyChart = [
 		"Dummy Chart: 2 tasks",
 		[
-			[100,100],
-			[300,300]
+			[100,100,"First task"],
+			[300,300,"Second task"]
 		]
 	];
 	data_save(dummyChart);
 	dummyChart = [
 		"Dummy Chart: 4 tasks",
 		[
-			[100,400],
-			[200,400],
-			[300,400],
-			[400,400]
+			[100,400,"First task"],
+			[200,400,"Second task"],
+			[300,400,"Third task"],
+			[400,400,"Fourth task"]
 		]
 	];
 	data_save(dummyChart);
 }
 
 seedTheDatabase();
+

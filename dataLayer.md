@@ -14,18 +14,16 @@ need to be captured. This means there has to be:
    takes x and y co-ordinates as parameters so that we can easily iterate through
    a list of them read in from outside.
 
-TODAY IS: Friday
+TODAY IS: Visting Matthew week
 
-1) Refactor the campaignChart into an array
-1) Add a chart title to the playArea
-1) Populate the chartLoad div with a paragraph tag containing the name of everything in dataBase
-1) Add an event hondler that retrieves the chart by name
-1) Add a function (called fae above) that loads all the munros fae the chart into playArea
-1) Go through the debugging in the browser tutorial (and maybe the one fae the make a website course?)
-1) Get the retrieval system, that is already there noo, to actually work!
-1) Write the business logic that'll drive the behaviour, now that you know you'll need to instantiate campaignChart objects...
+The next challenge: to get the chart details in a div / ul below the playArea.
+- I need some way of both displaying it, and then making it CRUDable.
+- So, in the list, start with an input field and a Save button.
+- Once the Save button is clicked, update the input to a normal <p>
+  -- add a Delete button
+  -- and an Edit button, which hides the <p> and returns the input
+- Important: we also need a Done button!
+- Clicking the Done button colours the Munro in.
+- So, there has to be an id for each Munro that links it to the li in this list.
 
-SO: 
-You open the app. You want to be able to click stuff and save it... but objects are no good because you can't create an object. So, for now,
-re-factor app.js so that campaignChart is just an array, not an object. There's probably a way to JSON-ise it and stringify it in reverse,
-but we'll cross that bridge when we come to it.
+
