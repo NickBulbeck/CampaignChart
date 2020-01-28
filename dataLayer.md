@@ -25,5 +25,8 @@ The next challenge: to get the chart details in a div / ul below the playArea.
 - Important: we also need a Done button!
 - Clicking the Done button colours the Munro in.
 - So, there has to be an id for each Munro that links it to the li in this list.
+- Also, we know that local storage is straightforward to use.
+- It would be interesting to find a way to have both in the same app. Maybe.
+- Oh, and I need to make the playArea respond to double-clicks as well as single.
 
 

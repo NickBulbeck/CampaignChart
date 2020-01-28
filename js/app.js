@@ -53,7 +53,8 @@ const drawChart = (list) => {
 const addChartListLine = () => {
   let li = document.createElement('li');
   // hard-coded stuff to begin with...
-  html = "Some details about the Munro";
+  html = `<input type="text" placeholder="... and keep it brief!"><button class="saveMunro">Save</button>
+          <button class="editMunro">Edit</button><button class="deleteMunro">Delete</button>`;
   li.innerHTML = html;
   chartActionList.appendChild(li);
 }
