@@ -14,7 +14,7 @@ need to be captured. This means there has to be:
    takes x and y co-ordinates as parameters so that we can easily iterate through
    a list of them read in from outside.
 
-TODAY IS: Visting Matthew week
+TODAY IS: Friday
 
 The next challenge: to get the chart details in a div / ul below the playArea.
 - I need some way of both displaying it, and then making it CRUDable.
@@ -22,11 +22,12 @@ The next challenge: to get the chart details in a div / ul below the playArea.
 - Once the Save button is clicked, update the input to a normal <p>
   -- add a Delete button
   -- and an Edit button, which hides the <p> and returns the input
-- Important: we also need a Done button!
-- Clicking the Done button colours the Munro in.
+  -- and a Done button that colours the Munro in!
 - So, there has to be an id for each Munro that links it to the li in this list.
-- Also, we know that local storage is straightforward to use.
-- It would be interesting to find a way to have both in the same app. Maybe.
+- There also has to be a design for the data that fits in the local storage string.
+- Event-handler for the Save button that does all the above stuff.
+- Event-handlers for the Delete, Edit and Done buttons too.
+
 - Oh, and I need to make the playArea respond to double-clicks as well as single.
 
 
