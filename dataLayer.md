@@ -25,6 +25,8 @@ The next challenge: to get the chart details in a div / ul below the playArea.
   -- and a Done button that colours the Munro in!
 - So, there has to be an id for each Munro that links it to the li in this list.
 - There also has to be a design for the data that fits in the local storage string.
+- The save to local storage needs to use const JSONstuff = JSON.stringify(data);
+- ... and the retrieve needs to use JSON.parse(same data).
 - Event-handler for the Save button that does all the above stuff.
 - Event-handlers for the Delete, Edit and Done buttons too.
 
