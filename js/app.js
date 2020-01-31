@@ -85,6 +85,12 @@ const chartListClick = (event) => {
   drawChart(list);
 }
 
+const chartActionListClick = (event) => {
+  const target = event.target;
+  const text = target.textContent;
+  console.log(text);
+}
+
 /*****************************************************************************************
 App setup. So, we have a list of items in chartList that is refreshed 
 *****************************************************************************************/
@@ -103,5 +109,6 @@ loadChartList();
 chartListDiv.addEventListener('click',chartListClick,false);
 saveButton.addEventListener('click',saveButtonClick,false);
 playArea.addEventListener('click',playAreaClick,false);
+chartActionList.addEventListener('click',chartActionListClick,false);
 
 
