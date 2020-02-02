@@ -4,3 +4,31 @@
 
 let dataBase = [];
 
+/*
+  chart:
+    chartData:
+      id, name, some_other_stuff;
+    munroList:
+      munro:
+        id, size, co-ordinates, description
+      munro:
+        id, size, co-ordinates, description
+      munro:
+        id, size, co-ordinates, description
+  chart:
+    chartData:
+      id, name, some_other_stuff;
+    munroList:
+      munro:
+        id, size, co-ordinates, description
+      munro:
+        id, size, co-ordinates, description
+      munro:
+        id, size, co-ordinates, description
+
+
+
+
+
+
+*/
