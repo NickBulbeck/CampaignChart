@@ -1,10 +1,15 @@
 const playArea = document.getElementById("playArea");
-const saveButton = document.getElementById("saveButton");
+const saveChart = document.getElementById("saveChart");
 const chartListDiv = document.getElementById("chartList");
+const chartInfoDiv = document.getElementById("chartInfo");
 const chartActionList = document.getElementById("chartActionList");
 let campaignChart = [];
 let munroList = [];
+let newChart = true;
 
+const setUpScreen = () => {
+  chartInfoDiv.style.display='none';
+}
 
 const playAreaClick = (event) => {
 // First, detect where the cursor is
@@ -54,7 +59,8 @@ const addChartListLine = () => {
   let li = document.createElement('li');
   // hard-coded stuff to begin with...
   html = `<input type="text" placeholder="... and keep it brief!"><button class="saveMunro">Save</button>
-          <button class="editMunro">Edit</button><button class="deleteMunro">Delete</button>`;
+          <button class="editMunro">Edit</button><button class="deleteMunro">Delete</button>
+          <button class="markAsDone">Done</button>`;
   li.innerHTML = html;
   chartActionList.appendChild(li);
 }
@@ -63,7 +69,7 @@ const addChartListLine = () => {
 Data persistence. So, we have an array of objects, which is searched by something in 
 dataAccess.js, which in turn is called from here.
 *****************************************************************************************/
-const saveButtonClick = (event) => {
+const saveChartClick = (event) => {
   const nameField = document.getElementById('nameField');
   campaignChart.push(nameField.value);
   nameField.value = '';
@@ -105,9 +111,10 @@ const loadChartList = () => {
 
 //****************************************************************************************
 // The "app" per se starts here.
+setUpScreen();
 loadChartList();
 chartListDiv.addEventListener('click',chartListClick,false);
-saveButton.addEventListener('click',saveButtonClick,false);
+saveChart.addEventListener('click',saveChartClick,false);
 playArea.addEventListener('click',playAreaClick,false);
 chartActionList.addEventListener('click',chartActionListClick,false);
 

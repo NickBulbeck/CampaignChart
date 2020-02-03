@@ -14,11 +14,10 @@ need to be captured. This means there has to be:
    takes x and y co-ordinates as parameters so that we can easily iterate through
    a list of them read in from outside.
 
-TODAY IS: Friday
+TODAY IS: Monday
 
-The next challenge: to get the chart details in a div / ul below the playArea.
-- I need some way of both displaying it, and then making it CRUDable.
-- So, in the list, start with an input field and a Save button.
+The next challenges include:
+- 
 - Once the Save button is clicked, update the input to a normal <p>
   -- add a Delete button
   -- and an Edit button, which hides the <p> and returns the input
@@ -29,7 +28,11 @@ The next challenge: to get the chart details in a div / ul below the playArea.
 - ... and the retrieve needs to use JSON.parse(same data).
 - Event-handler for the Save button that does all the above stuff.
 - Event-handlers for the Delete, Edit and Done buttons too.
-
 - Oh, and I need to make the playArea respond to double-clicks as well as single.
 
+Next:
+Make the app such that you EITHER load an existing chart OR create a new one.
 
+HOW...
+1) hide the text field and Save buttons initially
+2) set a global "load flag" 
