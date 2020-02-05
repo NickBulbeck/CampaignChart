@@ -6,21 +6,32 @@ const chartActionList = document.getElementById("chartActionList");
 let campaignChart = [];
 let munroList = [];
 let currentChart = null;
-/* Sadly, cannae mind hoo tae dae this! But the properties are as given. 
-let Chart = {
-  id: [which is a timestamp]
-  name: [which has to be unique]
-  munros: [array of Munro objects, I think.]
-  constructor etc.
-  will need a getter/setter for the list of Munros. This will be interesting...
+class Chart {
+  constructor(id,name,munros) {
+    this.id = id;
+    this.name = name;
+    this.munros = munros || [];
+  }
 }
-*/
+class Munro {
+  constructor(id,size,coOrdinates,description,complete) {
+    this.id = id;
+    this.size = size;
+    this.coOrdinates = coOrdinates;
+    this.description = description;
+    this.complete = complete;
+  }
+}
+
 const setUpScreen = () => {
   chartInfoDiv.style.display='none';
 }
 
 const playAreaClick = (event) => {
-// We need a new check: if currentMunro. If not, create a new one.
+  if (!currentChart) {
+    console.log("No chart yet; setting one up.");
+    currentChart = new Chart;
+  }
 
 // First, detect where the cursor is
   let cursorX = event.clientX;
@@ -102,6 +113,11 @@ const saveChartClick = (event) => {
 }
 
 const chartListClick = (event) => {
+  if (!currentChart) {
+    console.log("No chart yet; setting one up.");
+    currentChart = new Chart;
+  }
+
 // This needs refactoring like saveChartClick. It also needs a test for if currentChart;
 // if so, it needs to save the current chart 
   const loadMe = event.target;

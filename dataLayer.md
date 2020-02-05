@@ -40,4 +40,5 @@ HOW...
 2) Set the current object to null 
 
 
-
+WEDNESDAY'S PRIMARY CHALLENGE
+- find out how to set up an array within an object constructor

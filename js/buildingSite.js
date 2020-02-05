@@ -7,7 +7,7 @@ const testLocalStorage = () => {
   
 	// console.log(foadyb);
   try {
-    const foadyb1 = localStorage.getItem('foadyb2');
+    const foadyb1 = localStorage.getItem('foadyb');
     console.log(foadyb1);
   }
   catch(error) {
@@ -16,5 +16,14 @@ const testLocalStorage = () => {
   
 }
 
+const testSetupOfChartObject = () => {
+  const date = new Date();
+  const munro = new Munro;
+  console.log(munro);
+}
+
+
+
 // testLocalStorage();
 
+testSetupOfChartObject();
