@@ -14,12 +14,12 @@ class Chart {
   }
 }
 class Munro {
-  constructor(id,size,coOrdinates,description,complete) {
+  constructor(id,coOrdinates,description,complete,size) {
     this.id = id;
-    this.size = size;
     this.coOrdinates = coOrdinates;
     this.description = description;
-    this.complete = complete;
+    this.complete = complete || false;
+    this.size = size || "munro";
   }
 }
 
@@ -29,7 +29,6 @@ const setUpScreen = () => {
 
 const playAreaClick = (event) => {
   if (!currentChart) {
-    console.log("No chart yet; setting one up.");
     currentChart = new Chart;
   }
 
