@@ -5,13 +5,23 @@ const chartInfoDiv = document.getElementById("chartInfo");
 const chartActionList = document.getElementById("chartActionList");
 let campaignChart = [];
 let munroList = [];
-let newChart = true;
-
+let currentChart = null;
+/* Sadly, cannae mind hoo tae dae this! But the properties are as given. 
+let Chart = {
+  id: [which is a timestamp]
+  name: [which has to be unique]
+  munros: [array of Munro objects, I think.]
+  constructor etc.
+  will need a getter/setter for the list of Munros. This will be interesting...
+}
+*/
 const setUpScreen = () => {
   chartInfoDiv.style.display='none';
 }
 
 const playAreaClick = (event) => {
+// We need a new check: if currentMunro. If not, create a new one.
+
 // First, detect where the cursor is
   let cursorX = event.clientX;
   let cursorY = event.clientY;
@@ -43,6 +53,9 @@ const drawMunro = (x,y) => {
   let munro = [x,y];
   munroList.push(munro);
   addChartListLine();
+// This needs refactoring so that the name/id of the Munro are created and that the
+// munro is pushed to the list of objects in the current campaign chart. All of this
+// means that the munro itself probably needs creating as a new Object!
 }
 
 const drawChart = (list) => {
@@ -58,6 +71,9 @@ const drawChart = (list) => {
 const addChartListLine = () => {
   let li = document.createElement('li');
   // hard-coded stuff to begin with...
+
+  // also this needs refactoring so that the stuff below goes in some kind of div or li that has an identity
+  // the same as the Munro's identity. That's how we link the two together.
   html = `<input type="text" placeholder="... and keep it brief!"><button class="saveMunro">Save</button>
           <button class="editMunro">Edit</button><button class="deleteMunro">Delete</button>
           <button class="markAsDone">Done</button>`;
@@ -70,6 +86,9 @@ Data persistence. So, we have an array of objects, which is searched by somethin
 dataAccess.js, which in turn is called from here.
 *****************************************************************************************/
 const saveChartClick = (event) => {
+// This needs refactoring to take account of the object nature of the chart. It should persist
+// the currentChart to the database - the save function in dataAccess.js will need modifying
+// to detect whether it's creating a new one or overwriting an existing one.
   const nameField = document.getElementById('nameField');
   campaignChart.push(nameField.value);
   nameField.value = '';
@@ -83,6 +102,8 @@ const saveChartClick = (event) => {
 }
 
 const chartListClick = (event) => {
+// This needs refactoring like saveChartClick. It also needs a test for if currentChart;
+// if so, it needs to save the current chart 
   const loadMe = event.target;
   const chartID = parseInt(loadMe.dataset.id);
   console.log(`chartID: ${chartID}`);
@@ -92,6 +113,8 @@ const chartListClick = (event) => {
 }
 
 const chartActionListClick = (event) => {
+  // this isn't yet properly written. It needs to show/hide various buttons and
+  // persist or remove data against the munro objects in the chart.
   const target = event.target;
   const text = target.textContent;
   console.log(text);
