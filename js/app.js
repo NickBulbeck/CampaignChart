@@ -50,12 +50,14 @@ const playAreaClick = (event) => {
   if (munroY < 0) {
     munroY = 0;
   }
+  // THIS IS WHERE WE CREATE THE MUNRO OBJECT.
   drawMunro(munroX,munroY);
 }
 
 const drawMunro = (x,y) => {
 // draws a triangle, of size set in triangles.css, centered x and y pixels 
-// from the left/top of the playArea div. Then it adds it to campaignChart
+// from the left/top of the playArea div. Then it adds it to campaignChart.
+// Also, we need to create an id... but not here. This function only renders it.
   let html = '<div class="triangle munro" style="top:' + y + 'px; left:' + x + 'px">' 
              + '<div class="triangle munro-inner">' + '</div>'
              + '</div>';
