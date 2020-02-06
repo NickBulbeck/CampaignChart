@@ -27,10 +27,17 @@ const setUpScreen = () => {
   chartInfoDiv.style.display='none';
 }
 
-const playAreaClick = (event) => {
+const handleTodaysFirstClick = () => {
   if (!currentChart) {
     currentChart = new Chart;
+    const key = new Date();
+    currentChart.id = key;
+    console.log(currentChart);
   }
+}
+
+const playAreaClick = (event) => {
+  handleTodaysFirstClick();
 
 // First, detect where the cursor is
   let cursorX = event.clientX;
@@ -114,10 +121,8 @@ const saveChartClick = (event) => {
 }
 
 const chartListClick = (event) => {
-  if (!currentChart) {
-    console.log("No chart yet; setting one up.");
-    currentChart = new Chart;
-  }
+// If there's a current chart, save it - different from handling first click
+
 
 // This needs refactoring like saveChartClick. It also needs a test for if currentChart;
 // if so, it needs to save the current chart 
