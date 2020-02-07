@@ -23,7 +23,7 @@ const testSetupOfChartObject = () => {
 }
 
 /* Scaffolding function to seed the database for testing and development purposes
-********************************************************************************/
+********************************************************************************
 
 const seedTheDatabase = () => {
   const munro1 = new Munro("id_1",[100,100],"The first test task");
@@ -32,29 +32,20 @@ const seedTheDatabase = () => {
   const munro4 = new Munro("id_4",[200,400],"The fourth test task");
   const munro5 = new Munro("id_5",[300,400],"The fifth test task");
   const munro6 = new Munro("id_6",[400,400],"The sixth test task");
-  let dummyChart = new Chart [
-    "Dummy Chart: 2 tasks",
-    [
-      [100,100,"First task"],
-      [300,300,"Second task"]
-    ]
-  ];
-  data_save(dummyChart);
-  dummyChart = [
-    "Dummy Chart: 4 tasks",
-    [
-      [100,400,"First task"],
-      [200,400,"Second task"],
-      [300,400,"Third task"],
-      [400,400,"Fourth task"]
-    ]
-  ];
-  data_save(dummyChart);
+  let chartA = new Chart("seedChart1","Refactoring part A");
+  chartA.munros.push(munro1);
+  chartA.munros.push([munro2,munro3,munro4]);
+  data_save(chartA);
+  let chartB = new Chart("seedChart2","Refactoring part B",[munro5,munro6]);
+  data_save(chartB);
+  console.log(`Seeded the database: ${dataBase}`);
 }
 
 seedTheDatabase();
-
+*/
 
 // testLocalStorage();
 
-testSetupOfChartObject();
+// testSetupOfChartObject();
+
+
