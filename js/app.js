@@ -3,21 +3,20 @@ const saveChart = document.getElementById("saveChart");
 const chartListDiv = document.getElementById("chartList");
 const chartInfoDiv = document.getElementById("chartInfo");
 const chartActionList = document.getElementById("chartActionList");
-let campaignChart = [];
-let munroList = [];
 let currentChart = null;
 class Chart {
   constructor(id,name,munros) {
     this.id = id;
     this.name = name;
     this.munros = munros || [];
+    this.munroMeta = 1;
   }
 }
 class Munro {
   constructor(id,coOrdinates,description,complete,size) {
     this.id = id;
     this.coOrdinates = coOrdinates;
-    this.description = description;
+    this.description = description || "";
     this.complete = complete || false;
     this.size = size || "munro";
   }
@@ -30,9 +29,10 @@ const setUpScreen = () => {
 const handleTodaysFirstClick = () => {
   if (!currentChart) {
     currentChart = new Chart;
-    const key = new Date();
+    const key = new Date().toString();
     currentChart.id = key;
     console.log(currentChart);
+    chartInfoDiv.style.display="inherit";
   }
 }
 
@@ -57,24 +57,23 @@ const playAreaClick = (event) => {
   if (munroY < 0) {
     munroY = 0;
   }
-  // THIS IS WHERE WE CREATE THE MUNRO OBJECT.
   drawMunro(munroX,munroY);
+  addChartListLine();
+  const id = "munro" + currentChart.munroMeta;
+  const newMunro = new Munro(id,[munroX,munroY]);
+  currentChart.munroMeta += 1;
+// This increments the key for the next munro to be created, which makes sure every munro has a
+// different key regardless of how many are added or deleted. It should probably be done in some
+// kind of getter/setter in the class, mind you...
 }
 
 const drawMunro = (x,y) => {
 // draws a triangle, of size set in triangles.css, centered x and y pixels 
 // from the left/top of the playArea div. Then it adds it to campaignChart.
-// Also, we need to create an id... but not here. This function only renders it.
   let html = '<div class="triangle munro" style="top:' + y + 'px; left:' + x + 'px">' 
              + '<div class="triangle munro-inner">' + '</div>'
              + '</div>';
   playArea.innerHTML += html;
-  let munro = [x,y];
-  munroList.push(munro);
-  addChartListLine();
-// This needs refactoring so that the name/id of the Munro are created and that the
-// munro is pushed to the list of objects in the current campaign chart. All of this
-// means that the munro itself probably needs creating as a new Object!
 }
 
 const drawChart = (list) => {
@@ -84,6 +83,7 @@ const drawChart = (list) => {
     const x = list[i].coOrdinates[0];
     const y = list[i].coOrdinates[1];
     drawMunro(x,y);
+    addChartListLine();
   }
 }
 
@@ -108,15 +108,9 @@ const saveChartClick = (event) => {
 // This needs refactoring to take account of the object nature of the chart. It should persist
 // the currentChart to the database - the save function in dataAccess.js will need modifying
 // to detect whether it's creating a new one or overwriting an existing one.
-  const nameField = document.getElementById('nameField');
-  campaignChart.push(nameField.value);
-  nameField.value = '';
-  campaignChart.push(munroList);
-  data_save(campaignChart);
-  playArea.innerHTML = '';
-  chartActionList.innerHTML = '';
-  campaignChart = [];
-  munroList = [];
+  const nameField = document.getElementById('chartNameInput');
+  currentChart.name = nameField.value;
+  data_save(currentChart);
   loadChartList();
 }
 
@@ -142,17 +136,20 @@ const chartActionListClick = (event) => {
   console.log(text);
 }
 
+const chartInfoDivClick = (event) => {
+  console.log(`Element clicked: ${event.target}`);
+}
+
 /*****************************************************************************************
 App setup. So, we have a list of items in chartList that is refreshed 
 *****************************************************************************************/
 const loadChartList = () => {
   chartListDiv.innerHTML = '';
   const chartList = data_getAll();
-  console.log(chartList);
   for (let i=0; i<chartList.length; i++) {
     const chart_i = chartList[i];
-    console.log(chart_i);
-    let html = `<p data-id="${chart_i.id}">${chartList[i].name}</p>`;
+    let html = `<p data-id="${chart_i.id.toString()}">${chartList[i].name}</p>`;
+    // toString may be belt-and-braces, because I think HTML stringifies it anyway.
     chartListDiv.innerHTML += html;
   }
 }
@@ -187,3 +184,4 @@ chartListDiv.addEventListener('click',chartListClick,false);
 saveChart.addEventListener('click',saveChartClick,false);
 playArea.addEventListener('click',playAreaClick,false);
 chartActionList.addEventListener('click',chartActionListClick,false);
+chartInfoDiv.addEventListener('click',chartInfoDivClick,false);

@@ -12,7 +12,7 @@ const data_save = (campaignChart) => {
 	const key = campaignChart.id;
 	for (let i=0; i<dataBase.length; i++) {
 		if (dataBase[i].id === key) {
-			database[i] = campaignChart;
+			dataBase[i] = campaignChart;
 			return 0;
 		}
 	}
@@ -37,7 +37,9 @@ const data_getByName = (searchName) => {
 
 const data_getByID = (searchID) => {
 	for (let i=0; i<dataBase.length; i++) {
+		console.log(`Match: ${dataBase[i].id === searchID}`);
 		if (dataBase[i].id === searchID) {
+			console.log(`Match found: ${dataBase[i]}`)
 			return dataBase[i];
 		}
 	}
