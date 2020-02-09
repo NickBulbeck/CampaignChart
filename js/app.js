@@ -57,21 +57,21 @@ const playAreaClick = (event) => {
   if (munroY < 0) {
     munroY = 0;
   }
-  drawMunro(munroX,munroY);
-  addChartListLine();
-  const id = "munro" + currentChart.munroMeta;
-  const newMunro = new Munro(id,[munroX,munroY]);
+  const munroID = "munro" + currentChart.munroMeta;
+  const newMunro = new Munro(munroID,[munroX,munroY]);
   currentChart.munroMeta += 1;
 // This increments the key for the next munro to be created, which makes sure every munro has a
 // different key regardless of how many are added or deleted. It should probably be done in some
 // kind of getter/setter in the class, mind you...
+  drawMunro(munroX,munroY,munroID);
+  addChartListLine(munroID);
 }
 
-const drawMunro = (x,y) => {
+const drawMunro = (x,y,id) => {
 // draws a triangle, of size set in triangles.css, centered x and y pixels 
 // from the left/top of the playArea div. Then it adds it to campaignChart.
   let html = '<div class="triangle munro" style="top:' + y + 'px; left:' + x + 'px">' 
-             + '<div class="triangle munro-inner">' + '</div>'
+             + '<div class="triangle munro-inner" id = "' + id + '"></div>'
              + '</div>';
   playArea.innerHTML += html;
 }
@@ -82,15 +82,15 @@ const drawChart = (list) => {
   for (let i=0; i<list.length; i++) {
     const x = list[i].coOrdinates[0];
     const y = list[i].coOrdinates[1];
-    drawMunro(x,y);
-    addChartListLine();
+    const id = list[i].id;
+    drawMunro(x,y,id);
+    addChartListLine(id);
   }
 }
 
-const addChartListLine = () => {
+const addChartListLine = (id) => {
   let li = document.createElement('li');
-  // hard-coded stuff to begin with...
-
+  li.setAttribute("id",id);
   // also this needs refactoring so that the stuff below goes in some kind of div or li that has an identity
   // the same as the Munro's identity. That's how we link the two together.
   html = `<input type="text" placeholder="... and keep it brief!"><button class="saveMunro">Save</button>
@@ -121,10 +121,9 @@ const chartListClick = (event) => {
 // if so, it needs to save the current chart 
   const loadMe = event.target;
   const chartID = loadMe.dataset.id;
-  console.log(`in chartListClick... chartID: ${chartID}`);
   const chart = data_getByID(chartID);
+  currentChart = chart;
   const list = chart.munros;
-  console.log(`list of munros to draw: ${list}`);
   drawChart(list);
 }
 
@@ -158,19 +157,23 @@ const loadChartList = () => {
 
 /* Scaffolding: seeding the database. */
 const seedTheDatabase = () => {
-  const munro1 = new Munro("id_1",[100,100],"The first test task");
-  const munro2 = new Munro("id_2",[300,300],"The second test task");
-  const munro3 = new Munro("id_3",[100,400],"The third test task");
-  const munro4 = new Munro("id_4",[200,400],"The fourth test task");
-  const munro5 = new Munro("id_5",[300,400],"The fifth test task");
-  const munro6 = new Munro("id_6",[400,400],"The sixth test task");
+  const munro1 = new Munro("munro1",[100,100],"The first test task");
+  const munro2 = new Munro("munro2",[300,300],"The second test task");
+  const munro3 = new Munro("munro3",[100,400],"The third test task");
+  const munro4 = new Munro("munro4",[200,400],"The fourth test task");
+  const munro5 = new Munro("munro5",[300,400],"The fifth test task");
+  const munro6 = new Munro("munro6",[400,400],"The sixth test task");
   let chartA = new Chart("seedChart1","Refactoring part A");
   chartA.munros.push(munro1);
   chartA.munros.push(munro2);
   chartA.munros.push(munro3);
   chartA.munros.push(munro4);
+  chartA.munros.push(munro5);
+  chartA.munros.push(munro6);
+  chartA.munroMeta = 7;
   data_save(chartA);
-  let chartB = new Chart("seedChart2","Refactoring part B",[munro5,munro6]);
+  let chartB = new Chart("seedChart2","Refactoring part B",[munro1,munro2]);
+  chartB.munroMeta = 3;
   data_save(chartB);
   // console.log(`Seeded the database: ${dataBase}`);
 }
