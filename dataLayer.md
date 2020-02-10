@@ -16,29 +16,18 @@ need to be captured. This means there has to be:
    takes x and y co-ordinates as parameters so that we can easily iterate through
    a list of them read in from outside.
 
-TODAY IS: Wednesday
+TODAY IS: Monday
 
 The next challenges include:
-- 
-- Once the Save button is clicked, update the input to a normal <p>
-  -- add a Delete button
-  -- and an Edit button, which hides the <p> and returns the input
-  -- and a Done button that colours the Munro in!
-- So, there has to be an id for each Munro that links it to the li in this list.
-- There also has to be a design for the data that fits in the local storage string.
-- The save to local storage needs to use const JSONstuff = JSON.stringify(data);
-- ... and the retrieve needs to use JSON.parse(same data).
-- Event-handler for the Save button that does all the above stuff.
-- Event-handlers for the Delete, Edit and Done buttons too.
-- Oh, and I need to make the playArea respond to double-clicks as well as single.
+- Display the chart name in chartTitle once there's a current chart
+- Decide on the chart name-editing approach, with the save button if the munros are updated
+- Attach event-listeners to the following munro buttons:
+-- munro: edit
+-- munro: save
+-- munro: delete
+-- munro: done
+- Attach event-listeners to the following chartTitle buttons:
+-- edit
+-- save
+-- delete
 
-Next:
-Make the app such that you EITHER load an existing chart OR create a new one.
-
-HOW...
-1) hide the text field and Save buttons initially
-2) Set the current object to null 
-
-
-WEDNESDAY'S PRIMARY CHALLENGE
-- find out how to set up an array within an object constructor

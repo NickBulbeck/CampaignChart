@@ -9,21 +9,31 @@
   <link rel="stylesheet" href = "styles/chartInfo.css">  
 </head>
 <body>
+
+<!-- Possible list of charts: at the moment it's a div full of paragraphs, but
+     should be re-factored into a select list and moved next to chartTitle -->
+  <div id="chartList">
+    
+  </div>
+
+
+<!-- Display only - not used yet. -->
   <div id="chartTitle"></div>
 
+<!-- The main visual area -->
   <div id="playArea">
 
   </div>
 
+<!-- Chart-level information -->
   <div id="chartInfo">
     <label for="chartDetails">About this Campaign Chart:</label>
   	<input id="chartNameInput" type="text" name="chartDetails" placeholder="Enter a chart name">
   	<button id="saveChart">Save chart</button>
   </div>
-  <div id="chartList">
-  	
-  </div>
+ 
 
+<!-- Important list of munros for the current chart -->
   <div id="chartDetails">
     <div id="chartActions">
       <ul id="chartActionList">

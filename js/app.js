@@ -31,7 +31,9 @@ const handleTodaysFirstClick = () => {
     currentChart = new Chart;
     const key = new Date().toString();
     currentChart.id = key;
-    console.log(currentChart);
+// Changes: what if you're just adding to an existing chart? In that case,
+// you don't want to update currentChart, but you do want to alter the
+// buttons in chartInfoDiv.
     chartInfoDiv.style.display="inherit";
   }
 }
