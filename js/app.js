@@ -1,7 +1,7 @@
 const playArea = document.getElementById("playArea");
 const saveChart = document.getElementById("saveChart");
-const chartListDiv = document.getElementById("chartList");
-const chartInfoDiv = document.getElementById("chartInfo");
+const chartListDiv = document.getElementById("chartListDiv");
+const chartInfoDiv = document.getElementById("chartInfoDiv");
 const chartActionList = document.getElementById("chartActionList");
 let currentChart = null;
 class Chart {
@@ -95,8 +95,10 @@ const addChartListLine = (id) => {
   li.setAttribute("id",id);
   // also this needs refactoring so that the stuff below goes in some kind of div or li that has an identity
   // the same as the Munro's identity. That's how we link the two together.
-  html = `<input type="text" placeholder="... and keep it brief!"><button class="saveMunro">Save</button>
-          <button class="editMunro">Edit</button><button class="deleteMunro">Delete</button>
+  html = `<input type="text" placeholder="... and keep it brief!">
+          <button class="saveMunro">Save</button>
+          <button class="editMunro">Edit</button>
+          <button class="deleteMunro">Delete</button>
           <button class="markAsDone">Done</button>`;
   li.innerHTML = html;
   chartActionList.appendChild(li);
@@ -116,18 +118,17 @@ const saveChartClick = (event) => {
   loadChartList();
 }
 
-const chartListClick = (event) => {
-// If there's a current chart, save it - different from handling first click
 
-// This needs refactoring like saveChartClick. It also needs a test for if currentChart;
-// if so, it needs to save the current chart 
-  const loadMe = event.target;
-  const chartID = loadMe.dataset.id;
+const chartListSelect = (event) => {
+  
+  const chartID = event.target.value;
+  console.log(chartID);
   const chart = data_getByID(chartID);
   currentChart = chart;
   const list = chart.munros;
-  drawChart(list);
+  drawChart(list);  
 }
+
 
 const chartActionListClick = (event) => {
   // this isn't yet properly written. It needs to show/hide various buttons and
@@ -145,14 +146,21 @@ const chartInfoDivClick = (event) => {
 App setup. So, we have a list of items in chartList that is refreshed 
 *****************************************************************************************/
 const loadChartList = () => {
-  chartListDiv.innerHTML = '';
+  const selectList = document.createElement("select");
   const chartList = data_getAll();
+  const defaultOption = document.createElement("option");
+  defaultOption.textContent = "Search for an existing chart";
+  selectList.appendChild(defaultOption);
   for (let i=0; i<chartList.length; i++) {
-    const chart_i = chartList[i];
-    let html = `<p data-id="${chart_i.id.toString()}">${chartList[i].name}</p>`;
+    const chartName = chartList[i].name;
+    const chartID = chartList[i].id.toString();
     // toString may be belt-and-braces, because I think HTML stringifies it anyway.
-    chartListDiv.innerHTML += html;
+    const option = document.createElement("option");
+    option.setAttribute("value",chartID);
+    option.textContent = chartName;
+    selectList.appendChild(option);
   }
+  chartListDiv.appendChild(selectList);
 }
 
 
@@ -185,7 +193,7 @@ seedTheDatabase();
 // The "app" per se starts here.
 setUpScreen();
 loadChartList();
-chartListDiv.addEventListener('click',chartListClick,false);
+chartListDiv.addEventListener('change',chartListSelect,false);
 saveChart.addEventListener('click',saveChartClick,false);
 playArea.addEventListener('click',playAreaClick,false);
 chartActionList.addEventListener('click',chartActionListClick,false);
