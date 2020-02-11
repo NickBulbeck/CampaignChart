@@ -1,5 +1,5 @@
 const playArea = document.getElementById("playArea");
-const saveChart = document.getElementById("saveChart");
+// const saveChart = document.getElementById("saveChartButton");
 const chartListDiv = document.getElementById("chartListDiv");
 const chartInfoDiv = document.getElementById("chartInfoDiv");
 const chartActionList = document.getElementById("chartActionList");
@@ -62,6 +62,7 @@ const playAreaClick = (event) => {
   const munroID = "munro" + currentChart.munroMeta;
   const newMunro = new Munro(munroID,[munroX,munroY]);
   currentChart.munroMeta += 1;
+  currentChart.munros.push(newMunro);
 // This increments the key for the next munro to be created, which makes sure every munro has a
 // different key regardless of how many are added or deleted. It should probably be done in some
 // kind of getter/setter in the class, mind you...
@@ -112,10 +113,10 @@ const saveChartClick = (event) => {
 // This needs refactoring to take account of the object nature of the chart. It should persist
 // the currentChart to the database - the save function in dataAccess.js will need modifying
 // to detect whether it's creating a new one or overwriting an existing one.
-  const nameField = document.getElementById('chartNameInput');
-  currentChart.name = nameField.value;
-  data_save(currentChart);
-  loadChartList();
+  // const nameField = document.getElementById('chartNameInput');
+  // currentChart.name = nameField.value;
+  // data_save(currentChart);
+  // loadChartList();
 }
 
 
@@ -139,13 +140,28 @@ const chartActionListClick = (event) => {
 }
 
 const chartInfoDivClick = (event) => {
-  console.log(`Element clicked: ${event.target}`);
+  const action = event.target.id;
+  const nameField = document.getElementById('chartNameInput');
+  const editButton = document.getElementById('editChartButton');
+  const elements = {
+    deleteChartButton: () => {
+      console.log("Deleting the chart...");
+    },
+    saveChartButton: () => {
+      console.log("Saving the chart...");
+      currentChart.name = nameField.value;
+      data_save(currentChart);
+      loadChartList();
+    }
+  }
+  elements[action]();
 }
 
 /*****************************************************************************************
 App setup. So, we have a list of items in chartList that is refreshed 
 *****************************************************************************************/
 const loadChartList = () => {
+  chartListDiv.innerHTML = '';
   const selectList = document.createElement("select");
   const chartList = data_getAll();
   const defaultOption = document.createElement("option");
@@ -173,7 +189,7 @@ const seedTheDatabase = () => {
   const munro4 = new Munro("munro4",[200,400],"The fourth test task");
   const munro5 = new Munro("munro5",[300,400],"The fifth test task");
   const munro6 = new Munro("munro6",[400,400],"The sixth test task");
-  let chartA = new Chart("seedChart1","Refactoring part A");
+  let chartA = new Chart("seedChart1","Refactoring part A (six munros)");
   chartA.munros.push(munro1);
   chartA.munros.push(munro2);
   chartA.munros.push(munro3);
@@ -182,7 +198,7 @@ const seedTheDatabase = () => {
   chartA.munros.push(munro6);
   chartA.munroMeta = 7;
   data_save(chartA);
-  let chartB = new Chart("seedChart2","Refactoring part B",[munro1,munro2]);
+  let chartB = new Chart("seedChart2","Refactoring part B (two munros)",[munro1,munro2]);
   chartB.munroMeta = 3;
   data_save(chartB);
   // console.log(`Seeded the database: ${dataBase}`);
@@ -194,7 +210,7 @@ seedTheDatabase();
 setUpScreen();
 loadChartList();
 chartListDiv.addEventListener('change',chartListSelect,false);
-saveChart.addEventListener('click',saveChartClick,false);
+// saveChart.addEventListener('click',saveChartClick,false);
 playArea.addEventListener('click',playAreaClick,false);
 chartActionList.addEventListener('click',chartActionListClick,false);
 chartInfoDiv.addEventListener('click',chartInfoDivClick,false);
