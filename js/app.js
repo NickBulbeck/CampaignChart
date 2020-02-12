@@ -94,10 +94,12 @@ const addChartListLine = (id) => {
   let li = document.createElement('li');
   li.setAttribute("id",id);
   const index = parseInt(id.match(/\d/g,"")) -1; // I know, I know. That's ugly.
-  console.log(id + ", " + index);
   const munro = currentChart.munros[index];
-  const desc = munro.description;
-  html = `<input type="text" placeholder="... and keep it brief!" value="${desc}">
+  let desc = munro.description;
+  // if (!desc) {
+  //   desc = '... add a description...';
+  // }
+  html = `<input type="text" placeholder="Mind and add a description" value="${desc}">
           <button class="saveMunro">Save</button>
           <button class="editMunro">Edit</button>
           <button class="deleteMunro">Delete</button>
@@ -126,7 +128,11 @@ const chartListSelect = (event) => {
 const fillOutChartInfoDiv = () => {
   chartInfoDiv.style.display="inherit";
   const nameField = document.getElementById('chartNameInput');
-  nameField.value = currentChart.name;
+  if (currentChart.name) {
+    nameField.value = currentChart.name;
+  } else {
+    nameField.placeholder = "Mind and name the chart";
+  }
 }
 
 const chartActionListClick = (event) => {
