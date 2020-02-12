@@ -5,7 +5,10 @@ move to being a true database.
 DESIGN NOTES
 
 When I launch the app, I can either start a new one, or launch an existing one. So: I need a pull-down menu.
-
+To start with, the chart app contains a blank input, with a Save button.
+If you click on the chart...
+If you click on the New button... 
+Need these combinations decided.
 
 TODAY IS: Monday
 
