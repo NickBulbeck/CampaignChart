@@ -37,9 +37,7 @@ const data_getByName = (searchName) => {
 
 const data_getByID = (searchID) => {
 	for (let i=0; i<dataBase.length; i++) {
-		console.log(`Match: ${dataBase[i].id === searchID}`);
 		if (dataBase[i].id === searchID) {
-			console.log(`Match found: ${dataBase[i]}`)
 			return dataBase[i];
 		}
 	}
@@ -50,7 +48,9 @@ const data_deleteChart = (campaignChart) => {
 	const key = campaignChart.id;
 	for (let i=0; i<dataBase.length; i++) {
 		if (dataBase[i].id === key) {
-			dataBase.splice[i,1];
+			console.log("In data_deleteChart: " + dataBase.length);
+			dataBase.splice(i,1);
+			console.log("In data_deleteChart: " + dataBase.length);
 			return 1;
 		}
 	}

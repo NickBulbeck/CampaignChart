@@ -1,5 +1,4 @@
 const playArea = document.getElementById("playArea");
-// const saveChart = document.getElementById("saveChartButton");
 const chartListDiv = document.getElementById("chartListDiv");
 const chartInfoDiv = document.getElementById("chartInfoDiv");
 const chartActionList = document.getElementById("chartActionList");
@@ -34,7 +33,7 @@ const handleTodaysFirstClick = () => {
 // Changes: what if you're just adding to an existing chart? In that case,
 // you don't want to update currentChart, but you do want to alter the
 // buttons in chartInfoDiv.
-    chartInfoDiv.style.display="inherit";
+    fillOutChartInfoDiv();
   }
 }
 
@@ -109,27 +108,24 @@ const addChartListLine = (id) => {
 Data persistence. So, we have an array of objects, which is searched by something in 
 dataAccess.js, which in turn is called from here.
 *****************************************************************************************/
-const saveChartClick = (event) => {
-// This needs refactoring to take account of the object nature of the chart. It should persist
-// the currentChart to the database - the save function in dataAccess.js will need modifying
-// to detect whether it's creating a new one or overwriting an existing one.
-  // const nameField = document.getElementById('chartNameInput');
-  // currentChart.name = nameField.value;
-  // data_save(currentChart);
-  // loadChartList();
-}
 
 
 const chartListSelect = (event) => {
   
   const chartID = event.target.value;
-  console.log(chartID);
   const chart = data_getByID(chartID);
   currentChart = chart;
   const list = chart.munros;
-  drawChart(list);  
+  drawChart(list);
+  fillOutChartInfoDiv();
 }
 
+
+const fillOutChartInfoDiv = () => {
+  chartInfoDiv.style.display="inherit";
+  const nameField = document.getElementById('chartNameInput');
+  nameField.value = currentChart.name;
+}
 
 const chartActionListClick = (event) => {
   // this isn't yet properly written. It needs to show/hide various buttons and
@@ -143,9 +139,14 @@ const chartInfoDivClick = (event) => {
   const action = event.target.id;
   const nameField = document.getElementById('chartNameInput');
   const editButton = document.getElementById('editChartButton');
-  const elements = {
+  const buttons = {
     deleteChartButton: () => {
-      console.log("Deleting the chart...");
+      data_deleteChart(currentChart);
+      currentChart = null;
+      loadChartList();
+      chartInfoDiv.style.display = 'none';
+      chartActionList.innerHTML = '';
+      playArea.innerHTML = '';
     },
     saveChartButton: () => {
       console.log("Saving the chart...");
@@ -154,7 +155,9 @@ const chartInfoDivClick = (event) => {
       loadChartList();
     }
   }
-  elements[action]();
+  if (event.target.tagName === 'BUTTON') {
+      buttons[action]();
+  }
 }
 
 /*****************************************************************************************
@@ -210,7 +213,9 @@ seedTheDatabase();
 setUpScreen();
 loadChartList();
 chartListDiv.addEventListener('change',chartListSelect,false);
-// saveChart.addEventListener('click',saveChartClick,false);
 playArea.addEventListener('click',playAreaClick,false);
 chartActionList.addEventListener('click',chartActionListClick,false);
 chartInfoDiv.addEventListener('click',chartInfoDivClick,false);
+
+
+
