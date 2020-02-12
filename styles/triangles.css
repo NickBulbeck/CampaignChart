@@ -39,5 +39,5 @@
    when the task is finished*/
 
 .done {
-  border-color: #000;
+  border-bottom: 52px solid #404040;
 }

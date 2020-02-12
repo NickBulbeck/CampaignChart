@@ -65,15 +65,22 @@ const playAreaClick = (event) => {
 // This increments the key for the next munro to be created, which makes sure every munro has a
 // different key regardless of how many are added or deleted. It should probably be done in some
 // kind of getter/setter in the class, mind you...
-  drawMunro(munroX,munroY,munroID);
+  drawMunro(newMunro);
   addChartListLine(munroID);
 }
 
-const drawMunro = (x,y,id) => {
+const drawMunro = (munro) => {
 // draws a triangle, of size set in triangles.css, centered x and y pixels 
-// from the left/top of the playArea div. Then it adds it to campaignChart.
+// from the left/top of the playArea div.
+  const x = munro.coOrdinates[0];
+  const y = munro.coOrdinates[1];
+  const id = munro.id;
+  let classList = 'triangle munro-inner';
+  if (munro.complete) {
+    classList += ' done';
+  }
   let html = '<div class="triangle munro" style="top:' + y + 'px; left:' + x + 'px">' 
-             + '<div class="triangle munro-inner" id = "' + id + '"></div>'
+             + '<div class="' + classList + '" id = "' + id + '"></div>'
              + '</div>';
   playArea.innerHTML += html;
 }
@@ -82,28 +89,28 @@ const drawChart = (list) => {
   playArea.innerHTML = '';
   chartActionList.innerHTML = '';
   for (let i=0; i<list.length; i++) {
-    const x = list[i].coOrdinates[0];
-    const y = list[i].coOrdinates[1];
-    const id = list[i].id;
-    drawMunro(x,y,id);
+    const munro = list[i];
+    const id = munro.id;
+    drawMunro(munro);
     addChartListLine(id);
   }
+}
+
+const getMunroFromStringID = (id) => {
+  const i = parseInt(id.match(/\d/g,"")) -1; // I know, I know. That's ugly.
+  const munro = currentChart.munros[i];
+  return munro;
 }
 
 const addChartListLine = (id) => {
   let li = document.createElement('li');
   li.setAttribute("id",id);
-  const index = parseInt(id.match(/\d/g,"")) -1; // I know, I know. That's ugly.
-  const munro = currentChart.munros[index];
+  const munro = getMunroFromStringID(id);
   let desc = munro.description;
-  // if (!desc) {
-  //   desc = '... add a description...';
-  // }
   html = `<input type="text" placeholder="Mind and add a description" value="${desc}">
-          <button class="saveMunro">Save</button>
-          <button class="editMunro">Edit</button>
-          <button class="deleteMunro">Delete</button>
-          <button class="markAsDone">Done</button>`;
+          <button id="saveMunroButton">Save</button>
+          <button id="deleteMunroButton">Delete</button>
+          <button id="markAsDoneButton">Done</button>`;
   li.innerHTML = html;
   chartActionList.appendChild(li);
 }
@@ -136,11 +143,32 @@ const fillOutChartInfoDiv = () => {
 }
 
 const chartActionListClick = (event) => {
-  // this isn't yet properly written. It needs to show/hide various buttons and
-  // persist or remove data against the munro objects in the chart.
-  const target = event.target;
-  const text = target.textContent;
-  console.log(text);
+  const munroID = event.target.parentNode.id;
+  const munro = getMunroFromStringID(munroID);
+  const action = event.target.id;
+  const descriptionField = event.target.parentNode.getElementsByTagName('input')[0];
+  const buttons = {
+    deleteMunroButton: () => {
+      console.log("Clicking the delete button.");
+    },
+    markAsDoneButton: () => {
+      munro.complete = true;
+      drawMunro(munro);
+      descriptionField.disabled = true;
+      event.target.disabled = true;
+      event.target.previousElementSibling.style.display = 'none';
+      event.target.previousElementSibling.previousElementSibling.style.display = 'none';
+    },
+    saveMunroButton: () => {
+      if (descriptionField.value) {
+        munro.description = descriptionField.value;
+      }
+      data_save(currentChart);
+    }
+  }
+  if (event.target.tagName === 'BUTTON') {
+    buttons[action]();
+  }
 }
 
 const chartInfoDivClick = (event) => {

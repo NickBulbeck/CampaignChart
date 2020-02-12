@@ -10,19 +10,9 @@ If you click on the chart...
 If you click on the New button... 
 Need these combinations decided.
 
-TODAY IS: Monday
+TODAY IS: Thursday
 
 The next challenges include:
-- Display the chart name in chartTitle once there's a current chart
-- Decide on the chart name-editing approach, with the save button if the munros are updated
-- Attach event-listeners to the following munro buttons:
--- munro: edit
--- munro: save
--- munro: delete
--- munro: done
-- Attach event-listeners to the following chartTitle buttons:
--- new
--- edit
--- save
--- delete
-
+- Add delete munro button functionality
+- Fix bug whereby a munro marked as done carries over into the next chart
+- Add feature whereby a chart with done munros has them drawn as done when it loads
