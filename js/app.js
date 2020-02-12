@@ -93,9 +93,11 @@ const drawChart = (list) => {
 const addChartListLine = (id) => {
   let li = document.createElement('li');
   li.setAttribute("id",id);
-  // also this needs refactoring so that the stuff below goes in some kind of div or li that has an identity
-  // the same as the Munro's identity. That's how we link the two together.
-  html = `<input type="text" placeholder="... and keep it brief!">
+  const index = parseInt(id.match(/\d/g,"")) -1; // I know, I know. That's ugly.
+  console.log(id + ", " + index);
+  const munro = currentChart.munros[index];
+  const desc = munro.description;
+  html = `<input type="text" placeholder="... and keep it brief!" value="${desc}">
           <button class="saveMunro">Save</button>
           <button class="editMunro">Edit</button>
           <button class="deleteMunro">Delete</button>
