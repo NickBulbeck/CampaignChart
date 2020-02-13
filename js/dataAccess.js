@@ -8,6 +8,8 @@
 // in data.js, and does the usual CRUD stuff on it. Actually, it probably just needs to
 // read and overwrite at this point.
 
+let dataBase = [];
+
 const data_save = (campaignChart) => {
 	const key = campaignChart.id;
 	for (let i=0; i<dataBase.length; i++) {
@@ -17,13 +19,19 @@ const data_save = (campaignChart) => {
 		}
 	}
 	dataBase.push(campaignChart);
-	// console.log(`In data_save: ${dataBase.length}`);
 	return 1;
 }
 
 const data_getAll = () => {
-	// let blub = JSON.stringify(dataBase[0])
+	// gets the full file from localstorage;
+	// stores it in dataBase
+	dataBase = localstorage.getItem('') // name of the database in localstorage
 	return dataBase;
+}
+
+const data_commit = () => {
+	// saves dataBase to localstorage
+	localstorage.setItem('') // name of the database in localstorage
 }
 
 const data_getByName = (searchName) => {
@@ -45,17 +53,29 @@ const data_getByID = (searchID) => {
 }
 
 const data_deleteChart = (campaignChart) => {
+	// there's localstorage.removeitem('') with a single keyname. Might work with database[i] as well.
 	const key = campaignChart.id;
 	for (let i=0; i<dataBase.length; i++) {
 		if (dataBase[i].id === key) {
-			console.log("In data_deleteChart: " + dataBase.length);
 			dataBase.splice(i,1);
-			console.log("In data_deleteChart: " + dataBase.length);
 			return 1;
 		}
 	}
 	return -1;
 }
+
+/*
+	On startup: load everything into the dataBase. Then each updating thing - data_save and data_deleteChart - 
+	persists to local storage.
+
+
+
+*/
+
+
+
+
+
 
 
 
