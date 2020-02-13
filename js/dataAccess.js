@@ -17,7 +17,6 @@ const data_save = (campaignChart) => {
 		}
 	}
 	dataBase.push(campaignChart);
-	// console.log(`In data_save: ${dataBase.length}`);
 	return 1;
 }
 
