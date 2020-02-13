@@ -101,17 +101,27 @@ const addChartListLine = (munro) => {
   li.setAttribute("id",munro.id);
   let desc = munro.description;
   html = `<input type="text" placeholder="Mind and add a description" value="${desc}">
-          <button id="saveMunroButton">Save</button>
-          <button id="deleteMunroButton">Delete</button>
-          <button id="markAsDoneButton">Done</button>`;
+          <button class="saveMunroButton">Save</button>
+          <button class="deleteMunroButton">Delete</button>
+          <button class="markAsDoneButton">Done</button>`;
   li.innerHTML = html;
   chartActionList.appendChild(li);
+  if (munro.complete) {
+    li.querySelector('.deleteMunroButton').style.display = 'none';
+    li.querySelector('.markAsDoneButton').disabled = true;
+    li.querySelector('.saveMunroButton').style.display = 'none';
+    li.getElementsByTagName('INPUT')[0].disabled = true; 
+  }
 }
 
 const getMunroFromStringID = (id) => {
-  const i = parseInt(id.match(/\d/g,"")) -1; // I know, I know. That's ugly.
-  const munro = currentChart.munros[i];
-  return munro;
+  const munros = currentChart.munros;
+  for (let i=0; i<munros.length; i++) {
+    if (munros[i].id === id) {
+      return munros[i];
+    }
+  }
+  return null;
 }
 
 /*****************************************************************************************
@@ -144,7 +154,7 @@ const fillOutChartInfoDiv = () => {
 const chartActionListClick = (event) => {
   const munroID = event.target.parentNode.id;
   const munro = getMunroFromStringID(munroID);
-  const action = event.target.id;
+  const action = event.target.className;
   const descriptionField = event.target.parentNode.getElementsByTagName('input')[0];
   const buttons = {
     deleteMunroButton: () => {
@@ -205,9 +215,30 @@ const chartInfoDivClick = (event) => {
   }
 }
 
+const newChartButtonClick = (event) => {
+  // In case the user clicks the button first of all, when currentChart is null:
+  if (currentChart) {
+    data_save(currentChart);
+  }
+  playArea.innerHTML = '';
+  chartActionList.innerHTML = '';
+  currentChart = null;
+  initialiseChartInfoDiv();
+  // Also, initialise chartInfoDiv. This needs a function...
+}
+
+
 /*****************************************************************************************
 App setup. So, we have a list of items in chartList that is refreshed 
 *****************************************************************************************/
+initialiseChartInfoDiv = () => {
+  chartInfoDiv.innerHTML = 
+    '<p id="chartInfoLabel">About this Campaign Chart:</p>' +
+    '<input id="chartNameInput" type="text" name="chartDetails" placeholder="Enter a chart name">' +
+    '<button id="saveChartButton">Save changes</button>' +
+    '<button id="deleteChartButton">Delete chart</button>';
+}
+
 const loadChartList = () => {
   chartListDiv.innerHTML = '';
   const selectList = document.createElement("select");
@@ -225,6 +256,21 @@ const loadChartList = () => {
     selectList.appendChild(option);
   }
   chartListDiv.appendChild(selectList);
+  const newChartButton = document.createElement('button');
+  newChartButton.textContent = 'New chart';
+  newChartButton.addEventListener('click',newChartButtonClick,false);
+  chartListDiv.appendChild(newChartButton);
+  /* the New Chart button also goes in this div. It also needs an event listener; 
+    the one for the div at the moment is a change event, but this will need to be
+    a click event. First thing is to find out how this will affect the existing
+    change event - can I have both? Do I need to just add the click listener to the
+    new button, and do it within here?
+    Anyway: what the button needs to do.
+    - clear the playArea
+    - set the currentChart to null
+    - 
+
+  */
 }
 
 

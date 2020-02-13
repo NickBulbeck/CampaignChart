@@ -17,3 +17,5 @@ The next challenges include:
 - DONE Fix bug whereby a munro marked as done carries over into the next chart
 - DONE Add feature whereby a chart with done munros has them drawn as done when it loads
 - DONE Fix bug whereby buttons etc aren't disabled when a munro is marked as done
+- New Chart functionality, around line 228
+- Fix bug whereby deleting a munro (indeed, re-drawing the munros list generally) re-enables the done munros
