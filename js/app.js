@@ -66,7 +66,7 @@ const playAreaClick = (event) => {
 // different key regardless of how many are added or deleted. It should probably be done in some
 // kind of getter/setter in the class, mind you...
   drawMunro(newMunro);
-  addChartListLine(munroID);
+  addChartListLine(newMunro);
 }
 
 const drawMunro = (munro) => {
@@ -92,20 +92,13 @@ const drawChart = (list) => {
     const munro = list[i];
     const id = munro.id;
     drawMunro(munro);
-    addChartListLine(id);
+    addChartListLine(munro);
   }
 }
 
-const getMunroFromStringID = (id) => {
-  const i = parseInt(id.match(/\d/g,"")) -1; // I know, I know. That's ugly.
-  const munro = currentChart.munros[i];
-  return munro;
-}
-
-const addChartListLine = (id) => {
+const addChartListLine = (munro) => {
   let li = document.createElement('li');
-  li.setAttribute("id",id);
-  const munro = getMunroFromStringID(id);
+  li.setAttribute("id",munro.id);
   let desc = munro.description;
   html = `<input type="text" placeholder="Mind and add a description" value="${desc}">
           <button id="saveMunroButton">Save</button>
@@ -113,6 +106,12 @@ const addChartListLine = (id) => {
           <button id="markAsDoneButton">Done</button>`;
   li.innerHTML = html;
   chartActionList.appendChild(li);
+}
+
+const getMunroFromStringID = (id) => {
+  const i = parseInt(id.match(/\d/g,"")) -1; // I know, I know. That's ugly.
+  const munro = currentChart.munros[i];
+  return munro;
 }
 
 /*****************************************************************************************
@@ -149,7 +148,14 @@ const chartActionListClick = (event) => {
   const descriptionField = event.target.parentNode.getElementsByTagName('input')[0];
   const buttons = {
     deleteMunroButton: () => {
-      console.log("Clicking the delete button.");
+      list = currentChart.munros;
+      for (let i=0; i<list.length; i++) {
+        if (list[i] === munro) {
+          list.splice(i,1);
+        }
+      }
+      drawChart(currentChart.munros)
+      // this will also re-draw the chart action list 
     },
     markAsDoneButton: () => {
       munro.complete = true;
@@ -166,9 +172,12 @@ const chartActionListClick = (event) => {
       data_save(currentChart);
     }
   }
+  // The app will work fine without this condition...
   if (event.target.tagName === 'BUTTON') {
     buttons[action]();
   }
+  // ... but the condition prevents a console error if the user clicks an element that
+  // isn't in the *buttons* object. Just feels a bit tidier.
 }
 
 const chartInfoDivClick = (event) => {
@@ -228,6 +237,8 @@ const seedTheDatabase = () => {
   const munro4 = new Munro("munro4",[200,400],"The fourth test task");
   const munro5 = new Munro("munro5",[300,400],"The fifth test task");
   const munro6 = new Munro("munro6",[400,400],"The sixth test task");
+  const munro7 = new Munro("munro1",[100,100],"The first test task");
+  const munro8 = new Munro("munro2",[300,300],"The second test task");
   let chartA = new Chart("seedChart1","Refactoring part A (six munros)");
   chartA.munros.push(munro1);
   chartA.munros.push(munro2);
@@ -237,7 +248,7 @@ const seedTheDatabase = () => {
   chartA.munros.push(munro6);
   chartA.munroMeta = 7;
   data_save(chartA);
-  let chartB = new Chart("seedChart2","Refactoring part B (two munros)",[munro1,munro2]);
+  let chartB = new Chart("seedChart2","Refactoring part B (two munros)",[munro7,munro8]);
   chartB.munroMeta = 3;
   data_save(chartB);
   // console.log(`Seeded the database: ${dataBase}`);

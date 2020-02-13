@@ -4,15 +4,16 @@ move to being a true database.
 
 DESIGN NOTES
 
-When I launch the app, I can either start a new one, or launch an existing one. So: I need a pull-down menu.
-To start with, the chart app contains a blank input, with a Save button.
-If you click on the chart...
-If you click on the New button... 
-Need these combinations decided.
+When I launch the app, I can either start a new one, or launch an existing one; this is in place.
+What's still missing is a "New chart" button.
+Two more added features:
+- Double-click creates a Top instead of a Munro
+- Enabling a Munro to link to another list
 
 TODAY IS: Thursday
 
 The next challenges include:
-- Add delete munro button functionality
-- Fix bug whereby a munro marked as done carries over into the next chart
-- Add feature whereby a chart with done munros has them drawn as done when it loads
+- DONE Add delete munro button functionality
+- DONE Fix bug whereby a munro marked as done carries over into the next chart
+- DONE Add feature whereby a chart with done munros has them drawn as done when it loads
+- DONE Fix bug whereby buttons etc aren't disabled when a munro is marked as done
