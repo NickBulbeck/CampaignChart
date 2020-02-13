@@ -30,9 +30,6 @@ const handleTodaysFirstClick = () => {
     currentChart = new Chart;
     const key = new Date().toString();
     currentChart.id = key;
-// Changes: what if you're just adding to an existing chart? In that case,
-// you don't want to update currentChart, but you do want to alter the
-// buttons in chartInfoDiv.
     fillOutChartInfoDiv();
   }
 }
@@ -224,7 +221,6 @@ const newChartButtonClick = (event) => {
   chartActionList.innerHTML = '';
   currentChart = null;
   initialiseChartInfoDiv();
-  // Also, initialise chartInfoDiv. This needs a function...
 }
 
 
@@ -260,17 +256,6 @@ const loadChartList = () => {
   newChartButton.textContent = 'New chart';
   newChartButton.addEventListener('click',newChartButtonClick,false);
   chartListDiv.appendChild(newChartButton);
-  /* the New Chart button also goes in this div. It also needs an event listener; 
-    the one for the div at the moment is a change event, but this will need to be
-    a click event. First thing is to find out how this will affect the existing
-    change event - can I have both? Do I need to just add the click listener to the
-    new button, and do it within here?
-    Anyway: what the button needs to do.
-    - clear the playArea
-    - set the currentChart to null
-    - 
-
-  */
 }
 
 
