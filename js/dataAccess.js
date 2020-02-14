@@ -15,23 +15,29 @@ const data_save = (campaignChart) => {
 	for (let i=0; i<dataBase.length; i++) {
 		if (dataBase[i].id === key) {
 			dataBase[i] = campaignChart;
+			data_commit();
 			return 0;
 		}
 	}
 	dataBase.push(campaignChart);
+	data_commit();
 	return 1;
 }
 
 const data_getAll = () => {
 	// gets the full file from localstorage;
 	// stores it in dataBase
-	dataBase = localstorage.getItem('') // name of the database in localstorage
+	if (localStorage.getItem('campaignChartApp')) {
+		dataBase = localStorage.getItem('campaignChartApp');
+		console.log(`retrieved database: `);
+		console.log(dataBase[0]);
+	} 
 	return dataBase;
 }
 
 const data_commit = () => {
 	// saves dataBase to localstorage
-	localstorage.setItem('') // name of the database in localstorage
+	localStorage.setItem('campaignChartApp','dataBase') // name of the database in localstorage
 }
 
 const data_getByName = (searchName) => {
@@ -63,6 +69,8 @@ const data_deleteChart = (campaignChart) => {
 	}
 	return -1;
 }
+
+
 
 /*
 	On startup: load everything into the dataBase. Then each updating thing - data_save and data_deleteChart - 
