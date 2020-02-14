@@ -4,9 +4,7 @@
 //  - any data processing [NTS: may have to define 'data-processing' carefully at some future point]
 //  - any actual data
 //
-// HOWEVER: it is tech-specific. It interacts specifically with the data as it is stored 
-// in data.js, and does the usual CRUD stuff on it. Actually, it probably just needs to
-// read and overwrite at this point.
+// HOWEVER: it is tech-specific. It interacts specifically with the data in localStorage.
 
 let dataBase = [];
 
@@ -27,17 +25,23 @@ const data_save = (campaignChart) => {
 const data_getAll = () => {
 	// gets the full file from localstorage;
 	// stores it in dataBase
-	// if (localStorage.getItem('campaignChartApp')) {
-	// 	dataBase = localStorage.getItem('campaignChartApp');
-	// 	console.log(`retrieved database: `);
-	// 	console.log(dataBase[0]);
-	// } 
+	if (localStorage.getItem('campaignChartApp')[0].id) {
+		dataBase = localStorage.getItem('campaignChartApp');
+		console.log(`retrieved database: `);
+		console.log(dataBase[0]);
+	} 
 	return dataBase;
 }
 
 const data_commit = () => {
 	// saves dataBase to localstorage
 	localStorage.setItem('campaignChartApp',dataBase) // name of the database in localstorage
+	console.log(dataBase);
+	console.log(localStorage.getItem('campaignChartApp'));
+	//
+	//	Both Key and Value must be strings - try using JSON.stringify and stuff.
+	//
+	//
 }
 
 const data_getByName = (searchName) => {
@@ -64,6 +68,7 @@ const data_deleteChart = (campaignChart) => {
 	for (let i=0; i<dataBase.length; i++) {
 		if (dataBase[i].id === key) {
 			dataBase.splice(i,1);
+			data_commit();
 			return 1;
 		}
 	}
@@ -71,14 +76,6 @@ const data_deleteChart = (campaignChart) => {
 }
 
 
-
-/*
-	On startup: load everything into the dataBase. Then each updating thing - data_save and data_deleteChart - 
-	persists to local storage.
-
-
-
-*/
 
 
 
