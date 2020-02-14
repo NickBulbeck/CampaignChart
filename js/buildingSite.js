@@ -6,18 +6,14 @@ const testLocalStorage = () => {
 	// const foadyb = localStorage.getItem('foadyb');
   
 	// console.log(foadyb);
-  try {
     const foadyb1 = localStorage.getItem('campaignChartApp');
     console.log(foadyb1 + "... is localStorage.getItem");
-  }
-  catch(error) {
-    console.log(error + ". foadyb1 doesn't exist, yet at any rate.");
-  }
+
   
 }
 
 
- // testLocalStorage();
+ testLocalStorage();
 
 
 

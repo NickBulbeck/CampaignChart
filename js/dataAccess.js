@@ -27,17 +27,17 @@ const data_save = (campaignChart) => {
 const data_getAll = () => {
 	// gets the full file from localstorage;
 	// stores it in dataBase
-	if (localStorage.getItem('campaignChartApp')) {
-		dataBase = localStorage.getItem('campaignChartApp');
-		console.log(`retrieved database: `);
-		console.log(dataBase[0]);
-	} 
+	// if (localStorage.getItem('campaignChartApp')) {
+	// 	dataBase = localStorage.getItem('campaignChartApp');
+	// 	console.log(`retrieved database: `);
+	// 	console.log(dataBase[0]);
+	// } 
 	return dataBase;
 }
 
 const data_commit = () => {
 	// saves dataBase to localstorage
-	localStorage.setItem('campaignChartApp','dataBase') // name of the database in localstorage
+	localStorage.setItem('campaignChartApp',dataBase) // name of the database in localstorage
 }
 
 const data_getByName = (searchName) => {

@@ -284,7 +284,7 @@ const seedTheDatabase = () => {
   data_save(chartB);
   // console.log(`Seeded the database: ${dataBase}`);
 }
-seedTheDatabase();
+// seedTheDatabase();
 
 //****************************************************************************************
 // The "app" per se starts here.
