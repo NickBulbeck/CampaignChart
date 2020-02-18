@@ -132,6 +132,7 @@ const chartListSelect = (event) => {
   const chartID = event.target.value;
   const chart = data_getByID(chartID);
   currentChart = chart;
+  document.title = chart.name;
   const list = chart.munros;
   drawChart(list);
   fillOutChartInfoDiv();
