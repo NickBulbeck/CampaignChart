@@ -2,6 +2,7 @@ const playArea = document.getElementById("playArea");
 const chartListDiv = document.getElementById("chartListDiv");
 const chartInfoDiv = document.getElementById("chartInfoDiv");
 const chartActionList = document.getElementById("chartActionList");
+const heading = document.getElementById("titleDiv").getElementsByTagName('H1')[0];
 let currentChart = null;
 class Chart {
   constructor(id,name,munros) {
@@ -133,6 +134,7 @@ const chartListSelect = (event) => {
   const chart = data_getByID(chartID);
   currentChart = chart;
   document.title = chart.name;
+  heading.textContent = chart.name;
   const list = chart.munros;
   drawChart(list);
   fillOutChartInfoDiv();
