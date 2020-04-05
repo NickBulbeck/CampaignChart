@@ -13,9 +13,5 @@ Two more added features:
 TODAY IS: Thursday
 
 The next challenges include:
-- DONE Add delete munro button functionality
-- DONE Fix bug whereby a munro marked as done carries over into the next chart
-- DONE Add feature whereby a chart with done munros has them drawn as done when it loads
-- DONE Fix bug whereby buttons etc aren't disabled when a munro is marked as done
-- DONE New Chart functionality, around line 228
-- DONE Fix bug whereby deleting a munro (indeed, re-drawing the munros list generally) re-enables the done munros
+- In the playAreaCLick function fae 38 onwards, detect a double-click.
+- When a chartActionsList input is created, add the blur event listener to it so the chart is saved.

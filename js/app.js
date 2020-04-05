@@ -37,6 +37,9 @@ const handleTodaysFirstClick = () => {
 
 const playAreaClick = (event) => {
   handleTodaysFirstClick();
+// ToDo: decide where to put the double-click timeout. The difference is:
+// -- whether you add the class munro or top. 
+// -- whether you check for the offset of 40 or 25.
 
 // First, detect where the cursor is
   let cursorX = event.clientX;
@@ -206,6 +209,7 @@ const chartInfoDivClick = (event) => {
     saveChartButton: () => {
       console.log("Saving the chart...");
       currentChart.name = nameField.value;
+      heading.textContent = nameField.value;
       data_save(currentChart);
       loadChartList();
     }
@@ -213,6 +217,10 @@ const chartInfoDivClick = (event) => {
   if (event.target.tagName === 'BUTTON') {
       buttons[action]();
   }
+}
+
+const chartNameInputProcessing = (event) => {
+  // may use this later. 
 }
 
 const newChartButtonClick = (event) => {
@@ -270,6 +278,7 @@ chartListDiv.addEventListener('change',chartListSelect,false);
 playArea.addEventListener('click',playAreaClick,false);
 chartActionList.addEventListener('click',chartActionListClick,false);
 chartInfoDiv.addEventListener('click',chartInfoDivClick,false);
+// chartNameInput.addEventListener('input',chartNameInputProcessing,false);
 
 
 
