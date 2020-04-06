@@ -106,6 +106,10 @@ const addChartListLine = (munro) => {
           <button class="deleteMunroButton">Delete</button>
           <button class="markAsDoneButton">Done</button>`;
   li.innerHTML = html;
+  const newInput = li.getElementsByTagName('input')[0];
+  newInput.addEventListener('blur',function(event) {
+    munro.description = event.target.value;
+  },false);
   chartActionList.appendChild(li);
   if (munro.complete) {
     li.querySelector('.deleteMunroButton').style.display = 'none';
@@ -197,6 +201,7 @@ const chartInfoDivClick = (event) => {
   const action = event.target.id;
   const nameField = document.getElementById('chartNameInput');
   const editButton = document.getElementById('editChartButton');
+  const saveAsButton = document.getElementById('saveAsButton');
   const buttons = {
     deleteChartButton: () => {
       data_deleteChart(currentChart);
@@ -207,11 +212,19 @@ const chartInfoDivClick = (event) => {
       playArea.innerHTML = '';
     },
     saveChartButton: () => {
-      console.log("Saving the chart...");
       currentChart.name = nameField.value;
       heading.textContent = nameField.value;
       data_save(currentChart);
       loadChartList();
+    },
+    saveAsButton: () => {
+      console.log(`button is working: ${event.target}`);
+      // save current chart
+      // create new chart object equal to the current chart object (look this up...)
+      // set its own id, then all the Munros equal to the current chart
+      // blank the name input and replace it with "mind and name..."
+      // set currentChart = the new chart
+      // save new current chart
     }
   }
   if (event.target.tagName === 'BUTTON') {
@@ -243,6 +256,7 @@ initialiseChartInfoDiv = () => {
     '<p id="chartInfoLabel">About this Campaign Chart:</p>' +
     '<input id="chartNameInput" type="text" name="chartDetails" placeholder="Enter a chart name">' +
     '<button id="saveChartButton">Save changes</button>' +
+    '<button id="saveAsButton">Save chart as...</button>' +
     '<button id="deleteChartButton">Delete chart</button>';
 }
 
