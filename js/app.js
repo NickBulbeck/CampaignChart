@@ -9,7 +9,7 @@ class Chart {
     this.id = id;
     this.name = name;
     this.munros = munros || [];
-    this.munroMeta = 1;
+    this.munroMeta = 1; // Not sure what I'll use this for, but hey.
   }
 }
 class Munro {
@@ -218,10 +218,18 @@ const chartInfoDivClick = (event) => {
       loadChartList();
     },
     saveAsButton: () => {
-      console.log(`button is working: ${event.target}`);
-      // save current chart
-      // create new chart object equal to the current chart object (look this up...)
-      // set its own id, then all the Munros equal to the current chart
+      console.log(`button is working: ${event.target.parentNode.getElementsByTagName('input')[0].value}`);
+      data_save(currentChart);
+      const newID = new Date().toString();
+      const newName = currentChart.name + " (copy)";
+      let newChart = Object.assign({},currentChart);
+      newChart.id = newID;
+      newChart.name = newName;
+      console.log(`Existing: ${currentChart.name}, copy: ${newChart.name}`);
+      data_save(newChart);
+      currentChart = newChart;
+      nameField.value = currentChart.name;
+      heading.textContent = currentChart.name;
       // blank the name input and replace it with "mind and name..."
       // set currentChart = the new chart
       // save new current chart
@@ -234,6 +242,7 @@ const chartInfoDivClick = (event) => {
 
 const chartNameInputProcessing = (event) => {
   // may use this later. 
+  // which is a stupid reason for creating a function.
 }
 
 const newChartButtonClick = (event) => {
