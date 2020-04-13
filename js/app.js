@@ -4,6 +4,7 @@ const chartInfoDiv = document.getElementById("chartInfoDiv");
 const chartActionList = document.getElementById("chartActionList");
 const heading = document.getElementById("titleDiv").getElementsByTagName('H1')[0];
 let currentChart = null;
+let playAreaClickTracker = 0;
 class Chart {
   constructor(name,munros) {
     this.id = new Date().toString();
@@ -33,12 +34,7 @@ const handleTodaysFirstClick = () => {
   }
 }
 
-const playAreaClick = (event) => {
-  handleTodaysFirstClick();
-// ToDo: decide where to put the double-click timeout. The difference is:
-// -- whether you add the class munro or top. 
-// -- whether you check for the offset of 40 or 25.
-
+const getClickCoordinates = (event) => {
 // First, detect where the cursor is
   let cursorX = event.clientX;
   let cursorY = event.clientY;
@@ -58,15 +54,43 @@ const playAreaClick = (event) => {
   if (munroY < 0) {
     munroY = 0;
   }
-  const munroID = "munro" + currentChart.munroMeta;
-  const newMunro = new Munro(munroID,[munroX,munroY]);
-  currentChart.munroMeta += 1;
-  currentChart.munros.push(newMunro);
+  return [munroX,munroY];
+}
+const createMunro = (size,coOrdinates) => {
+  const id = size + currentChart.munroMeta;
+  const munro = new Munro(id,coOrdinates,"",false,size);
+  return munro;
+}
+const addMunroToCurrentChart = (munro) => {
+  currentChart.munroMeta++;
 // This increments the key for the next munro to be created, which makes sure every munro has a
 // different key regardless of how many are added or deleted. It should probably be done in some
 // kind of getter/setter in the class, mind you...
-  drawMunro(newMunro);
-  addChartListLine(newMunro);
+  currentChart.munros.push(munro);
+}
+
+const playAreaClick = (event) => {
+  playAreaClickTracker++;
+  if (playAreaClickTracker === 1) {
+    singleClickTimer = setTimeout(function() {
+      handleTodaysFirstClick();
+      const coOrdinates = getClickCoordinates(event);
+      const newMunro = createMunro("munro",coOrdinates);
+      addMunroToCurrentChart(newMunro);
+      drawMunro(newMunro);
+      addChartListLine(newMunro);
+      playAreaClickTracker = 0;
+    }, 400);
+  } else if (playAreaClickTracker === 2) {
+    clearTimeout(singleClickTimer);
+    handleTodaysFirstClick();
+    const coOrdinates = getClickCoordinates(event);
+    const newMunro = createMunro("top",coOrdinates);
+    addMunroToCurrentChart(newMunro);
+    drawMunro(newMunro);
+    addChartListLine(newMunro);
+    playAreaClickTracker = 0;
+  }
 }
 
 const drawMunro = (munro) => {
@@ -79,7 +103,6 @@ const drawMunro = (munro) => {
   const y = munro.coOrdinates[1];
   const id = munro.id;
   const size = munro.size;
-  console.log(`size is ${size}`);
   let classList = `triangle ${size}-inner`;
   if (munro.complete) {
     classList += ` done`;
