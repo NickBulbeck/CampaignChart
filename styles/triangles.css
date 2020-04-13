@@ -18,7 +18,7 @@
   position: absolute; 
   top: 8px;
   left: -32px;
-  color:#000;
+  color:#000; /* Not really used at the moment */
 }
 
 .top {
@@ -27,17 +27,19 @@
   border-bottom: 41px solid #404040;
 }
 .top-inner {
-  border-left: 21px solid transparent;
-  border-right: 21px solid transparent;
-  border-bottom: 37px solid #fff;
-  top: 8px;
-  left: -32px;
-  color:#000;
+  border-left: 16px solid transparent;
+  border-right: 17px solid transparent;
+  border-bottom: 30px solid #fff;
+  position: absolute;
+  top: 7px;
+  left: -16px;
+  color:#000; /* Not really used at the moment */
 }
 
 /*   The idea is to append this class to the classlist of an inner triangle
    when the task is finished*/
 
 .done {
-  border-bottom: 52px solid #404040;
+  /*border-bottom: 52px solid #404040;*/
+  border-bottom-color: #404040;
 }

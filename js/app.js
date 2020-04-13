@@ -5,11 +5,11 @@ const chartActionList = document.getElementById("chartActionList");
 const heading = document.getElementById("titleDiv").getElementsByTagName('H1')[0];
 let currentChart = null;
 class Chart {
-  constructor(id,name,munros) {
-    this.id = id;
-    this.name = name;
+  constructor(name,munros) {
+    this.id = new Date().toString();
+    this.name = name || "(chart not named yet)";
     this.munros = munros || [];
-    this.munroMeta = 1; // Not sure what I'll use this for, but hey.
+    this.munroMeta = 1; // Currently used to increment the Munro id's.
   }
 }
 class Munro {
@@ -29,8 +29,6 @@ const setUpScreen = () => {
 const handleTodaysFirstClick = () => {
   if (!currentChart) {
     currentChart = new Chart;
-    const key = new Date().toString();
-    currentChart.id = key;
     fillOutChartInfoDiv();
   }
 }
@@ -50,7 +48,8 @@ const playAreaClick = (event) => {
   let offsetX = offsets.x;
   let offsetY = offsets.top;
 // then prevent the drawn triangle overlapping the edge of the playArea
-// (only works at the top and the left so far)
+// (only works at the top and the left so far. Also the same correction is applied
+// to both munros and tops - that's fine.)
   let munroX = cursorX - offsetX - 40;
   if (munroX < 0) {
     munroX = 0;
@@ -72,17 +71,22 @@ const playAreaClick = (event) => {
 
 const drawMunro = (munro) => {
 // draws a triangle, of size set in triangles.css, centered x and y pixels 
-// from the left/top of the playArea div.
+// from the left/top of the playArea div. Munro.size can be 'top' or 'munro'.
+// Should probably refactor to replace the word 'top' - this makes sense in 
+// the analogous real-life situation, but is used in two ways here and I
+// can't change the CSS property name!
   const x = munro.coOrdinates[0];
   const y = munro.coOrdinates[1];
   const id = munro.id;
-  let classList = 'triangle munro-inner';
+  const size = munro.size;
+  console.log(`size is ${size}`);
+  let classList = `triangle ${size}-inner`;
   if (munro.complete) {
-    classList += ' done';
+    classList += ` done`;
   }
-  let html = '<div class="triangle munro" style="top:' + y + 'px; left:' + x + 'px">' 
-             + '<div class="' + classList + '" id = "' + id + '"></div>'
-             + '</div>';
+  let html = `<div class="triangle ${size}" style="top:${y}px; left:${x}px">` 
+             + `<div class="${classList}" id = "${id}"></div>`
+             + `</div>`;
   playArea.innerHTML += html;
 }
 
@@ -95,6 +99,7 @@ const drawChart = (list) => {
     drawMunro(munro);
     addChartListLine(munro);
   }
+  fillOutChartInfoDiv();
 }
 
 const addChartListLine = (munro) => {
@@ -144,7 +149,6 @@ const chartListSelect = (event) => {
   heading.textContent = chart.name;
   const list = chart.munros;
   drawChart(list);
-  fillOutChartInfoDiv();
 }
 
 
@@ -218,21 +222,16 @@ const chartInfoDivClick = (event) => {
       loadChartList();
     },
     saveAsButton: () => {
-      console.log(`button is working: ${event.target.parentNode.getElementsByTagName('input')[0].value}`);
       data_save(currentChart);
       const newID = new Date().toString();
       const newName = currentChart.name + " (copy)";
       let newChart = Object.assign({},currentChart);
       newChart.id = newID;
       newChart.name = newName;
-      console.log(`Existing: ${currentChart.name}, copy: ${newChart.name}`);
       data_save(newChart);
       currentChart = newChart;
       nameField.value = currentChart.name;
       heading.textContent = currentChart.name;
-      // blank the name input and replace it with "mind and name..."
-      // set currentChart = the new chart
-      // save new current chart
     }
   }
   if (event.target.tagName === 'BUTTON') {
@@ -256,6 +255,45 @@ const newChartButtonClick = (event) => {
   initialiseChartInfoDiv();
 }
 
+const newStandardChartButtonClick = (event) => {
+  // In case the user clicks the button first of all, when currentChart is null:
+  if (currentChart) {
+    data_save(currentChart);
+  }
+  currentChart = buildStandardChart();
+  data_save(currentChart);
+  const nameField = document.getElementById('chartNameInput');
+  nameField.value = currentChart.name;
+  heading.textContent = currentChart.name;
+  drawChart(currentChart.munros);
+  // See chart save as button around line 227
+}
+
+const buildStandardChart = () => {
+  const munros = [];
+  const descriptions = [
+                      ["Feed burrds",[20,20]],
+                      ["Empty bins",[100,20]],
+                      ["Empty airing cupboard",[180,20]],
+                      ["Fill airing cupboard",[260,20]],
+                      ["Do washing",[20,100]],
+                      ["Hang out washing",[100,100]],
+                      ["Prep tea",[180,100]],
+                      ["Clear kitchen",[260,100]]
+                      ];
+  const meta = descriptions.length + 2; // number of munros, plus 1
+  for (let i=0; i<descriptions.length; i++) {
+    const k = i + 1;
+    const id = "top" + k;
+    const desc = descriptions[i][0];
+    const coOrdinates = descriptions[i][1];
+    munro = new Munro(id,coOrdinates,desc,false,"top");
+    munros.push(munro);
+  }
+  const chart = new Chart("TEMP ...",munros);
+  chart.munroMeta = meta; 
+  return chart;
+}
 
 /*****************************************************************************************
 App setup. So, we have a list of items in chartList that is refreshed 
@@ -290,6 +328,10 @@ const loadChartList = () => {
   newChartButton.textContent = 'New chart';
   newChartButton.addEventListener('click',newChartButtonClick,false);
   chartListDiv.appendChild(newChartButton);
+  const newStandardChartButton = document.createElement('button');
+  newStandardChartButton.textContent = 'New standard chart';
+  newStandardChartButton.addEventListener('click',newStandardChartButtonClick,false);
+  chartListDiv.appendChild(newStandardChartButton);
 }
 
 
