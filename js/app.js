@@ -4,8 +4,7 @@ const chartInfoDiv = document.getElementById("chartInfoDiv");
 const chartActionList = document.getElementById("chartActionList");
 const heading = document.getElementById("titleDiv").getElementsByTagName('H1')[0];
 let currentChart = null;
-let playAreaClickTracker = 0;
-let playAreaRightClickTracker = 0;
+let clickTracker = 0;
 class Chart {
   constructor(name,munros) {
     this.id = new Date().toString();
@@ -71,8 +70,8 @@ const addMunroToCurrentChart = (munro) => {
 }
 
 const playAreaClick = (event) => {
-  playAreaClickTracker++;
-  if (playAreaClickTracker === 1) {
+  clickTracker++;
+  if (clickTracker === 1) {
     singleClickTimer = setTimeout(function() {
       handleTodaysFirstClick();
       const coOrdinates = getClickCoordinates(event);
@@ -80,9 +79,9 @@ const playAreaClick = (event) => {
       addMunroToCurrentChart(newMunro);
       drawMunro(newMunro);
       addChartListLine(newMunro);
-      playAreaClickTracker = 0;
+      clickTracker = 0;
     }, 250);
-  } else if (playAreaClickTracker === 2) {
+  } else if (clickTracker === 2) {
     clearTimeout(singleClickTimer);
     handleTodaysFirstClick();
     const coOrdinates = getClickCoordinates(event);
@@ -90,22 +89,26 @@ const playAreaClick = (event) => {
     addMunroToCurrentChart(newMunro);
     drawMunro(newMunro);
     addChartListLine(newMunro);
-    playAreaClickTracker = 0;
+    clickTracker = 0;
   }
 }
 
 const playAreaRightClick = (event) => {
   event.preventDefault();
-  playAreaRightClickTracker++;
-  if (playAreaRightClickTracker === 1) {
+  if (!event.target.classList.contains("triangle")) {
+    console.log("We're NOT clicking a munro");
+    return null;
+  }
+  clickTracker++;
+  if (clickTracker === 1) {
     singleClickTimer = setTimeout(function() {
-      console.log("Right click worked...");
-      playAreaRightClickTracker = 0;
+      console.log("Right click worked..." + event.target);
+      clickTracker = 0;
     }, 250);
-  } else if (playAreaRightClickTracker === 2) {
-      console.log("Right double-click worked...");
-      playAreaRightClickTracker = 0;
-    });
+  } else if (clickTracker === 2) {
+    clearTimeout(singleClickTimer);
+    console.log("Right double-click worked..." + event.target);
+    clickTracker = 0;
   }
 }
 
