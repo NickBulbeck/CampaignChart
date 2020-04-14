@@ -5,6 +5,7 @@ const chartActionList = document.getElementById("chartActionList");
 const heading = document.getElementById("titleDiv").getElementsByTagName('H1')[0];
 let currentChart = null;
 let playAreaClickTracker = 0;
+let playAreaRightClickTracker = 0;
 class Chart {
   constructor(name,munros) {
     this.id = new Date().toString();
@@ -80,7 +81,7 @@ const playAreaClick = (event) => {
       drawMunro(newMunro);
       addChartListLine(newMunro);
       playAreaClickTracker = 0;
-    }, 400);
+    }, 250);
   } else if (playAreaClickTracker === 2) {
     clearTimeout(singleClickTimer);
     handleTodaysFirstClick();
@@ -92,6 +93,22 @@ const playAreaClick = (event) => {
     playAreaClickTracker = 0;
   }
 }
+
+const playAreaRightClick = (event) => {
+  event.preventDefault();
+  playAreaRightClickTracker++;
+  if (playAreaRightClickTracker === 1) {
+    singleClickTimer = setTimeout(function() {
+      console.log("Right click worked...");
+      playAreaRightClickTracker = 0;
+    }, 250);
+  } else if (playAreaRightClickTracker === 2) {
+      console.log("Right double-click worked...");
+      playAreaRightClickTracker = 0;
+    });
+  }
+}
+
 
 const drawMunro = (munro) => {
 // draws a triangle, of size set in triangles.css, centered x and y pixels 
@@ -262,6 +279,7 @@ const chartInfoDivClick = (event) => {
   }
 }
 
+
 const chartNameInputProcessing = (event) => {
   // may use this later. 
   // which is a stupid reason for creating a function.
@@ -364,6 +382,7 @@ setUpScreen();
 loadChartList();
 chartListDiv.addEventListener('change',chartListSelect,false);
 playArea.addEventListener('click',playAreaClick,false);
+playArea.addEventListener('contextmenu',playAreaRightClick,false);
 chartActionList.addEventListener('click',chartActionListClick,false);
 chartInfoDiv.addEventListener('click',chartInfoDivClick,false);
 // chartNameInput.addEventListener('input',chartNameInputProcessing,false);
