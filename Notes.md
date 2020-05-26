@@ -12,6 +12,7 @@ Two more added features:
 TODAY IS: Monday
 
 Immediate ToDo:
+- Put some kind of try/catch round dataAccess line 30 for when somehow it's not proper JSON.
 - Check what happens to the new chart ID when chart-save-as button is clicked
 - Refactor 230 and 263 into a separate function
 

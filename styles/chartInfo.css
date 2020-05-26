@@ -6,3 +6,7 @@ button {
 input {
   width: 25rem;
 }
+
+#chartMunrosDiv {
+  margin-bottom: 5rem;
+}
