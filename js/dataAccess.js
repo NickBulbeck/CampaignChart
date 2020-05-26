@@ -25,10 +25,6 @@ const data_save = (campaignChart) => {
 const data_getAll = () => {
 	// gets the full file from localstorage;
 	// stores it in dataBase
-	// console.log(`campaignChartApp: ${localStorage.getItem('campaignChartApp')}`);
-	// const dummyChart = buildStandardChart();
-	// data_save(dummyChart);
-	// console.log(`campaignChartApp: ${localStorage.getItem('campaignChartApp')}`);
 	let testDB = JSON.parse(localStorage.getItem('campaignChartApp'));
 	console.log(`testDB: ${testDB}`);
 	if (testDB[0].id) {
@@ -42,12 +38,6 @@ const data_getAll = () => {
 const data_commit = () => {
 	// saves dataBase to localstorage
 	localStorage.setItem('campaignChartApp',JSON.stringify(dataBase)) // name of the database in localstorage
-	// console.log(dataBase);
-	// console.log(JSON.parse(localStorage.getItem('campaignChartApp')));
-	//
-	//	Both Key and Value must be strings - try using JSON.stringify and stuff.
-	//
-	//
 }
 
 const data_getByName = (searchName) => {
