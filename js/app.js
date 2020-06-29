@@ -320,6 +320,7 @@ const buildStandardChart = () => {
                       ["Empty bins",[100,20]],
                       ["Empty airing cupboard",[180,20]],
                       ["Fill airing cupboard",[260,20]],
+                      ["Do finance admin",[340,20]],
                       ["Do washing",[20,100]],
                       ["Hang out washing",[100,100]],
                       ["Prep tea",[180,100]],
