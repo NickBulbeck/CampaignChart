@@ -261,6 +261,7 @@ const chartInfoDivClick = (event) => {
     saveChartButton: () => {
       currentChart.name = nameField.value;
       heading.textContent = nameField.value;
+      document.title = nameField.value;
       data_save(currentChart);
       loadChartList();
     },
@@ -309,6 +310,7 @@ const newStandardChartButtonClick = (event) => {
   const nameField = document.getElementById('chartNameInput');
   nameField.value = currentChart.name;
   heading.textContent = currentChart.name;
+  document.title = "A new day...";
   drawChart(currentChart.munros);
   // See chart save as button around line 227
 }
