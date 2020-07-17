@@ -326,7 +326,8 @@ const buildStandardChart = () => {
                       ["Do washing",[20,100]],
                       ["Hang out washing",[100,100]],
                       ["Prep tea",[180,100]],
-                      ["Clear kitchen",[260,100]]
+                      ["Clear kitchen",[260,100]],
+                      ["Check freezer contents",[340,100]]
                       ];
   const meta = descriptions.length + 2; // number of munros, plus 1
   for (let i=0; i<descriptions.length; i++) {
