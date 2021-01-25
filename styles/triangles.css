@@ -43,3 +43,7 @@
   /*border-bottom: 52px solid #404040;*/
   border-bottom-color: #404040;
 }
+
+.highlighted {
+  background-color: #40a0d7;
+}

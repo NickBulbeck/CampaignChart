@@ -1,6 +1,6 @@
-This stage introduces some form of rudimentary data persistence. To begin with,
-it's only runtime persistence in a file; next time around, or soon thereafter, it'll
-move to being a true database.
+CURRENT TODO
+Right-clicking a munro highlights it in the list
+Right-clicking a list item highlights it on the playArea
 
 DESIGN NOTES
 
@@ -17,5 +17,3 @@ Immediate ToDo:
 - Refactor 230 and 263 into a separate function
 
 The next challenges include:
-- In the playAreaCLick function fae 38 onwards, detect a double-click.
-- When a chartActionsList input is created, add the blur event listener to it so the chart is saved.

@@ -98,16 +98,28 @@ const playAreaRightClick = (event) => {
   if (!event.target.classList.contains("triangle")) {
     console.log("We're NOT clicking a munro");
     return null;
+  } else {
+    console.log("We ARE clicking a munro");
   }
+  // Try playArea.getElementById() and then 
+  // chartActionList.getElementById()
+  const id = event.target.getAttribute("id");
+  const listId = "list-" + id;
+  console.log(id);
+  console.log(listId);
+
+
   clickTracker++;
   if (clickTracker === 1) {
     singleClickTimer = setTimeout(function() {
-      console.log("Right click worked..." + event.target);
+      event.target.classList.add("highlighted");
+      document.getElementById(listId).classList.add("highlighted");
       clickTracker = 0;
     }, 250);
   } else if (clickTracker === 2) {
     clearTimeout(singleClickTimer);
-    console.log("Right double-click worked..." + event.target);
+    event.target.classList.remove("highlighted");
+    document.getElementById(listId).classList.remove("highlighted");
     clickTracker = 0;
   }
 }
@@ -147,7 +159,8 @@ const drawChart = (list) => {
 
 const addChartListLine = (munro) => {
   let li = document.createElement('li');
-  li.setAttribute("id",munro.id);
+  let listLineId = "list-" + munro.id
+  li.setAttribute("id",listLineId);
   let desc = munro.description;
   html = `<input type="text" placeholder="Mind and add a description" value="${desc}">
           <button class="saveMunroButton">Save</button>
@@ -206,7 +219,9 @@ const fillOutChartInfoDiv = () => {
 }
 
 const chartActionListClick = (event) => {
-  const munroID = event.target.parentNode.id;
+  listID = event.target.parentNode.id;
+  const munroID = listID.replace("list-","");
+  console.log("MONDAY ", munroID);
   const munro = getMunroFromStringID(munroID);
   const action = event.target.className;
   const descriptionField = event.target.parentNode.getElementsByTagName('input')[0];
