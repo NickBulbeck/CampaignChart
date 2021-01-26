@@ -6,7 +6,6 @@ DESIGN NOTES
 
 When I launch the app, I can either start a new one, or launch an existing one; this is in place.
 Two more added features:
-- Double-click creates a Top instead of a Munro
 - Enabling a Munro to link to another list
 
 TODAY IS: Monday
