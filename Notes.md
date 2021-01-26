@@ -1,6 +1,6 @@
 CURRENT TODO
-Right-clicking a munro highlights it in the list
-Right-clicking a list item highlights it on the playArea
+Right-clicking a list item highlights it on the playArea.
+Make it so that cmnd+S saves the chart.
 
 DESIGN NOTES
 
