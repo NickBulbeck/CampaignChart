@@ -96,17 +96,15 @@ const playAreaClick = (event) => {
 const playAreaRightClick = (event) => {
   event.preventDefault();
   if (!event.target.classList.contains("triangle")) {
-    console.log("We're NOT clicking a munro");
     return null;
   } else {
-    console.log("We ARE clicking a munro");
   }
   // Try playArea.getElementById() and then 
   // chartActionList.getElementById()
   const id = event.target.getAttribute("id");
+  // This is a bit hard-coded and clunky, but it reflects the style of 
+  // element id that the list items are given in addChartListLine().
   const listId = "list-" + id;
-  console.log(id);
-  console.log(listId);
 
 
   clickTracker++;
@@ -221,7 +219,6 @@ const fillOutChartInfoDiv = () => {
 const chartActionListClick = (event) => {
   listID = event.target.parentNode.id;
   const munroID = listID.replace("list-","");
-  console.log("MONDAY ", munroID);
   const munro = getMunroFromStringID(munroID);
   const action = event.target.className;
   const descriptionField = event.target.parentNode.getElementsByTagName('input')[0];
@@ -262,8 +259,6 @@ const chartActionListClick = (event) => {
 const chartInfoDivClick = (event) => {
   const action = event.target.id;
   const nameField = document.getElementById('chartNameInput');
-  const editButton = document.getElementById('editChartButton');
-  const saveAsButton = document.getElementById('saveAsButton');
   const buttons = {
     deleteChartButton: () => {
       data_deleteChart(currentChart);
@@ -298,6 +293,12 @@ const chartInfoDivClick = (event) => {
   }
 }
 
+const cmndS = (event) => {
+  // event.preventDefault();
+  if (event.metaKey && event.keycode === 83) {
+    console.log("CMD + S");
+  }
+}
 
 const chartNameInputProcessing = (event) => {
   // may use this later. 
@@ -407,7 +408,15 @@ playArea.addEventListener('click',playAreaClick,false);
 playArea.addEventListener('contextmenu',playAreaRightClick,false);
 chartActionList.addEventListener('click',chartActionListClick,false);
 chartInfoDiv.addEventListener('click',chartInfoDivClick,false);
+// document.addEventListener('keydown',cmndS,false)
 // chartNameInput.addEventListener('input',chartNameInputProcessing,false);
 
-
+document.addEventListener("keydown", function(e) {
+  if ((window.navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)  && e.keyCode == 83) {
+    e.preventDefault();
+      if (currentChart) {
+        data_save(currentChart);
+      }
+    }
+}, false);
 

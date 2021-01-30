@@ -1,6 +1,8 @@
 CURRENT TODO
-Right-clicking a munro highlights it in the list
-Right-clicking a list item highlights it on the playArea
+Activate the code in chartInfoDivClick (line 259) when cmd+s is entered
+Find out why the chart details aren't saving on cmd+s, wo the text field blur thing.
+
+
 
 DESIGN NOTES
 
