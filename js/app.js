@@ -333,25 +333,15 @@ const newStandardChartButtonClick = (event) => {
 
 const buildStandardChart = () => {
   const munros = [];
-  const descriptions = [
-                      ["Feed burrds",[20,20]],
-                      ["Empty bins",[100,20]],
-                      ["Empty airing cupboard",[180,20]],
-                      ["Fill airing cupboard",[260,20]],
-                      ["Do finance admin",[340,20]],
-                      ["Do washing",[20,100]],
-                      ["Hang out washing",[100,100]],
-                      ["Prep tea",[180,100]],
-                      ["Clear kitchen",[260,100]],
-                      ["Check freezer contents",[340,100]]
-                      ];
+  const descriptions = standardChartDescriptions;
   const meta = descriptions.length + 2; // number of munros, plus 1
   for (let i=0; i<descriptions.length; i++) {
+    const topOrMunro = descriptions[i][2];
     const k = i + 1;
-    const id = "top" + k;
+    const id = topOrMunro + k;
     const desc = descriptions[i][0];
     const coOrdinates = descriptions[i][1];
-    munro = new Munro(id,coOrdinates,desc,false,"top");
+    munro = new Munro(id,coOrdinates,desc,false,topOrMunro);
     munros.push(munro);
   }
   const chart = new Chart("TEMP ...",munros);
