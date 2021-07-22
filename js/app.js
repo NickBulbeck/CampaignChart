@@ -195,7 +195,7 @@ dataAccess.js, which in turn is called from here.
 
 
 const chartListSelect = (event) => {
-  
+  console.log("Change event... " + event.target + " " + event.target.value);
   const chartID = event.target.value;
   const chart = data_getByID(chartID);
   currentChart = chart;
@@ -405,8 +405,26 @@ const detectToday = () => {
   const todayChart = `${todayDDD} ${todayDD}`;
   return todayChart;
 }
+const inTodaysNews = () => {
+  const today = detectToday();
+  const chartOptions = (chartListDiv.querySelectorAll('option'));
+  chartOptions.forEach(option => {
+    if (option.textContent.includes(today)) {
+      drawTodaysChart(option.value);
+    }
+  })
+  // see if you can use chartListSelect() with a change event
+}
+const drawTodaysChart = (chartName) => {
+  const event = new Event('change');
+  event.target = chartListDiv;
+  chartListDiv.value = chartName;
+  console.log(chartListDiv.value);
+  chartListDiv.dispatchEvent(event);
+}
 //****************************************************************************************
 // The "app" per se starts here.
+//****************************************************************************************
 setUpScreen();
 loadChartList();
 chartListDiv.addEventListener('change',chartListSelect,false);
@@ -427,5 +445,5 @@ document.addEventListener("keydown", function(e) {
 }, false);
 
 // Detect today's chart, if there is one
-
+inTodaysNews();
 
