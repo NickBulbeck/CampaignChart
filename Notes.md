@@ -12,8 +12,10 @@ Two more added features:
 TODAY IS: Monday
 
 Immediate ToDo:
-- Put some kind of try/catch round dataAccess line 30 for when somehow it's not proper JSON.
-- Check what happens to the new chart ID when chart-save-as button is clicked
-- Refactor 230 and 263 into a separate function
+- Load today's chart automatically
 
 The next challenges include:
+- Set up an onLoad() event, or rather, add the function in at the end of app.js active code
+- Determine today's date, with DDD and DD
+- Go through the list of charts and as soon as you find one with both DDD and DD, flag it
+- Use the drawChart() function

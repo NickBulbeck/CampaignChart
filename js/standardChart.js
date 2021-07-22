@@ -10,6 +10,7 @@ const standardChartDescriptions = [
     ["Prep tea",[180,100],"top"],
     ["Clear kitchen",[260,100],"top"],
     ["Check freezer contents",[340,100],"top"],
+    ["Phone Mum",[420,100],"top"],
     ["Food -",[20,200],"munro"],
     [" - Lord's prayer", [110,180],"top"],
     [" - pray over ", [130,225],"top"]

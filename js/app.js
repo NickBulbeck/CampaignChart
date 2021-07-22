@@ -362,6 +362,7 @@ initialiseChartInfoDiv = () => {
 }
 
 const loadChartList = () => {
+  const todaysChart = detectToday();
   chartListDiv.innerHTML = '';
   const selectList = document.createElement("select");
   const chartList = data_getAll();
@@ -369,11 +370,16 @@ const loadChartList = () => {
   defaultOption.textContent = "Search for an existing chart";
   selectList.appendChild(defaultOption);
   for (let i=0; i<chartList.length; i++) {
-    const chartName = chartList[i].name;
+    let chartName = chartList[i].name;
     const chartID = chartList[i].id.toString();
     // toString may be belt-and-braces, because I think HTML stringifies it anyway.
     const option = document.createElement("option");
     option.setAttribute("value",chartID);
+    if (chartName.includes(todaysChart)) {
+      chartName += " TODAY";
+      // currentChart = chartList[i];
+      // drawChart(currentChart.munros);
+    }
     option.textContent = chartName;
     selectList.appendChild(option);
   }
@@ -388,7 +394,17 @@ const loadChartList = () => {
   chartListDiv.appendChild(newStandardChartButton);
 }
 
-
+/*****************************************************************************************
+Today's chart setup. If there is a chart for the current date, display it on load. 
+*****************************************************************************************/
+const detectToday = () => {
+  const days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+  const today = new Date();
+  const todayDD = today.getDate();
+  const todayDDD = days[today.getDay()];
+  const todayChart = `${todayDDD} ${todayDD}`;
+  return todayChart;
+}
 //****************************************************************************************
 // The "app" per se starts here.
 setUpScreen();
@@ -409,4 +425,7 @@ document.addEventListener("keydown", function(e) {
       }
     }
 }, false);
+
+// Detect today's chart, if there is one
+
 
