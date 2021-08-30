@@ -12,6 +12,6 @@ const standardChartDescriptions = [
     ["Check freezer contents",[340,100],"top"],
     ["Phone Mum",[420,100],"top"],
     ["Food -",[20,200],"munro"],
-    [" - Lord's prayer", [110,180],"top"],
-    [" - pray over ", [130,225],"top"]
+    [" - Lord's prayer and/or Luke 15 readings", [110,180],"top"],
+    [" - pray over JOB, church role and life goals", [130,225],"top"]
 ]
