@@ -363,6 +363,7 @@ initialiseChartInfoDiv = () => {
 
 const loadChartList = () => {
   const todaysChart = detectToday();
+  console.log(`Today is ${todaysChart}`);
   chartListDiv.innerHTML = '';
   const selectList = document.createElement("select");
   const chartList = data_getAll();
@@ -375,10 +376,11 @@ const loadChartList = () => {
     // toString may be belt-and-braces, because I think HTML stringifies it anyway.
     const option = document.createElement("option");
     option.setAttribute("value",chartID);
-    if (chartName.includes(todaysChart)) {
+    if (chartName == todaysChart) {
       chartName += " TODAY";
-      // currentChart = chartList[i];
-      // drawChart(currentChart.munros);
+      currentChart = chartList[i];
+      console.log(currentChart);
+      drawChart(currentChart.munros);
     }
     option.textContent = chartName;
     selectList.appendChild(option);
@@ -407,9 +409,13 @@ const detectToday = () => {
 }
 const inTodaysNews = () => {
   const today = detectToday();
+  console.log(today);
   const chartOptions = (chartListDiv.querySelectorAll('option'));
   chartOptions.forEach(option => {
-    if (option.textContent.includes(today)) {
+    // if (option.textContent.includes(today)) {
+    //   drawTodaysChart(option.value);
+    // }
+    if (option.textContent == today) {
       drawTodaysChart(option.value);
     }
   })
