@@ -379,7 +379,6 @@ const loadChartList = () => {
     if (chartName == todaysChart) {
       chartName += " TODAY";
       currentChart = chartList[i];
-      console.log(currentChart);
       drawChart(currentChart.munros);
     }
     option.textContent = chartName;

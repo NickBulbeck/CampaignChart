@@ -19,3 +19,5 @@ The next challenges include:
 - Determine today's date, with DDD and DD
 - Go through the list of charts and as soon as you find one with both DDD and DD, flag it
 - Use the drawChart() function
+
+... dummy change...
