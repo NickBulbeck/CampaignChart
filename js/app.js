@@ -363,7 +363,6 @@ initialiseChartInfoDiv = () => {
 
 const loadChartList = () => {
   const todaysChart = detectToday();
-  console.log(`Today is ${todaysChart}`);
   chartListDiv.innerHTML = '';
   const selectList = document.createElement("select");
   const chartList = data_getAll();
@@ -378,8 +377,8 @@ const loadChartList = () => {
     option.setAttribute("value",chartID);
     if (chartName == todaysChart) {
       chartName += " TODAY";
-      currentChart = chartList[i];
-      drawChart(currentChart.munros);
+      // currentChart = chartList[i];
+      // drawChart(currentChart.munros);
     }
     option.textContent = chartName;
     selectList.appendChild(option);
@@ -411,9 +410,9 @@ const inTodaysNews = () => {
   console.log(today);
   const chartOptions = (chartListDiv.querySelectorAll('option'));
   chartOptions.forEach(option => {
-    // if (option.textContent.includes(today)) {
-    //   drawTodaysChart(option.value);
-    // }
+  // The problem is that this is called unconditionally.
+  // We only want to call it on window load, which for some
+  // reason isn't working.
     if (option.textContent == today) {
       drawTodaysChart(option.value);
     }
