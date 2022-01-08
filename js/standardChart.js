@@ -4,7 +4,7 @@ const standardChartDescriptions = [
     ["Empty airing cupboard",[180,20],"top"],
     ["Fill airing cupboard",[260,20],"top"],
     ["Do finance admin",[340,20],"top"],
-    ["Check chart for this week",[420,20],"top"],
+    ["Do heart exercise",[420,20],"top"],
     ["Do washing",[20,100],"top"],
     ["Hang out washing",[100,100],"top"],
     ["Prep tea",[180,100],"top"],
