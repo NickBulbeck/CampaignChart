@@ -26,8 +26,10 @@ const data_getAll = () => {
 	// gets the full file from localstorage;
 	// stores it in dataBase
 	let testDB = JSON.parse(localStorage.getItem('campaignChartApp'));
+  let database = {};
 	// console.log(`testDB: ${testDB}`);
-	if (testDB[0].id) {
+	// if (testDB[0].id) {
+  if (testDB[0]) {
 		dataBase = testDB;
 		// console.log(`retrieved database: `);
 		// console.log(dataBase[0]);
