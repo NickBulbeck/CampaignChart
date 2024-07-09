@@ -56,11 +56,13 @@ const getClickCoordinates = (event) => {
   }
   return [munroX,munroY];
 }
+
 const createMunro = (size,coOrdinates) => {
   const id = size + currentChart.munroMeta;
   const munro = new Munro(id,coOrdinates,"",false,size);
   return munro;
 }
+
 const addMunroToCurrentChart = (munro) => {
   currentChart.munroMeta++;
 // This increments the key for the next munro to be created, which makes sure every munro has a
@@ -93,19 +95,38 @@ const playAreaClick = (event) => {
   }
 }
 
+const munroMouseOver = (event) => {
+  event.preventDefault();
+  console.log("Hovering over a Munro");
+  const targetRect = event.target.getBoundingClientRect();
+  console.log(targetRect.left.toFixed(),targetRect.x.toFixed());
+  console.log(targetRect.top.toFixed(),targetRect.y.toFixed());
+  console.log("==============================");
+}
+
+const topMouseOver = (event) => {
+  event.preventDefault();
+  console.log("Hovering over a Top");
+  const targetRect = event.target.getBoundingClientRect();
+  console.log(targetRect.left.toFixed(),targetRect.x.toFixed());
+  console.log(targetRect.top.toFixed(),targetRect.y.toFixed());
+  console.log("==============================");
+}
+
+
+
 const playAreaRightClick = (event) => {
   event.preventDefault();
   if (!event.target.classList.contains("triangle")) {
     return null;
-  } else {
   }
   // Try playArea.getElementById() and then 
   // chartActionList.getElementById()
-  const id = event.target.getAttribute("id");
+  const target = event.target;
+  const id = target.getAttribute("id");
   // This is a bit hard-coded and clunky, but it reflects the style of 
   // element id that the list items are given in addChartListLine().
   const listId = "list-" + id;
-
 
   clickTracker++;
   if (clickTracker === 1) {
@@ -129,18 +150,33 @@ const drawMunro = (munro) => {
 // Should probably refactor to replace the word 'top' - this makes sense in 
 // the analogous real-life situation, but is used in two ways here and I
 // can't change the CSS property name!
-  const x = munro.coOrdinates[0];
-  const y = munro.coOrdinates[1];
+  const x = munro.coOrdinates[0].toString() + "px";
+  const y = munro.coOrdinates[1].toString() + "px";
   const id = munro.id;
   const size = munro.size;
   let classList = `triangle ${size}-inner`;
   if (munro.complete) {
     classList += ` done`;
   }
-  let html = `<div class="triangle ${size}" style="top:${y}px; left:${x}px">` 
-             + `<div class="${classList}" id = "${id}"></div>`
-             + `</div>`;
-  playArea.innerHTML += html;
+  // Start new code here
+  const outerDiv = document.createElement("div");
+  outerDiv.classList = `triangle ${size}`;
+  // begin comment: These next two lines aren't working
+  outerDiv.style.top = y;
+  outerDiv.style.left = x;
+  // end comment
+  size === "munro" ? outerDiv.addEventListener("mouseover",munroMouseOver) 
+                   : outerDiv.addEventListener("mouseover",topMouseOver);
+  const innerDiv = document.createElement("div");
+  innerDiv.classList = classList;
+  innerDiv.id = id;
+  outerDiv.appendChild(innerDiv);
+  playArea.appendChild(outerDiv);
+  // End new code here
+  // let html = `<div class="triangle ${size}" style="top:${y}px; left:${x}px">` 
+  //            + `<div class="${classList}" id = "${id}"></div>`
+  //            + `</div>`;
+  // playArea.innerHTML += html;
 }
 
 const drawChart = (list) => {
@@ -195,7 +231,7 @@ dataAccess.js, which in turn is called from here.
 
 
 const chartListSelect = (event) => {
-  console.log("Change event... " + event.target + " " + event.target.value);
+  // console.log("Change event... " + event.target + " " + event.target.value);
   const chartID = event.target.value;
   const chart = data_getByID(chartID);
   currentChart = chart;
