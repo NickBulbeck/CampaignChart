@@ -165,8 +165,8 @@ const drawMunro = (munro) => {
   outerDiv.style.top = y;
   outerDiv.style.left = x;
   // end comment
-  size === "munro" ? outerDiv.addEventListener("mouseover",munroMouseOver) 
-                   : outerDiv.addEventListener("mouseover",topMouseOver);
+  size === "munro" ? outerDiv.addEventListener("mouseenter",munroMouseOver) 
+                   : outerDiv.addEventListener("mouseenter",topMouseOver);
   const innerDiv = document.createElement("div");
   innerDiv.classList = classList;
   innerDiv.id = id;

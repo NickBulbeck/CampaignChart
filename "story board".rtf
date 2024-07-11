@@ -31,6 +31,9 @@ Work out the position of the menu - that's subtler than it looks and needs its o
 ===================================================\
 TEMP\
 ===================================================\
-In drawMunro(), try adding an event-listener via an onclick parameter in the innerHTML.\
-\
-Then use a variation on getCoOrdinates() to work out where to put }
+When drawing a Munro or a top, draw the popup menu next to it, but with display:hidden or something.\
+Use a variation on getCoOrdinates() to work out where to put it.\
+Then, in the mouseover functions, make it visible.\
+If it's a Top, add an attribute to link it to a Munro. Then, in the mouseover menu, display a list of all the Munros in the chart and make one selectable.\
+   - this is provisional, as I still have to consider how to make them draggable and also how to reshuffle the chart list\
+   - but it's the correct basic approach}
