@@ -17,13 +17,14 @@ Actually there's two possibilities in my heid; a flat .json file (with json-obje
 ## Task 1.1 - data design
 
 A chart has multiple Munros have multiple Tops. From a future POV, each Munro or Top could in principle have a sub-chart. But not multiple sub-charts: it has either none, or one.
-Chart: as is.
+Chart: I need to add a "parent" property, being the ID of a Munro/Top, because once a chart is completed, its parent needs marking as complete. Also when I delete a parent Munro/Top, I want to leave the option of either removing the link with the wean chart (which may still be useful in its own right) or deleting the chart as no longer needed. (I don't want orphaned charts, obviously.)
 Munro:  ID
         Co-ordinates
         Description
         Size
         Done
         Tasks []
+    do NOT record a Munro's parent.
 
 # Story 2: adding Toips to any Munro
 
