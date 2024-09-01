@@ -40,4 +40,4 @@ If it's a Top, add an attribute to link it to a Munro. Then, in the mouseover me
 
 # Story 3: the third dimension
 
-Is an extension of Stories 1 and 2, really, in that it means a Munro or Top needs to have zero or one sub-charts (not more than one, though) as a property. And that property needs to be displayed/editable via the popup menu. Maybe do that next...
+Is an extension of Stories 1 and 2, really, in that it means a Munro or Top needs to have zero or one sub-charts (not more than one, though) as a property. And that property needs to be displayed/editable via the popup menu.
