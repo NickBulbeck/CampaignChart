@@ -38,5 +38,35 @@ const seedTheDatabase = () => {
 
  // testLocalStorage();
 
+// quick random array hingmy
+const challenges = [
+  "Actual D&I",
+  "RLRC 2",
+  "My own website",
+  "More advanced campaign chart app"
+];
 
-
+const randomDailySchedule = (arr) => {
+  if (!arr) {
+    arr = challenges;
+  }
+  const days = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday"  
+  ];
+  const temp = [];
+  const length = arr.length;
+  let ind;
+  while (temp.length < 4) {
+    ind = Math.floor(Math.random() * length);
+    if (!temp.includes(ind)) {
+      temp.push(ind);
+    }
+  }
+  for (let i = 0; i < arr.length; i++) {
+    console.log(`${days[i]}: ${arr[temp[i]]}`);
+  }
+  console.log("Finished!");
+}

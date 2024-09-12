@@ -5,6 +5,9 @@ const chartActionList = document.getElementById("chartActionList");
 const heading = document.getElementById("titleDiv").getElementsByTagName('H1')[0];
 let currentChart = null;
 let clickTracker = 0;
+
+randomDailySchedule();
+
 class Chart {
   constructor(name,munros) {
     this.id = new Date().toString();

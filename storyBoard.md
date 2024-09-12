@@ -41,3 +41,7 @@ If it's a Top, add an attribute to link it to a Munro. Then, in the mouseover me
 # Story 3: the third dimension
 
 Is an extension of Stories 1 and 2, really, in that it means a Munro or Top needs to have zero or one sub-charts (not more than one, though) as a property. And that property needs to be displayed/editable via the popup menu.
+
+## Current backlog
+
+There's actually a kind of step zero in the background, which is the radical refactor from a one-off js script to a web app, using a server and full back-end processing. Converting it to run on node (with or without Angliar at this point) and the role of express is a significant design step and will need some actual non-coding work. What, for instance, are the endpoints and corresponding REST requests and endpoints?
