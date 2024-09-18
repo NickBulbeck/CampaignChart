@@ -26,7 +26,7 @@ Munro:  ID
         Tasks []
     do NOT record a Munro's parent.
 
-# Story 2: adding Toips to any Munro
+# Story 2: adding Tops to any Munro
 
 Which means that you right-click the Munro in the chart, and a noption appears to add a Top. This means the pop-up menu business that is already underway.
 
@@ -41,6 +41,14 @@ If it's a Top, add an attribute to link it to a Munro. Then, in the mouseover me
 # Story 3: the third dimension
 
 Is an extension of Stories 1 and 2, really, in that it means a Munro or Top needs to have zero or one sub-charts (not more than one, though) as a property. And that property needs to be displayed/editable via the popup menu.
+
+## Mini 4 (tiny): adding a wee button that displays the random chart hingmy
+
+The function's there in buildingSite.js, so I just need a button somewhere that either displays the stuff or logs it to the console. In due course, I maybe want a function that actually creates a standard week, with four charts, and adds the randomly-distributed main afternoon tasks to them.
+
+## Mini 5 (tiny): add an "undo" button to each line in the listDiv
+
+A button that appears to replacer "Done" when the latter is clicked. And it reverses the action of "done", obviously. This would be really useful, and could be considered an early priority. Much more than Mini 4.
 
 ## Current backlog
 
