@@ -1,9 +1,39 @@
-#playArea {
+/* Remember:
+  .block
+  .block__element
+  .block--modifier
+
+  ... and bear in mind that the modifier is NOT a global variable - it only applies within this block. The only global
+      CSS you should write is the colour-scheme, the media query width changes and the normalise.css file (and even that
+      is the exception that proves the rule). For instance: a 'large' version of something will mean one thing in a 
+      button, and a different thing in a list. Remember that the whole problem with CSS is its global scope.
+
+  NTS: to be properly BEM, I'll need to change #playArea to .playArea, and re-factor the HTML (and any JS behind the scenes that
+  creates elements) to add the .playArea class to the playArea div element. 
+
+*/
+
+.playArea {
   background-color: #fff;
-  min-width:600px;
-  max-width:1200px;
+  width: 1000px;
   height:600px;
-  width:80%;
   margin: 20px auto;
   position: relative;
 }
+
+.popupContainer {
+  width: 100%;
+  height: 100%;
+  opacity: 0.3;
+  background-color: blueviolet;
+  z-index: 99;
+}
+
+.popup {
+  width: 50px;
+  height: 150px;
+  opacity: 0.4;
+  background-color: darkkhaki;
+  z-index: 99;
+}
+

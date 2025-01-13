@@ -23,6 +23,8 @@ class Munro {
     this.description = description || "";
     this.complete = complete || false;
     this.size = size || "munro";
+    this.parent = null;
+    this.popupPosition = [0,0]; // Rudinentary type-enforcement there!
   }
 }
 
@@ -57,6 +59,9 @@ const getClickCoordinates = (event) => {
   if (munroY < 0) {
     munroY = 0;
   }
+// stick to whole numbers, for tidiness
+  munroX = Math.round(munroX);
+  munroY = Math.round(munroY);  
   return [munroX,munroY];
 }
 
@@ -100,20 +105,20 @@ const playAreaClick = (event) => {
 
 const munroMouseOver = (event) => {
   event.preventDefault();
-  console.log("Hovering over a Munro");
-  const targetRect = event.target.getBoundingClientRect();
-  console.log(targetRect.left.toFixed(),targetRect.x.toFixed());
-  console.log(targetRect.top.toFixed(),targetRect.y.toFixed());
-  console.log("==============================");
+  // console.log("Hovering over a Munro");
+  // const targetRect = event.target.getBoundingClientRect();
+  // console.log(targetRect.left.toFixed(),targetRect.x.toFixed());
+  // console.log(targetRect.top.toFixed(),targetRect.y.toFixed());
+  // console.log("==============================");
 }
 
 const topMouseOver = (event) => {
   event.preventDefault();
-  console.log("Hovering over a Top");
-  const targetRect = event.target.getBoundingClientRect();
-  console.log(targetRect.left.toFixed(),targetRect.x.toFixed());
-  console.log(targetRect.top.toFixed(),targetRect.y.toFixed());
-  console.log("==============================");
+  // console.log("Hovering over a Top");
+  // const targetRect = event.target.getBoundingClientRect();
+  // console.log(targetRect.left.toFixed(),targetRect.x.toFixed());
+  // console.log(targetRect.top.toFixed(),targetRect.y.toFixed());
+  // console.log("==============================");
 }
 
 
@@ -163,7 +168,7 @@ const drawMunro = (munro) => {
   }
   // Start new code here
   const outerDiv = document.createElement("div");
-  outerDiv.classList = `triangle ${size}`;
+  outerDiv.classList = `outer triangle ${size}`;
   // begin comment: These next two lines aren't working
   outerDiv.style.top = y;
   outerDiv.style.left = x;
@@ -175,15 +180,12 @@ const drawMunro = (munro) => {
   innerDiv.id = id;
   outerDiv.appendChild(innerDiv);
   playArea.appendChild(outerDiv);
-  // End new code here
-  // let html = `<div class="triangle ${size}" style="top:${y}px; left:${x}px">` 
-  //            + `<div class="${classList}" id = "${id}"></div>`
-  //            + `</div>`;
-  // playArea.innerHTML += html;
 }
 
 const drawChart = (list) => {
-  playArea.innerHTML = '';
+  // playArea.innerHTML = '';
+  emptyPlayArea();
+  // playArea.innerHTML = '';
   chartActionList.innerHTML = '';
   for (let i=0; i<list.length; i++) {
     const munro = list[i];
@@ -225,6 +227,40 @@ const getMunroFromStringID = (id) => {
     }
   }
   return null;
+}
+
+const createSkeletonPopup = () => {
+  const popupContainer = document.createElement('div');
+  popupContainer.setAttribute("id","popupContainer");
+  popupContainer.classList.add("popupContainer");
+  const popup = document.createElement("div");
+  popup.setAttribute("id","popup");
+  popup.classList.add("popup");
+  const input = document.createElement("input"); 
+  const select = document.createElement("select"); 
+  const button = document.createElement("button"); 
+  input.setAttribute("id", "popupDescriptionInput");
+  input.setAttribute("type", "text");
+  input.setAttribute("name", "description");
+  popup.appendChild(input);
+  select.setAttribute("id","popupSelect");
+  select.setAttribute("name","parent");
+  popup.appendChild(select);
+  button.setAttribute("id","popupSaveButton");
+  button.textContent = "Save changes";
+  popup.appendChild(button);
+  popupContainer.appendChild(popup);
+  return popupContainer;
+}
+
+const emptyPlayArea = () => {
+  playArea.innerHTML = '';
+  const popup = createSkeletonPopup();
+  playArea.appendChild(popup);
+}
+
+const emptyChartActionList = () => {
+  // provisional - may not use
 }
 
 /*****************************************************************************************
@@ -305,7 +341,8 @@ const chartInfoDivClick = (event) => {
       loadChartList();
       chartInfoDiv.style.display = 'none';
       chartActionList.innerHTML = '';
-      playArea.innerHTML = '';
+      emptyPlayArea();
+      // playArea.innerHTML = '';
     },
     saveChartButton: () => {
       currentChart.name = nameField.value;
@@ -349,7 +386,8 @@ const newChartButtonClick = (event) => {
   if (currentChart) {
     data_save(currentChart);
   }
-  playArea.innerHTML = '';
+  // playArea.innerHTML = '';
+  emptyPlayArea();
   chartActionList.innerHTML = '';
   currentChart = null;
   initialiseChartInfoDiv();
@@ -416,8 +454,6 @@ const loadChartList = () => {
     option.setAttribute("value",chartID);
     if (chartName == todaysChart) {
       chartName += " TODAY";
-      // currentChart = chartList[i];
-      // drawChart(currentChart.munros);
     }
     option.textContent = chartName;
     selectList.appendChild(option);
@@ -446,7 +482,6 @@ const detectToday = () => {
 }
 const inTodaysNews = () => {
   const today = detectToday();
-  console.log(today);
   const chartOptions = (chartListDiv.querySelectorAll('option'));
   chartOptions.forEach(option => {
   // The problem is that this is called unconditionally.
