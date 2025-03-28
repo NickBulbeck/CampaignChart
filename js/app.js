@@ -5,6 +5,7 @@ const chartActionList = document.getElementById("chartActionList");
 const heading = document.getElementById("titleDiv").getElementsByTagName('H1')[0];
 let currentChart = null;
 let clickTracker = 0;
+let todayHasAChart = false;
 
 randomDailySchedule();
 
@@ -454,6 +455,9 @@ const loadChartList = () => {
     option.setAttribute("value",chartID);
     if (chartName == todaysChart) {
       chartName += " TODAY";
+      todayHasAChart = true;
+      currentChart = chartList[i];
+      drawChart(chartList[i].munros);
     }
     option.textContent = chartName;
     selectList.appendChild(option);

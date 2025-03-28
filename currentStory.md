@@ -1,3 +1,6 @@
+# FRIDAY 28th FEBRUARY 2025
+Line 459 in app.js added. If it's not working... remove this line!
+
 # Current Story: Moving Tops between Munros
 
 What I want: to be able to edit a list in a chart. So, the first gap is the fact that I can't add, say, cablish tasks to the cablish list once I've added a new Munro. I want to be able to put a Munro on the chart, add some tops, and then come back to it later and add others so that they appear under it in the ul.
