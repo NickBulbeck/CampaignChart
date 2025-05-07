@@ -7,5 +7,6 @@ const standardChartDescriptions = [
     [" - Empty bins",[310,70],"top"],
     [" - Finance admin",[310,120],"top"],
     [" - Do washing",[310,170],"top"],
-    [" - Check this month's chart",[310,220],"top"]
+    [" - Check this month's chart",[310,220],"top"],
+    [" - Check kitchen calendar",[310,270],"top"]
 ]
