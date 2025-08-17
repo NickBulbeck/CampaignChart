@@ -8,5 +8,7 @@ const standardChartDescriptions = [
     [" - Finance admin",[310,120],"top"],
     [" - Do washing",[310,170],"top"],
     [" - Check this month's chart and scribbles doc",[310,220],"top"],
-    [" - Check kitchen calendar",[310,270],"top"]
+    [" - Check kitchen calendar",[310,270],"top"],
+    [" - Round of kettle-bell exercises",[310,320],"top"],
+    [" - 2 minutes recorded speaking",[310,370],"top"]
 ]
