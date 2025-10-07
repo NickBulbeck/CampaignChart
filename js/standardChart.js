@@ -1,7 +1,13 @@
 const standardChartDescriptions = [
+    ["Morning Prayer",[20,20],"munro"],
+    ["Seize the first hour -",[150,20],"munro"],
+    [" - LTL20 on ",[220,43],"top"],
+    [" - LTL20 on ",[220,83],"top"],
+    [" - LTL20 on ",[220,123],"top"],
     ["Piano -",[20,200],"munro"],
     [" - Rachmaninov",[100,233],"top"],
     [" - Debussy",[100,283],"top"],
+    ["Midday Prayer",[420,280],"munro"],
     ["Home liturgy -",[20,450],"munro"],
     [" - Feed burrds",[100,473],"top"],
     [" - Empty bins",[150,473],"top"],
@@ -12,11 +18,5 @@ const standardChartDescriptions = [
     [" - Round of kettle-bell exercises",[400,473],"top"],
     [" - 2 minutes recorded speaking",[450,473],"top"],
     [" - Clear kitchen at lunchtime",[500,473],"top"],
-    ["Morning Prayer",[20,20],"munro"],
-    ["Midday Prayer",[420,280],"munro"],
-    ["Evening Prayer",[840,500],"munro"],
-    ["Seize the first hour -",[150,20],"munro"],
-    [" - LTL20 on ",[220,43],"top"],
-    [" - LTL20 on ",[220,83],"top"],
-    [" - LTL20 on ",[220,123],"top"]
+    ["Evening Prayer",[840,500],"munro"]
 ]
