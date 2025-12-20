@@ -1,6 +1,6 @@
 const standardChartDescriptions = [
     ["Morning liturgy",[20,20],"munro"],
-      [" - Clean getaway",[95,30],"top"],
+      [" - Well-defined start",[95,30],"top"],
       [" - Morning prayer",[125,30],"top"],
       [" - Check this month's chart and scribbles doc",[155,30],"top"],
       [" - Feed burrds",[185,30],"top"],
