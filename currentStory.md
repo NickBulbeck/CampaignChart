@@ -1,7 +1,23 @@
 # FRIDAY 28th FEBRUARY 2025
 Line 459 in app.js added. If it's not working... remove this line!
 
-# Current Story: Moving Tops between Munros
+# Current story: different standard charts
+
+In principle, I want to change the "New standard chart" button to a drop-down menu
+with working day, devops day and activity day, and blank day. I may need separate
+working-day charts for me and Lesley or, more likely, to re-name the standard chart
+as "HH working day".
+
+Step 1: Rename standardChart.js to be plural.           DONE
+Step 2: Refactor template charts as an array            DONE
+Step 3: Create the new charts in the array              -
+Step 4: Create a function that reads the array          - 
+Step 5: Create a drop-down menu populated by 4          - 
+Step 6: Add change event listener to drop-down in 5     -
+Step 7: Upgrade buildStandardChart per 6                DONE
+
+
+# Next epic: Moving Tops between Munros
 
 What I want: to be able to edit a list in a chart. So, the first gap is the fact that I can't add, say, cablish tasks to the cablish list once I've added a new Munro. I want to be able to put a Munro on the chart, add some tops, and then come back to it later and add others so that they appear under it in the ul.
 

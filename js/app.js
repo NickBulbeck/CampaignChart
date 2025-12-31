@@ -409,9 +409,9 @@ const newStandardChartButtonClick = (event) => {
   // See chart save as button around line 227
 }
 
-const buildStandardChart = () => {
+const buildStandardChart = (template = 0) => {
   const munros = [];
-  const descriptions = standardChartDescriptions;
+  const descriptions = standardChartDescriptions[template]["chart"];
   const meta = descriptions.length + 2; // number of munros, plus 1
   for (let i=0; i<descriptions.length; i++) {
     const topOrMunro = descriptions[i][2];
@@ -509,6 +509,8 @@ const drawTodaysChart = (chartName) => {
 //****************************************************************************************
 setUpScreen();
 loadChartList();
+console.log(`User agent: ${navigator.userAgent}`);
+console.log(navigator);
 chartListDiv.addEventListener('change',chartListSelect,false);
 playArea.addEventListener('click',playAreaClick,false);
 playArea.addEventListener('contextmenu',playAreaRightClick,false);
