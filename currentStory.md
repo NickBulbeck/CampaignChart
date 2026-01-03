@@ -3,16 +3,6 @@ Line 459 in app.js added. If it's not working... remove this line!
 
 # Current story: different standard chart colour schemes
 
-It would be nice to have different background colours for different charts. How about:
- - Grey for plain new chart
- - Dark Blue for working day
- - Light Blue for default Friday
- - Green for activity day
-
-It'll need 
-
-Step 1: Add colour-scheme item to  to munro class
-
 
 # Next epic: Moving Tops between Munros
 

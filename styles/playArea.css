@@ -14,11 +14,31 @@
 */
 
 .playArea {
-  background-color: #fff;
+  background-color: aliceblue;
   width: 1000px;
   height:600px;
   margin: 20px auto;
   position: relative;
+}
+
+.playArea--working-day {
+  background-color: lightskyblue;
+}
+
+.playArea--activity-day {
+  background-color: green;
+}
+
+.playArea--standard-friday {
+  background-color: lightblue;
+}
+
+.playArea--devops-day {
+  background-color: goldenrod;
+}
+
+.playArea--default {
+  background-color: plum;
 }
 
 .popupContainer {

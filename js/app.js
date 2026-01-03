@@ -13,6 +13,7 @@ class Chart {
     this.name = name || "(chart not named yet)";
     this.munros = munros || [];
     this.munroMeta = 1; // Currently used to increment the Munro id's.
+    this.colourScheme = "";
   }
 }
 class Munro {
@@ -181,10 +182,10 @@ const drawMunro = (munro) => {
   playArea.appendChild(outerDiv);
 }
 
-const drawChart = (list) => {
-  // playArea.innerHTML = '';
+const drawChart = (list,colourScheme = "playArea--default") => {
   emptyPlayArea();
-  // playArea.innerHTML = '';
+  playArea.classList = "playArea " + colourScheme;
+  console.log(playArea.classList);
   chartActionList.innerHTML = '';
   for (let i=0; i<list.length; i++) {
     const munro = list[i];
@@ -255,7 +256,7 @@ const createSkeletonPopup = () => {
 const emptyPlayArea = () => {
   playArea.innerHTML = '';
   const popup = createSkeletonPopup();
-  playArea.appendChild(popup);
+//  playArea.appendChild(popup); Not using this yet
 }
 
 const emptyChartActionList = () => {
@@ -279,7 +280,7 @@ const selectExistingChart = (event) => {
   document.title = chart.name;
   heading.textContent = chart.name;
   const list = chart.munros;
-  drawChart(list);
+  drawChart(list,currentChart.colourScheme);
 }
 
 const fillOutChartInfoDiv = () => {
@@ -306,7 +307,7 @@ const chartActionListClick = (event) => {
           list.splice(i,1);
         }
       }
-      drawChart(currentChart.munros)
+      drawChart(currentChart.munros,currentChart.colourScheme);
       // this will also re-draw the chart action list 
     },
     markAsDoneButton: () => {
@@ -398,23 +399,29 @@ const newChartButtonClick = (event) => {
  Template/standard charts
 ***************************************************************************************/
 
-const createTemplateChart = (event) => {
+const setTemplateColourScheme = (template) => {
+  template = template.toLowerCase();
+  template = template.replace(" ","-");
+  const colourScheme = "playArea--" + template;
+  return colourScheme;
+}
 
+const createTemplateChart = (event) => {
   if (currentChart) {
     data_save(currentChart);
   }
-
   const template = event.target.value;
   if (template === "New chart from template") {
     return;
   }
   currentChart = buildStandardChart(template);
+  console.log(currentChart.colourScheme);
   data_save(currentChart);
   const nameField = document.getElementById('chartNameInput');
   nameField.value = currentChart.name;
   heading.textContent = currentChart.name;
   document.title = "A new day...";
-  drawChart(currentChart.munros);
+  drawChart(currentChart.munros,currentChart.colourScheme);
 // See chart save as button aroon' line 227
 }
 
@@ -433,6 +440,7 @@ const buildStandardChart = (template) => {
   }
   const chart = new Chart("TEMP ...",munros);
   chart.munroMeta = meta; 
+  chart.colourScheme = setTemplateColourScheme(template);
   return chart;
 }
 
@@ -466,7 +474,7 @@ const create_selectList_existing = () => {
       chartName += " TODAY";
       todayHasAChart = true;
       currentChart = chartList[i];
-      drawChart(chartList[i].munros);
+      drawChart(chartList[i].munros,chartList[i].colourScheme);
     }
     option.textContent = chartName;
     selectList_existing.appendChild(option);
