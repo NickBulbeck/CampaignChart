@@ -270,7 +270,7 @@ dataAccess.js, which in turn is called from here.
 *****************************************************************************************/
 
 
-const chartListSelect = (event) => {
+const selectExistingChart = (event) => {
   // console.log("Change event... " + event.target + " " + event.target.value);
   const chartID = event.target.value;
   const chart = data_getByID(chartID);
@@ -280,7 +280,6 @@ const chartListSelect = (event) => {
   const list = chart.munros;
   drawChart(list);
 }
-
 
 const fillOutChartInfoDiv = () => {
   chartInfoDiv.style.display="inherit";
@@ -394,24 +393,33 @@ const newChartButtonClick = (event) => {
   initialiseChartInfoDiv();
 }
 
-const newStandardChartButtonClick = (event) => {
-  // In case the user clicks the button first of all, when currentChart is null:
+/**************************************************************************************
+ Template/standard charts
+***************************************************************************************/
+
+const createTemplateChart = (event) => {
+  console.log("In new function: ");
+  console.log(event.target.value);
+
   if (currentChart) {
     data_save(currentChart);
   }
-  currentChart = buildStandardChart();
+
+  const template = event.target.value;
+
+  currentChart = buildStandardChart(template);
   data_save(currentChart);
   const nameField = document.getElementById('chartNameInput');
   nameField.value = currentChart.name;
   heading.textContent = currentChart.name;
   document.title = "A new day...";
   drawChart(currentChart.munros);
-  // See chart save as button around line 227
+// See chart save as button aroon' line 227
 }
 
-const buildStandardChart = (template = 0) => {
+const buildStandardChart = (template) => {
   const munros = [];
-  const descriptions = standardChartDescriptions[template]["chart"];
+  const descriptions = standardChartDescriptions[template];
   const meta = descriptions.length + 2; // number of munros, plus 1
   for (let i=0; i<descriptions.length; i++) {
     const topOrMunro = descriptions[i][2];
@@ -439,14 +447,14 @@ initialiseChartInfoDiv = () => {
     '<button id="deleteChartButton">Delete chart</button>';
 }
 
-const loadChartList = () => {
+const create_selectList_existing = () => {
   const todaysChart = detectToday();
-  chartListDiv.innerHTML = '';
-  const selectList = document.createElement("select");
+  const selectList_existing = document.createElement("select");
+  selectList_existing.setAttribute("id","selectFromExisting");
   const chartList = data_getAll();
   const defaultOption = document.createElement("option");
   defaultOption.textContent = "Search for an existing chart";
-  selectList.appendChild(defaultOption);
+  selectList_existing.appendChild(defaultOption);
   for (let i=0; i<chartList.length; i++) {
     let chartName = chartList[i].name;
     const chartID = chartList[i].id.toString();
@@ -460,17 +468,43 @@ const loadChartList = () => {
       drawChart(chartList[i].munros);
     }
     option.textContent = chartName;
-    selectList.appendChild(option);
+    selectList_existing.appendChild(option);
   }
-  chartListDiv.appendChild(selectList);
+  return selectList_existing;
+}
+
+const create_selectList_standard = () => {
+  const selectList_standard = document.createElement("select");
+  selectList_standard.setAttribute("id","selectFromTemplates");
+  const defaultOption = document.createElement("option");
+  defaultOption.textContent = "New chart from template";
+  selectList_standard.appendChild(defaultOption);
+  templates = Object.keys(standardChartDescriptions);
+  for (let i=0; i<templates.length; i++) {
+    const option = document.createElement("option");
+    option.setAttribute("value",templates[i]);
+    option.textContent = templates[i];
+    selectList_standard.appendChild(option);
+  }
+
+  return selectList_standard;
+}
+
+const loadChartList = () => {
+
+  chartListDiv.innerHTML = '';
+
+  const selectList_existing = create_selectList_existing();
+  chartListDiv.appendChild(selectList_existing);
+
   const newChartButton = document.createElement('button');
   newChartButton.textContent = 'New chart';
   newChartButton.addEventListener('click',newChartButtonClick,false);
   chartListDiv.appendChild(newChartButton);
-  const newStandardChartButton = document.createElement('button');
-  newStandardChartButton.textContent = 'New standard chart';
-  newStandardChartButton.addEventListener('click',newStandardChartButtonClick,false);
-  chartListDiv.appendChild(newStandardChartButton);
+
+  const selectList_standard = create_selectList_standard();
+  chartListDiv.appendChild(selectList_standard);
+
 }
 
 /*****************************************************************************************
@@ -501,7 +535,6 @@ const drawTodaysChart = (chartName) => {
   const event = new Event('change');
   event.target = chartListDiv;
   chartListDiv.value = chartName;
-  console.log(chartListDiv.value);
   chartListDiv.dispatchEvent(event);
 }
 //****************************************************************************************
@@ -509,9 +542,12 @@ const drawTodaysChart = (chartName) => {
 //****************************************************************************************
 setUpScreen();
 loadChartList();
-console.log(`User agent: ${navigator.userAgent}`);
-console.log(navigator);
-chartListDiv.addEventListener('change',chartListSelect,false);
+const selectFromExisting = document.getElementById("selectFromExisting");
+selectFromExisting.addEventListener('change',selectExistingChart,false);
+
+const selectFromTemplates = document.getElementById("selectFromTemplates");
+selectFromTemplates.addEventListener('change',createTemplateChart,false);
+
 playArea.addEventListener('click',playAreaClick,false);
 playArea.addEventListener('contextmenu',playAreaRightClick,false);
 chartActionList.addEventListener('click',chartActionListClick,false);

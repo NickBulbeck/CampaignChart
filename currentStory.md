@@ -10,11 +10,14 @@ as "HH working day".
 
 Step 1: Rename standardChart.js to be plural.           DONE
 Step 2: Refactor template charts as an array            DONE
-Step 3: Create the new charts in the array              -
-Step 4: Create a function that reads the array          - 
-Step 5: Create a drop-down menu populated by 4          - 
-Step 6: Add change event listener to drop-down in 5     -
-Step 7: Upgrade buildStandardChart per 6                DONE
+Step 3: Create the new charts in the array              DONE
+Step 4: Create a function that reads the array          DONE
+Step 5: Create a drop-down menu populated by 4          DONE
+Step 6: Upgrade buildStandardChart per 6                DONE
+Step 7: Debug selectExistingChart at 552                DONE
+Step 8: Append chartListSelect to correct element       DONE
+Step 9: Create event listener for standard list 403     DONE
+Step 10: Add colour-scheme for standard charts          -
 
 
 # Next epic: Moving Tops between Munros
