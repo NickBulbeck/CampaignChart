@@ -1,29 +1,17 @@
 # FRIDAY 28th FEBRUARY 2025
 Line 459 in app.js added. If it's not working... remove this line!
 
-# Current story: different standard charts
+# Current story: different standard chart colour schemes
 
-In principle, I want to change the "New standard chart" button to a drop-down menu
-with working day, devops day and activity day, and blank day. I may need separate
-working-day charts for me and Lesley or, more likely, to re-name the standard chart
-as "HH working day".
+It would be nice to have different background colours for different charts. How about:
+ - Grey for plain new chart
+ - Dark Blue for working day
+ - Light Blue for default Friday
+ - Green for activity day
 
-Step 1: Rename standardChart.js to be plural.           DONE
-Step 2: Refactor template charts as an array            DONE
-Step 3: Create the new charts in the array              DONE
-Step 4: Create a function that reads the array          DONE
-Step 5: Create a drop-down menu populated by 4          DONE
-Step 6: Upgrade buildStandardChart per 6                DONE
-Step 7: Debug selectExistingChart at 552                DONE
-Step 8: Append chartListSelect to correct element       DONE
-Step 9: Create event listener for standard list 403     DONE
-Step 10: Debug Save changes and delete chart buttons    -
-        loadChartList() function sets innerHTML to an empty string, thereby removing
-        all the event listeners. They need to be added in loadChartList, and/or 
-        I need to make the removal of all the munro list details more specific, such
-        that it only removes the descriptions.
+It'll need 
 
-Step 11: Add colour-scheme to munro class               - 
+Step 1: Add colour-scheme item to  to munro class
 
 
 # Next epic: Moving Tops between Munros
