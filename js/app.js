@@ -7,8 +7,6 @@ let currentChart = null;
 let clickTracker = 0;
 let todayHasAChart = false;
 
-randomDailySchedule();
-
 class Chart {
   constructor(name,munros) {
     this.id = new Date().toString();
@@ -273,6 +271,9 @@ dataAccess.js, which in turn is called from here.
 const selectExistingChart = (event) => {
   // console.log("Change event... " + event.target + " " + event.target.value);
   const chartID = event.target.value;
+  if (chartID === "Search for an existing chart") {
+    return;
+  }
   const chart = data_getByID(chartID);
   currentChart = chart;
   document.title = chart.name;
@@ -398,15 +399,15 @@ const newChartButtonClick = (event) => {
 ***************************************************************************************/
 
 const createTemplateChart = (event) => {
-  console.log("In new function: ");
-  console.log(event.target.value);
 
   if (currentChart) {
     data_save(currentChart);
   }
 
   const template = event.target.value;
-
+  if (template === "New chart from template") {
+    return;
+  }
   currentChart = buildStandardChart(template);
   data_save(currentChart);
   const nameField = document.getElementById('chartNameInput');
@@ -505,6 +506,11 @@ const loadChartList = () => {
   const selectList_standard = create_selectList_standard();
   chartListDiv.appendChild(selectList_standard);
 
+  const selectFromExisting = document.getElementById("selectFromExisting");
+  selectFromExisting.addEventListener('change',selectExistingChart,false);
+
+  const selectFromTemplates = document.getElementById("selectFromTemplates");
+  selectFromTemplates.addEventListener('change',createTemplateChart,false);
 }
 
 /*****************************************************************************************
@@ -542,11 +548,11 @@ const drawTodaysChart = (chartName) => {
 //****************************************************************************************
 setUpScreen();
 loadChartList();
-const selectFromExisting = document.getElementById("selectFromExisting");
-selectFromExisting.addEventListener('change',selectExistingChart,false);
+// const selectFromExisting = document.getElementById("selectFromExisting");
+// selectFromExisting.addEventListener('change',selectExistingChart,false);
 
-const selectFromTemplates = document.getElementById("selectFromTemplates");
-selectFromTemplates.addEventListener('change',createTemplateChart,false);
+// const selectFromTemplates = document.getElementById("selectFromTemplates");
+// selectFromTemplates.addEventListener('change',createTemplateChart,false);
 
 playArea.addEventListener('click',playAreaClick,false);
 playArea.addEventListener('contextmenu',playAreaRightClick,false);

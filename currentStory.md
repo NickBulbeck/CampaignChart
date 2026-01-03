@@ -17,7 +17,13 @@ Step 6: Upgrade buildStandardChart per 6                DONE
 Step 7: Debug selectExistingChart at 552                DONE
 Step 8: Append chartListSelect to correct element       DONE
 Step 9: Create event listener for standard list 403     DONE
-Step 10: Add colour-scheme for standard charts          -
+Step 10: Debug Save changes and delete chart buttons    -
+        loadChartList() function sets innerHTML to an empty string, thereby removing
+        all the event listeners. They need to be added in loadChartList, and/or 
+        I need to make the removal of all the munro list details more specific, such
+        that it only removes the descriptions.
+
+Step 11: Add colour-scheme to munro class               - 
 
 
 # Next epic: Moving Tops between Munros
