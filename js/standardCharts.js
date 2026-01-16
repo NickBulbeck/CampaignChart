@@ -27,7 +27,7 @@ const standardChartDescriptions = {
                 [" - Evening prayer",[490,320],"munro"],
               ["Miscellaneous...",[700,20],"munro"]
   ],
-  "Standard Friday":[
+  "Default Friday":[
               ["Morning liturgy",[20,20],"munro"],
                 [" - Well-defined start",[95,30],"top"],
                 [" - Morning prayer",[125,30],"top"],
