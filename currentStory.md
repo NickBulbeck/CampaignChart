@@ -8,6 +8,15 @@ Line 459 in app.js added. If it's not working... remove this line!
 
 What I want: to be able to edit a list in a chart. So, the first gap is the fact that I can't add, say, cablish tasks to the cablish list once I've added a new Munro. I want to be able to put a Munro on the chart, add some tops, and then come back to it later and add others so that they appear under it in the ul.
 
+This means the ul has to be two-level. Each Munro needs to ken not only whether it has a 
+parent, but whether it has any weans. So, what if, instead of a parent Munro, I frame this
+as a group membership named after the root Munro? Then the root Munro has its own id in its
+root field. Moreover, if I assign that ID to the group field of another top/munro, I can then
+sort the ul in group order. That might be cumbersome, though; so maybe I just want to insert
+the new top/munro immediately after the group parent; or, find the last yin in the ul that
+has that group and inset it after that yin (better, because it adds the new yin to the
+end of the list, which is probably where I'll want it to go).
+
 ## Approach
 
 I think this needs a two-level unordered list in the chartList. Each Munro has its own second-level ol and is in turn given its own id, so that a new (or moved) Top can be assigned to the appropriate first-level li in the chartList.
@@ -17,9 +26,7 @@ And, of course, the right-menu thing needs to happen, as does the parent Munro d
 ## Scribbles
 
 Tasks:
-    Add a parent property to the Munro class (and keep the same class for both Munros and Tops). Default it to null. DONE
-    Set up id's for each Munro, if not already done (I think it is) DONE
-    Add those id's to the chartList ul li, with maybe li- concatenated oan DONE
+    Refactor "parent" to be "groupID". DONE
     Refactor all three instances of playArea.innerHTML = '' to a removeChild() approach
     PROVISIONAL: Refactor all three instances of chartActionList.innerHTML = '' likewise
 Then...
@@ -32,9 +39,7 @@ Then...
 BEGIN TEMP
 Each munro or top in the chart area is given the id munro1 or top2 (etc). The corresponding list item already has the id of list-munro1 or list-top2 (etc).
 
-So, I need to empty the playArea's innerhtml, because looping through child elements is creating bizzare behaviour. I could re-add the popup container at the start of each call of emptyPlayArea. 
-
-When I refactor the whole thing as an angular app, what's the HTML going to look like? Well, I'll have the elements set up as conditionally-rendered components. None of this hard-coded innerHTML bollux. So although I won't be refactoring exactly this app - I'll write it from scratch, not save_as - it'd be better practice to handle the elements properly.  
+So, I need to empty the playArea's innerhtml, because looping through child elements is creating bizzare behaviour. I could re-add the popup container at the start of each call of emptyPlayArea.   
 
 Now: the popup itself. Approach:
     In createMunro(), work out the co-ordinates of the popup, and populate them accordingly.

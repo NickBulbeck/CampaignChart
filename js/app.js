@@ -23,7 +23,7 @@ class Munro {
     this.description = description || "";
     this.complete = complete || false;
     this.size = size || "munro";
-    this.parent = null;
+    this.groupID = null;
     this.popupPosition = [0,0]; // Rudinentary type-enforcement there!
   }
 }
@@ -244,7 +244,7 @@ const createSkeletonPopup = () => {
   input.setAttribute("name", "description");
   popup.appendChild(input);
   select.setAttribute("id","popupSelect");
-  select.setAttribute("name","parent");
+  select.setAttribute("name","groupID");
   popup.appendChild(select);
   button.setAttribute("id","popupSaveButton");
   button.textContent = "Save changes";
