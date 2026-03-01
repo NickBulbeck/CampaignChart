@@ -72,5 +72,16 @@ const standardChartDescriptions = {
                 [" [one] ",[490,140],"munro"],
                 [" [two] ",[490,200],"munro"],
                 [" [three] ",[490,260],"munro"]
+  ],
+  "Sabbath":[
+              ["Morning liturgy",[20,20],"munro"],
+                [" - Morning prayer",[95,30],"top"],
+                [" - Feed burrds",[125,30],"top"],
+                [" - Do washing",[155,30],"top"],
+                [" - Message Mum",[185,30],"top"],
+                ["Gather locally",[100,100],"munro"],
+                ["Review kitchen calendar",[100,200],"munro"],
+                ["Review charts/sprints",[100,300],"munro"],
+                ["Gather non-locally",[100,400],"munro"]
   ]
 }
