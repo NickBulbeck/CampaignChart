@@ -47,6 +47,7 @@ const standardChartDescriptions = {
                 [" - Week retro",[490,140],"munro"],
                 [" - Backlog refinement",[490,200],"munro"],
                 [" - Sprint plonning",[490,260],"munro"],
+                [" - Financial planning",[490,320],"munro"],
               ["Miscellaneous...",[700,20],"munro"]
   ],
   "Activity Day":[
@@ -83,5 +84,6 @@ const standardChartDescriptions = {
                 ["Review kitchen calendar",[100,200],"munro"],
                 ["Review charts/sprints",[100,300],"munro"],
                 ["Gather non-locally",[100,400],"munro"]
-  ]
+  ],
+  "Month":[]
 }
