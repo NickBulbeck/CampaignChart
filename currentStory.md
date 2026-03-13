@@ -1,3 +1,21 @@
+# Mini-story: Add an "activate fatigue protocol" button
+
+The button relates to the current chart, so it should go somewhere near the top of 
+the screen. I think next to the "new chart from template" drop-down.
+ - Add a button next to the drop-down
+ - And for goodness sake add a bit of styling
+ - Add an event listener that does the following:
+  - If the text is "activate fatigue protocol":
+    - Change the text to "Confirm?"
+    - Create a "Cancel" button next to it
+    - Add a second even listener to the Cancel button
+  - Else
+    - Changes currentChart.colourScheme to "reflect"
+    - Saves current chart
+ - Add the Cancel event-listener that
+  - changes the text back to "activate fatigue protocol"
+  - removes the Cancel button
+
 # Next epic: Moving Tops between Munros
 
 What I want: to be able to edit a list in a chart. So, the first gap is the fact that I can't add, say, cablish tasks to the cablish list once I've added a new Munro. I want to be able to put a Munro on the chart, add some tops, and then come back to it later and add others so that they appear under it in the ul.

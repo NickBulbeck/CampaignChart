@@ -29,7 +29,7 @@
   background-color: #33cc33;
 }
 
-.playArea--standard-friday {
+.playArea--default-friday {
   background-color: lightblue;
 }
 
@@ -47,6 +47,12 @@
 
 .playArea--month {
   background-color: cadetblue;
+}
+
+.playArea--reflect {
+  background-color: greenyellow;
+  border: 2px solid green;
+  border-radius: 3px;
 }
 
 .popupContainer {
