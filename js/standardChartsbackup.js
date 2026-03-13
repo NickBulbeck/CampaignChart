@@ -19,7 +19,7 @@ const standardChartDescriptions = {
               ["13 o'clock liturgy",[400,20],"munro"],
                 [" - Clear kitchen",[475,30],"top"],
                 [" - <= 5 minutes Debussy",[505,30],"top"],
-                [" - 10 minutes Rachmaninov",[535,30],"top"],
+                [" - Hand nexercises",[535,30],"top"],
               ["Harvest the afternoon -",[400,120],"munro"],
                 [" - 14 o'clock prayer",[490,140],"munro"],
                 [" - LTL20",[490,200],"munro"],
@@ -27,7 +27,7 @@ const standardChartDescriptions = {
                 [" - LTL20",[490,320],"munro"],
               ["Closing liturgy",[720,20],"munro"],  
                 [" - Finance admin",[795,30],"top"],
-                [" - Tea",[825,30],"top"],
+                [" - 10 minutes Rachmaninov",[825,30],"top"],
               ["Miscellaneous...",[720,120],"munro"]
   ],
   "Default Friday":[
