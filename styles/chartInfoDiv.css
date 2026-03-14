@@ -1,0 +1,15 @@
+.r_and_r {
+  text-align: center;
+  background-color: #23e02f;
+  border: 3px solid green;
+  border-radius: 3px;
+  margin-left: 8px;
+}
+
+.cancel {
+  text-align: center;
+  background-color: burlywood;
+  border: 3px solid rebeccapurple;
+  border-radius: 3px;
+  margin-left: 8px;
+}

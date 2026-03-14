@@ -50,9 +50,9 @@
 }
 
 .playArea--reflect {
-  background-color: greenyellow;
-  border: 2px solid green;
-  border-radius: 3px;
+  background-color: #23e02f;
+  border: 4px solid green;
+  border-radius: 10px;
 }
 
 .popupContainer {

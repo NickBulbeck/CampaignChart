@@ -2,7 +2,7 @@
 
 The button relates to the current chart, so it should go somewhere near the top of 
 the screen. I think next to the "new chart from template" drop-down.
- - Add a button next to the drop-down
+ - Add a button next to the drop-down, in loadChartList() aroon' 523
  - And for goodness sake add a bit of styling
  - Add an event listener that does the following:
   - If the text is "activate fatigue protocol":

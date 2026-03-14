@@ -444,6 +444,31 @@ const buildStandardChart = (template) => {
   return chart;
 }
 
+const activateProtocolButtonClick = (event) => {
+  if (event.target.textContent === "Activate R&R protocol") {
+    event.target.textContent = "Confirm";
+    const cancelButton = create_cancelButton();
+    chartListDiv.appendChild(cancelButton);
+    cancelButton.addEventListener("click",cancelButtonClick,false);
+  } else {
+    console.log(currentChart);
+    currentChart.colourScheme = setTemplateColourScheme("reflect");
+    data_save(currentChart);
+    console.log(currentChart);
+    drawChart(currentChart.munros,currentChart.colourScheme);
+    event.target.textContent = "Activate R&R protocol";
+    const cancelButton = document.getElementById("cancelButton");
+    event.target.parentNode.removeChild(cancelButton);
+  }
+  
+}
+
+const cancelButtonClick = (event) => {
+  const activate = document.getElementById("activateProtocolButton");
+  activate.textContent = "Activate R&R protocol";
+  event.target.parentNode.removeChild(event.target);
+}
+
 /*****************************************************************************************
 App setup. So, we have a list of items in chartList that is refreshed 
 *****************************************************************************************/
@@ -495,8 +520,23 @@ const create_selectList_standard = () => {
     option.textContent = templates[i];
     selectList_standard.appendChild(option);
   }
-
   return selectList_standard;
+}
+
+const create_activateProtocolButton = () => {
+  const activateProtocolButton = document.createElement("button");
+  activateProtocolButton.classList.add("r_and_r");
+  activateProtocolButton.textContent = "Activate R&R protocol";
+  activateProtocolButton.setAttribute("id","activateProtocolButton");
+  return activateProtocolButton;
+}
+
+const create_cancelButton = () => {
+  const cancelButton = document.createElement("button");
+  cancelButton.classList.add("cancel");
+  cancelButton.textContent = "Cancel";
+  cancelButton.setAttribute("id","cancelButton");
+  return cancelButton;
 }
 
 const loadChartList = () => {
@@ -519,6 +559,11 @@ const loadChartList = () => {
 
   const selectFromTemplates = document.getElementById("selectFromTemplates");
   selectFromTemplates.addEventListener('change',createTemplateChart,false);
+
+  const activateProtocolButton = create_activateProtocolButton();
+  chartListDiv.appendChild(activateProtocolButton);
+  activateProtocolButton.addEventListener('click',activateProtocolButtonClick,false);
+
 }
 
 /*****************************************************************************************
