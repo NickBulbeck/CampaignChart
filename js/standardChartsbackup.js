@@ -1,7 +1,7 @@
 const standardChartDescriptions = {
   "Working Day":[
               ["Morning liturgy",[20,20],"munro"],
-                [" - Post in Mum's chat",[95,30],"top"],
+                [" - Check Mum's chat",[95,30],"top"],
                 [" - Check this month's chart and scribbles doc",[125,30],"top"],
                 [" - Feed burrds",[155,30],"top"],
                 [" - Empty bins",[185,30],"top"],
@@ -18,8 +18,6 @@ const standardChartDescriptions = {
                 [" - LTL20",[200,320],"munro"],
               ["13 o'clock liturgy",[400,20],"munro"],
                 [" - Clear kitchen",[475,30],"top"],
-                [" - <= 5 minutes Debussy",[505,30],"top"],
-                [" - Hand nexercises",[535,30],"top"],
               ["Harvest the afternoon -",[400,120],"munro"],
                 [" - 14 o'clock prayer",[490,140],"munro"],
                 [" - LTL20",[490,200],"munro"],
@@ -28,6 +26,8 @@ const standardChartDescriptions = {
               ["Closing liturgy",[720,20],"munro"],  
                 [" - Finance admin",[795,30],"top"],
                 [" - 10 minutes Rachmaninov",[825,30],"top"],
+                [" - <= 5 minutes Debussy",[855,30],"top"],
+                [" - Hand nexercises",[885,30],"top"],
               ["Miscellaneous...",[720,120],"munro"]
   ],
   "Default Friday":[
