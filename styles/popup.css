@@ -1,0 +1,47 @@
+.popup {
+  height: 300px;
+  width: 400px;
+  border: 2px black solid;
+  border-radius: 4px;
+  background-color: #e0e0e0;
+  z-index: 200;
+  position: relative;
+}
+
+.popup__h2 {
+  margin: 10px auto;
+  text-align: center;
+}
+
+.popup__groupIDPara {
+  margin: 10px auto;
+  text-align: center;
+}
+
+.popupCanvas {
+  height: 100%;
+  width: 100%;
+  background-color: #e0e0e0;
+  opacity: 0.5;
+  z-index: 100;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.popup__munrosSelect {
+  display: block;
+  width: 90%;
+  margin: auto;
+}
+
+.popup__OKbutton {
+  border: 2px black solid;
+  padding: 4px;
+  border-radius: 2px;
+  margin: 2px;
+}
+
+.popupCanvas--hidden {
+  display: none;
+}

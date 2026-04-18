@@ -3,6 +3,7 @@ const chartListDiv = document.getElementById("chartListDiv");
 const chartInfoDiv = document.getElementById("chartInfoDiv");
 const chartActionList = document.getElementById("chartActionList");
 const heading = document.getElementById("titleDiv").getElementsByTagName('H1')[0];
+const popupCanvas = document.getElementById("popupCanvas");
 let currentChart = null;
 let clickTracker = 0;
 let todayHasAChart = false;
@@ -24,7 +25,6 @@ class Munro {
     this.complete = complete || false;
     this.size = size || "munro";
     this.groupID = null;
-    this.popupPosition = [0,0]; // Rudinentary type-enforcement there!
   }
 }
 
@@ -71,6 +71,22 @@ const createMunro = (size,coOrdinates) => {
   return munro;
 }
 
+const calculatePopupPosition = (coOrdinates) => {
+  let topX = coOrdinates[0], topY = coOrdinates[1];
+  let popupX = 0, popupY = 0;
+  if (topY < 300 ) {
+    popupY = topY;
+  } else {
+    popupY = 300; 
+  }
+  if (topX < 500) {
+    popupX = topX + 100;
+  } else {
+    popupX = topX - 450;
+  }
+  return [popupX,popupY];
+}
+
 const addMunroToCurrentChart = (munro) => {
   currentChart.munroMeta++;
 // This increments the key for the next munro to be created, which makes sure every munro has a
@@ -80,6 +96,9 @@ const addMunroToCurrentChart = (munro) => {
 }
 
 const playAreaClick = (event) => {
+  if (event.target.id != "playArea") {
+    return null;
+  } 
   clickTracker++;
   if (clickTracker === 1) {
     singleClickTimer = setTimeout(function() {
@@ -125,32 +144,173 @@ const topMouseOver = (event) => {
 
 const playAreaRightClick = (event) => {
   event.preventDefault();
-  if (!event.target.classList.contains("triangle")) {
+  if (!event.target.classList.contains("triangle") ) {
     return null;
   }
-  // Try playArea.getElementById() and then 
-  // chartActionList.getElementById()
+  if (!event.target.id) {
+    // Effectively disables the right-click for anything that's not a munro/top inner
+    return null;
+  }
   const target = event.target;
-  const id = target.getAttribute("id");
-  // This is a bit hard-coded and clunky, but it reflects the style of 
-  // element id that the list items are given in addChartListLine().
-  const listId = "list-" + id;
-
+  const selectedTop = currentChart.munros.filter((t) => {
+    return t.id === target.id;
+  })[0];
   clickTracker++;
+  // Initially, right-click added a highlight to both the top and its corresponding list item.
+  // This feature is probably not needed at all now I've got the popup functionality working,
+  // but I've kept the double-click feature just in case I decide to revive it.
   if (clickTracker === 1) {
     singleClickTimer = setTimeout(function() {
-      event.target.classList.add("highlighted");
-      document.getElementById(listId).classList.add("highlighted");
+      drawPopup(selectedTop);
       clickTracker = 0;
-    }, 250);
+    }, 1); // was 250 when I had a working double-click
   } else if (clickTracker === 2) {
     clearTimeout(singleClickTimer);
-    event.target.classList.remove("highlighted");
-    document.getElementById(listId).classList.remove("highlighted");
     clickTracker = 0;
   }
 }
 
+const drawPopup = (top) => {
+// 'top' has an id which, when appended to 'list-', gives the id of an element in the
+// info list below the playarea. It also has a groupID that is null.
+// get the top's co-ordinates
+  const popupPosition = calculatePopupPosition(top.coOrdinates);  
+  let popupLeft = popupPosition[0];
+  let popupTop = popupPosition[1];
+  popupLeft = popupLeft.toString() + "px";
+  popupTop = popupTop.toString() + "px";
+
+  const popup = document.createElement('div');
+  popup.setAttribute("id","popup");
+  popup.setAttribute("fromtop",top.id);
+  popup.classList.add("popup");
+  popup.style.left = popupLeft;
+  popup.style.top = popupTop;
+
+  const descriptionH2 = document.createElement("h2");
+  descriptionH2.textContent = top.description;
+  descriptionH2.setAttribute("id","descriptionHeading");
+  descriptionH2.classList.add("popup__h2");
+  popup.appendChild(descriptionH2);
+
+  const munrosSelect = createMunrosSelectList(currentChart.munros,top.id);
+  munrosSelect.className = "popup__munrosSelect";
+  munrosSelect.addEventListener("change",setTopGroupID,false);
+  popup.appendChild(munrosSelect);
+
+  const groupIDPara = document.createElement("p");
+  top.groupID? groupIDPara.textContent = top.groupID : groupIDPara.textContent = "(Not added into a group)";
+  
+  groupIDPara.setAttribute("id","groupIDPara");
+  groupIDPara.classList.add("popup__groupIDPara");
+  popup.appendChild(groupIDPara);
+
+  const okButton = document.createElement("button");
+  okButton.setAttribute("id","popupOKButton");
+  okButton.addEventListener("click",clearPopup,false);
+  okButton.textContent = "Done";
+  okButton.classList.add("popup__OKbutton");
+  popup.appendChild(okButton);
+
+  playArea.appendChild(popup);
+  popupCanvas.classList.remove("popupCanvas--hidden");  
+}
+
+const clearPopup = (event) => {
+  event.stopPropagation();
+  document.getElementById("popupCanvas").classList.add("popupCanvas--hidden");
+  const popup = document.getElementById("popup");
+  popup.parentNode.removeChild(popup);
+}
+
+const setTopGroupID = (event) => {
+  const groupID = event.target.value;
+  const popup = event.target.parentNode;
+  const topToAssign = currentChart.munros.filter((t) => {
+                      return t.id === popup.getAttribute("fromtop");
+  })[0];
+  const groupIDPara = document.getElementById("groupIDPara");
+  const groupParent = currentChart.munros.filter((t) => {
+                      return t.id === groupID;
+  })[0];
+  groupIDPara.textContent = groupParent.description;
+  topToAssign.groupID = groupID;
+  data_save(currentChart); // makes sure the groupID change is saved into the current chart
+  assignTopToCurrentChartGroup(topToAssign)
+  assignTopInChartInfoDiv(topToAssign);
+  data_save(currentChart);
+}
+
+const assignTopToCurrentChartGroup = (topToAssign) => {
+/*  This is called when you right-click a top and assign it to a group, aka parent munro.
+    Here, we're moving the topToAssign munro/top object into the right place in the chart.munros array,
+    meaning that next time we load the chart, it will automatically be drawn in that place in the chart
+    info div (which is rendered li-by-li just going down the list of chart.munros in a for-loop).
+*/
+// I need to REMOVE topToAssign fae currentChart.munros 
+  const j = currentChart.munros.indexOf(
+      currentChart.munros.filter((t) => {
+          return t.id === topToAssign.id;
+        })[0]
+  );
+  currentChart.munros.splice(j,1);
+// Now find the position of the parent munro, and splice in topToAssign immediately after that
+  let i = currentChart.munros.indexOf(
+      currentChart.munros.filter((t) => {
+          return t.id === topToAssign.groupID;
+        })[0]
+  );
+  i++;
+  currentChart.munros.splice(i,0,topToAssign);
+}
+
+const assignTopInChartInfoDiv = (topToAssign) => {
+/*  This is called when you right-click a top and assign it to a group, aka parent munro, just like a
+    assignTopToCurrentChartGroup; it places the newly assigned top's corresponding li item in the right place in 
+    chartInfoDiv at the time you assign it. 
+*/
+const parentID = "list-" + topToAssign.groupID;
+const weanID = "list-" + topToAssign.id;
+const parentLi = document.getElementById(parentID);
+const weanLi = document.getElementById(weanID);
+parentLi.after(weanLi);
+}
+
+const createMunrosSelectList = (munros,notThisYin = null) => {
+  const select = document.createElement("select");
+  select.setAttribute("id","munrosSelectList");
+  let listsize = 1;
+  for (let i=0; i < munros.length; i++) {
+    if (munros[i].size === "munro" && !(munros[i].id === notThisYin)) {
+      listsize++;
+      const option = document.createElement("option"); 
+      option.textContent = munros[i].description;
+      option.value = munros[i].id;
+      select.appendChild(option);
+      option.addEventListener("mouseover",munroSelectListMouseover,false);
+      option.addEventListener("mouseout", munroSelectListMouseout, false);
+    }
+  }
+  if (listsize > 3) {
+    listsize = 4;
+  };
+  select.setAttribute("size",listsize);
+  return select;
+}
+
+const munroSelectListMouseover = (event) => {
+  const listItemToHighlight = document.getElementById("list-" + event.target.value);
+  const topToHighlight = document.getElementById(event.target.value);
+  listItemToHighlight.classList.add("highlighted");
+  topToHighlight.classList.add("highlighted");
+}
+
+const munroSelectListMouseout = (event) => {
+  const topToUnhighlight = document.getElementById(event.target.value);
+  const listItemToUnhighlight = document.getElementById("list-" + event.target.value);
+  listItemToUnhighlight.classList.remove("highlighted");
+  topToUnhighlight.classList.remove("highlighted");
+}
 
 const drawMunro = (munro) => {
 // draws a triangle, of size set in triangles.css, centered x and y pixels 
@@ -185,7 +345,6 @@ const drawMunro = (munro) => {
 const drawChart = (list,colourScheme = "playArea--default") => {
   emptyPlayArea();
   playArea.classList = "playArea " + colourScheme;
-  console.log(playArea.classList);
   chartActionList.innerHTML = '';
   for (let i=0; i<list.length; i++) {
     const munro = list[i];
@@ -229,33 +388,10 @@ const getMunroFromStringID = (id) => {
   return null;
 }
 
-const createSkeletonPopup = () => {
-  const popupContainer = document.createElement('div');
-  popupContainer.setAttribute("id","popupContainer");
-  popupContainer.classList.add("popupContainer");
-  const popup = document.createElement("div");
-  popup.setAttribute("id","popup");
-  popup.classList.add("popup");
-  const input = document.createElement("input"); 
-  const select = document.createElement("select"); 
-  const button = document.createElement("button"); 
-  input.setAttribute("id", "popupDescriptionInput");
-  input.setAttribute("type", "text");
-  input.setAttribute("name", "description");
-  popup.appendChild(input);
-  select.setAttribute("id","popupSelect");
-  select.setAttribute("name","groupID");
-  popup.appendChild(select);
-  button.setAttribute("id","popupSaveButton");
-  button.textContent = "Save changes";
-  popup.appendChild(button);
-  popupContainer.appendChild(popup);
-  return popupContainer;
-}
+
 
 const emptyPlayArea = () => {
   playArea.innerHTML = '';
-  const popup = createSkeletonPopup();
 //  playArea.appendChild(popup); Not using this yet
 }
 
@@ -270,7 +406,6 @@ dataAccess.js, which in turn is called from here.
 
 
 const selectExistingChart = (event) => {
-  // console.log("Change event... " + event.target + " " + event.target.value);
   const chartID = event.target.value;
   if (chartID === "Search for an existing chart") {
     return;
@@ -415,7 +550,6 @@ const createTemplateChart = (event) => {
     return;
   }
   currentChart = buildStandardChart(template);
-  console.log(currentChart.colourScheme);
   data_save(currentChart);
   const nameField = document.getElementById('chartNameInput');
   nameField.value = currentChart.name;
@@ -451,10 +585,8 @@ const activateProtocolButtonClick = (event) => {
     chartListDiv.appendChild(cancelButton);
     cancelButton.addEventListener("click",cancelButtonClick,false);
   } else {
-    console.log(currentChart);
     currentChart.colourScheme = setTemplateColourScheme("reflect");
     data_save(currentChart);
-    console.log(currentChart);
     drawChart(currentChart.munros,currentChart.colourScheme);
     event.target.textContent = "Activate R&R protocol";
     const cancelButton = document.getElementById("cancelButton");
