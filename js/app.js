@@ -224,6 +224,9 @@ const clearPopup = (event) => {
 }
 
 const setTopGroupID = (event) => {
+  if (event.target.value === "defaultOption") {
+    return;
+  }
   const groupID = event.target.value;
   const popup = event.target.parentNode;
   const topToAssign = currentChart.munros.filter((t) => {
@@ -280,6 +283,10 @@ const createMunrosSelectList = (munros,notThisYin = null) => {
   const select = document.createElement("select");
   select.setAttribute("id","munrosSelectList");
   let listsize = 1;
+  const defaultOption = document.createElement("option");
+  defaultOption.textContent = "Select a parent munro...";
+  defaultOption.value = "defaultOption";
+  select.appendChild(defaultOption);
   for (let i=0; i < munros.length; i++) {
     if (munros[i].size === "munro" && !(munros[i].id === notThisYin)) {
       listsize++;
