@@ -44,13 +44,13 @@ const standardChartDescriptions = {
                 [" - Clear kitchen",[505,30],"top"],
                 [" - Rachmaninov",[535,30],"top"],
                 [" - Debussy",[565,30],"top"],
-                [" - 5 minutes on LinkedIn",[595,30],"top"],
               ["Afternoon -",[400,120],"munro"],
                 [" - Week retro",[490,140],"munro"],
                 [" - Backlog refinement",[490,200],"munro"],
                 [" - Sprint plonning",[490,260],"munro"],
                 [" - Financial planning",[490,320],"munro"],
-              ["Miscellaneous...",[700,20],"munro"]
+              ["Miscellaneous...",[700,20],"munro"],
+              ["Tilli Larder",[20,220],"munro"]
   ],
   "Activity Day":[
               ["The Excitement:",[20,20],"munro"],
