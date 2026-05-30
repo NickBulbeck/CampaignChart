@@ -2,7 +2,7 @@ const standardChartDescriptions = {
   "Working Day":[
               ["Morning liturgy",[20,20],"munro"],
                 [" - Check Mum's chat",[95,30],"top"],
-                [" - Check this month's chart and scribbles doc",[125,30],"top"],
+                [" - Check this month's chart, 2026 and website backlogs",[125,30],"top"],
                 [" - Feed burrds",[155,30],"top"],
                 [" - Empty bins",[185,30],"top"],
                 [" - Do washing",[215,30],"top"],
