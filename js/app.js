@@ -368,9 +368,9 @@ const addChartListLine = (munro) => {
   li.setAttribute("id",listLineId);
   let desc = munro.description;
   html = `<input type="text" placeholder="Mind and add a description" value="${desc}">
-          <button class="saveMunroButton">Save</button>
-          <button class="deleteMunroButton">Delete</button>
-          <button class="markAsDoneButton">Done</button>`;
+          <button class="saveMunroButton" buttonType="saveMunro">Save</button>
+          <button class="deleteMunroButton" buttonType="deleteMunro">Delete</button>
+          <button class="markAsDoneButton" buttonType="markAsDone">Done</button>`;
   li.innerHTML = html;
   const newInput = li.getElementsByTagName('input')[0];
   newInput.addEventListener('blur',function(event) {
@@ -378,9 +378,10 @@ const addChartListLine = (munro) => {
   },false);
   chartActionList.appendChild(li);
   if (munro.complete) {
-    li.querySelector('.deleteMunroButton').style.display = 'none';
-    li.querySelector('.markAsDoneButton').disabled = true;
-    li.querySelector('.saveMunroButton').style.display = 'none';
+    li.querySelector('.deleteMunroButton').classList.add("topActionsList--hidden");
+    li.querySelector('.markAsDoneButton').textContent = "Re-open";
+    li.querySelector('.markAsDoneButton').classList.add("topActionsList--reOpen");
+    li.querySelector('.saveMunroButton').classList.add("topActionsList--hidden");
     li.getElementsByTagName('INPUT')[0].disabled = true; 
   }
 }
@@ -439,10 +440,11 @@ const chartActionListClick = (event) => {
   listID = event.target.parentNode.id;
   const munroID = listID.replace("list-","");
   const munro = getMunroFromStringID(munroID);
-  const action = event.target.className;
+  const action = event.target.getAttribute("buttonType");
+  console.log(action);
   const descriptionField = event.target.parentNode.getElementsByTagName('input')[0];
   const buttons = {
-    deleteMunroButton: () => {
+    deleteMunro: () => {
       list = currentChart.munros;
       for (let i=0; i<list.length; i++) {
         if (list[i] === munro) {
@@ -452,15 +454,34 @@ const chartActionListClick = (event) => {
       drawChart(currentChart.munros,currentChart.colourScheme);
       // this will also re-draw the chart action list 
     },
-    markAsDoneButton: () => {
-      munro.complete = true;
-      drawMunro(munro);
-      descriptionField.disabled = true;
-      event.target.disabled = true;
-      event.target.previousElementSibling.style.display = 'none';
-      event.target.previousElementSibling.previousElementSibling.style.display = 'none';
+    markAsDone: () => {
+      const deleteButton = event.target.previousElementSibling;
+      const saveButton = deleteButton.previousElementSibling;
+      if (!munro.complete) {
+        munro.complete = true;
+        drawMunro(munro);
+        descriptionField.disabled = true;
+        saveButton.classList.add("topActionsList--hidden");
+        deleteButton.classList.add("topActionsList--hidden");
+        event.target.textContent = "Re-open";
+        event.target.classList.add("topActionsList--reOpen");
+      } else {
+        munro.complete = false;
+        drawMunro(munro);
+        descriptionField.disabled = false;
+        saveButton.classList.remove("topActionsList--hidden");
+        deleteButton.classList.remove("topActionsList--hidden");
+        event.target.classList.remove("topActionsList--reOpen");
+        event.target.textContent = "Done";
+      }
+      // munro.complete = true;
+      // drawMunro(munro);
+      // descriptionField.disabled = true;
+      // event.target.previousElementSibling.style.display = 'none';
+      // event.target.previousElementSibling.previousElementSibling.style.display = 'none';
+
     },
-    saveMunroButton: () => {
+    saveMunro: () => {
       if (descriptionField.value) {
         munro.description = descriptionField.value;
       }

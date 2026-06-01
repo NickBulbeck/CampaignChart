@@ -1,3 +1,8 @@
+/*
+  BHAG: refactor this as BEM when I come to do some proper styling.
+
+*/
+
 button {
 	border: 1px black solid;
   margin: 2px;
@@ -10,3 +15,4 @@ input {
 #chartMunrosDiv {
   margin-bottom: 5rem;
 }
+
