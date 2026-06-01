@@ -368,9 +368,9 @@ const addChartListLine = (munro) => {
   li.setAttribute("id",listLineId);
   let desc = munro.description;
   html = `<input type="text" placeholder="Mind and add a description" value="${desc}">
-          <button class="saveMunroButton" buttonType="saveMunro">Save</button>
-          <button class="deleteMunroButton" buttonType="deleteMunro">Delete</button>
-          <button class="markAsDoneButton" buttonType="markAsDone">Done</button>`;
+          <button buttonAction="saveMunro">Save</button>
+          <button buttonAction="deleteMunro">Delete</button>
+          <button buttonAction="markAsDone">Done</button>`;
   li.innerHTML = html;
   const newInput = li.getElementsByTagName('input')[0];
   newInput.addEventListener('blur',function(event) {
@@ -378,10 +378,11 @@ const addChartListLine = (munro) => {
   },false);
   chartActionList.appendChild(li);
   if (munro.complete) {
-    li.querySelector('.deleteMunroButton').classList.add("topActionsList--hidden");
-    li.querySelector('.markAsDoneButton').textContent = "Re-open";
-    li.querySelector('.markAsDoneButton').classList.add("topActionsList--reOpen");
-    li.querySelector('.saveMunroButton').classList.add("topActionsList--hidden");
+    li.querySelector("[buttonAction='deleteMunro']").classList.add("topActionsList--hidden");
+    li.querySelector("[buttonAction='saveMunro']").classList.add("topActionsList--hidden");
+    const markAsDoneButton = li.querySelector("[buttonAction='markAsDone']");
+    markAsDoneButton.textContent = "Re-open";
+    markAsDoneButton.classList.add("topActionsList--reOpen");
     li.getElementsByTagName('INPUT')[0].disabled = true; 
   }
 }
@@ -440,8 +441,7 @@ const chartActionListClick = (event) => {
   listID = event.target.parentNode.id;
   const munroID = listID.replace("list-","");
   const munro = getMunroFromStringID(munroID);
-  const action = event.target.getAttribute("buttonType");
-  console.log(action);
+  const action = event.target.getAttribute("buttonAction");
   const descriptionField = event.target.parentNode.getElementsByTagName('input')[0];
   const buttons = {
     deleteMunro: () => {
