@@ -642,7 +642,7 @@ initialiseChartInfoDiv = () => {
 }
 
 const create_selectList_existing = () => {
-  const todaysChart = detectToday();
+  let todaysChart = detectToday();
   const selectList_existing = document.createElement("select");
   selectList_existing.setAttribute("id","selectFromExisting");
   const chartList = data_getAll();
@@ -658,8 +658,10 @@ const create_selectList_existing = () => {
     if (chartName == todaysChart) {
       chartName += " TODAY";
       todayHasAChart = true;
-      currentChart = chartList[i];
-      drawChart(chartList[i].munros,chartList[i].colourScheme);
+      if (!currentChart) {
+        currentChart = chartList[i];
+        drawChart(chartList[i].munros,chartList[i].colourScheme);
+      }
     }
     option.textContent = chartName;
     selectList_existing.appendChild(option);
@@ -703,7 +705,7 @@ const loadChartList = () => {
 
   chartListDiv.innerHTML = '';
 
-  const selectList_existing = create_selectList_existing();
+  const selectList_existing = create_selectList_existing(); // MAYBE CURRENTCHART SET UP HERE
   chartListDiv.appendChild(selectList_existing);
 
   const newChartButton = document.createElement('button');
@@ -738,6 +740,7 @@ const detectToday = () => {
   return todayChart;
 }
 const inTodaysNews = () => {
+  console.log(currentChart);
   const today = detectToday();
   const chartOptions = (chartListDiv.querySelectorAll('option'));
   chartOptions.forEach(option => {
@@ -759,8 +762,11 @@ const drawTodaysChart = (chartName) => {
 //****************************************************************************************
 // The "app" per se starts here.
 //****************************************************************************************
+console.log(currentChart); // null here
 setUpScreen();
+console.log(currentChart);
 loadChartList();
+console.log(currentChart);
 // const selectFromExisting = document.getElementById("selectFromExisting");
 // selectFromExisting.addEventListener('change',selectExistingChart,false);
 
@@ -773,6 +779,7 @@ chartActionList.addEventListener('click',chartActionListClick,false);
 chartInfoDiv.addEventListener('click',chartInfoDivClick,false);
 // document.addEventListener('keydown',cmndS,false)
 // chartNameInput.addEventListener('input',chartNameInputProcessing,false);
+console.log(currentChart);
 
 document.addEventListener("keydown", function(e) {
   if ((window.navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)  && e.keyCode == 83) {
@@ -782,6 +789,7 @@ document.addEventListener("keydown", function(e) {
       }
     }
 }, false);
+console.log(currentChart);
 
 // Detect today's chart, if there is one
 inTodaysNews();
