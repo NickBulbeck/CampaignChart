@@ -21,7 +21,7 @@ const standardChartDescriptions = {
                 [" - Clear kitchen",[475,30],"top"],
               ["Harvest the afternoon -",[400,120],"munro"],
                 [" - 13 o'clock prayer",[490,140],"munro"],
-                [" - Main topic...",[490,200],"munro"],
+                [" - Infrastructure:",[490,200],"munro"],
                 [" - Closing prayer",[490,260],"top"],
               ["Closing liturgy",[720,20],"munro"],  
                 [" - Finance admin",[795,30],"top"],
@@ -46,13 +46,12 @@ const standardChartDescriptions = {
                 [" - Clear kitchen",[505,30],"top"],
                 [" - Rachmaninov",[535,30],"top"],
                 [" - Debussy",[565,30],"top"],
-              ["Afternoon -",[400,120],"munro"],
-                [" - Week retro",[490,140],"munro"],
-                [" - Backlog refinement",[490,200],"munro"],
-                [" - Sprint plonning",[490,260],"munro"],
-                [" - Financial planning",[490,320],"munro"],
-              ["Miscellaneous...",[700,20],"munro"],
-              ["Tilli Larder",[20,220],"munro"]
+              ["Third act -",[400,120],"munro"],
+                [" - Retro",[490,140],"munro"],
+                [" - Infrascture refinement",[490,200],"munro"],
+                [" - Artefacts",[490,260],"munro"],
+                [" - Financial planning / GJC for us",[490,320],"munro"],
+              ["Miscellaneous...",[700,20],"munro"]
   ],
   "Activity Day":[
               ["The Excitement:",[20,20],"munro"],
@@ -73,7 +72,7 @@ const standardChartDescriptions = {
                 [" - Rachmaninov",[535,30],"top"],
                 [" - Debussy",[565,30],"top"],
                 [" - 5 minutes on LinkedIn",[595,30],"top"],
-              ["Main actitities -",[400,120],"munro"],
+              ["Main activities -",[400,120],"munro"],
                 [" [one] ",[490,140],"munro"],
                 [" [two] ",[490,200],"munro"],
                 [" [three] ",[490,260],"munro"]
@@ -83,10 +82,9 @@ const standardChartDescriptions = {
                 [" - Morning prayer",[95,30],"top"],
                 [" - Feed burrds",[125,30],"top"],
                 [" - Do washing",[155,30],"top"],
-                [" - Message Mum",[185,30],"top"],
                 ["Gather locally",[100,100],"munro"],
                 ["Review kitchen calendar",[100,200],"munro"],
-                ["Review charts/sprints",[100,300],"munro"],
+                ["Read a book",[100,300],"munro"],
                 ["Gather non-locally",[100,400],"munro"]
   ],
   "Month":[]
