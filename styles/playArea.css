@@ -29,8 +29,13 @@
   background-color: #33cc33;
 }
 
-.playArea--default-friday {
+.playArea--gjc-day {
   background-color: purple;
+}
+
+.playArea--default-saturday {
+  background-color: palegreen;
+  border: 1px solid #404040;
 }
 
 .playArea--devops-day {

@@ -3,7 +3,7 @@ const standardChartDescriptions = {
               ["Morning liturgy",[20,20],"munro"],
                 [" - Check Mum's chat",[95,30],"top"],
                 [" - Check this month's chart, 2026 (artefacts) and website backlogs",[125,30],"top"],
-                [" - Feed burrds",[155,30],"top"],
+                [" - Physio",[155,30],"top"],
                 [" - Empty bins",[185,30],"top"],
                 [" - Do washing",[215,30],"top"],
                 [" - Check kitchen calendar",[245,30],"top"],
@@ -28,15 +28,15 @@ const standardChartDescriptions = {
                 [" - Hand nexercises",[885,30],"top"],
               ["Miscellaneous...",[720,120],"munro"]
   ],
-  "Default Friday":[
+  "GJC day":[
               ["Morning liturgy",[20,20],"munro"],
                 [" - Kettlebell exercises",[95,30],"top"],
                 [" - Check this month's chart and scribbles doc",[125,30],"top"],
-                [" - Feed burrds",[155,30],"top"],
+                [" - Physio",[155,30],"top"],
                 [" - Empty bins",[185,30],"top"],
                 [" - Do washing",[215,30],"top"],
                 [" - Check kitchen calendar",[245,30],"top"],
-              ["Morning walk -",[20,120],"munro"],
+              ["Self care and training -",[20,120],"munro"],
                 [" (e.g. >= Hoop Peas)",[110,140],"munro"],
               ["Mid-day liturgy",[400,20],"munro"],
                 [" - Finance admin",[475,30],"top"],
@@ -50,6 +50,18 @@ const standardChartDescriptions = {
                 [" - Financial planning / GJC for us",[490,320],"munro"],
               ["Miscellaneous...",[700,20],"munro"]
   ],
+  "Default Saturday":[
+              ["Morning liturgy",[20,20],"munro"],
+                [" - Check Mum's chat",[95,30],"top"],
+                [" - Check this month's chart, 2026 (artefacts) and website backlogs",[125,30],"top"],
+                [" - Physio",[155,30],"top"],
+                [" - Empty bins",[185,30],"top"],
+                [" - Do washing",[215,30],"top"],
+                [" - Check kitchen calendar",[245,30],"top"],
+                [" - Kettlebell exercises",[275,30],"top"],
+              ["Challenges:",[20,120],"munro"],
+              ["Miscellaneous...",[700,20],"munro"]
+  ],
   "Activity Day":[
               ["The Excitement:",[20,20],"munro"],
               ["The prep -",[20,100],"munro"]
@@ -59,7 +71,7 @@ const standardChartDescriptions = {
                 [" - Kettlebell exercises",[95,30],"top"],
                 [" - Morning prayer",[125,30],"top"],
                 [" - Check this month's chart and scribbles doc",[155,30],"top"],
-                [" - Feed burrds",[185,30],"top"],
+                [" - Physio",[185,30],"top"],
                 [" - Empty bins",[215,30],"top"],
                 [" - Do washing",[245,30],"top"],
                 [" - Check kitchen calendar",[275,30],"top"],
