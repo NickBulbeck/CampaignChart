@@ -43,10 +43,15 @@ const data_commit = () => {
 }
 
 const data_getByName = (searchName) => {
+// in principle, there could be mair'n yin chart with a given name.
+	const results = []
 	for (let i=0; i<dataBase.length; i++) {
 		if (dataBase[i].name.toLowerCase() === searchName.toLowerCase()) {
-			return dataBase[i];
+			results.push(dataBase[i]);
 		}
+	}
+	if (results.length > 0) {
+		return results; 
 	}
 	return null;
 }

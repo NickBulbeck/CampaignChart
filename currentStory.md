@@ -20,18 +20,27 @@
   that functionality to the chart info div, next to the "Delete chart" button, because 
   that's a plausible scenario. For instance, a default Saturday is actually a walking day.
 
+  Change chart theme. This is its own story; the idea is that we can create a default week,
+  but update one or mair days to be a different type of day. The obvious example is when we
+  go walking instead of a default day.
+  Clicking the button launches a popup like right-clicking a top. It has a drop-down menu
+  of noptions (drawn from the same source as the existing yin) and a "cancel" button.
+  When you select a noption, two mair buttons appear: overwrite, and colour only. 
+  When you overwrite, it overwrites the chart with the default set of tops. When you go for
+  colour only, it changes the background colour without changing any of the tops.
 
 ## Approach
   The challenge here is to create and name a chart, then save it. Once that functionality
   is in place, I think the thing to do is to set up an array of 7 charts, and loop through
   it.
 
-
+## TEMP interim step
+  It doesn't matter what order the charts are created in; what matters is the order in which
+  they are displayed. So, it's actually the chart list display function that I need to
+  alter - that immediately embeds a whole load of functionality.
 
 ## Steps
-  STEP: ...
 
- 
 
 
 

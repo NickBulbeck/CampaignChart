@@ -1,0 +1,11 @@
+.popup__standardWeek {
+  width: 400px;
+  margin: 100px auto;
+  background-color: rgba(224,224,224,1);
+}
+
+.popup__standardWeek-Select {
+  display: block;
+  width: 80%;
+  margin: 20px auto;
+}

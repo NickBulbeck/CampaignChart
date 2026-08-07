@@ -1,0 +1,11 @@
+.popup__theme {
+  width: 500px;
+  margin: 100px auto;
+  background-color: rgba(224,224,224,1);
+}
+
+.popup__theme-Select {
+  display: block;
+  width: 90%;
+  margin: auto;
+}

@@ -71,7 +71,7 @@ const createMunro = (size,coOrdinates) => {
   return munro;
 }
 
-const calculatePopupPosition = (coOrdinates) => {
+const calculateParentingPopupPosition = (coOrdinates) => {
   let topX = coOrdinates[0], topY = coOrdinates[1];
   let popupX = 0, popupY = 0;
   if (topY < 300 ) {
@@ -161,7 +161,7 @@ const playAreaRightClick = (event) => {
   // but I've kept the double-click feature just in case I decide to revive it.
   if (clickTracker === 1) {
     singleClickTimer = setTimeout(function() {
-      drawPopup(selectedTop);
+      drawParentingPopup(selectedTop);
       clickTracker = 0;
     }, 1); // was 250 when I had a working double-click
   } else if (clickTracker === 2) {
@@ -170,20 +170,21 @@ const playAreaRightClick = (event) => {
   }
 }
 
-const drawPopup = (top) => {
+const drawParentingPopup = (top) => {
 // 'top' has an id which, when appended to 'list-', gives the id of an element in the
 // info list below the playarea. It also has a groupID that is null.
 // get the top's co-ordinates
-  const popupPosition = calculatePopupPosition(top.coOrdinates);  
+  const popupPosition = calculateParentingPopupPosition(top.coOrdinates);  
   let popupLeft = popupPosition[0];
   let popupTop = popupPosition[1];
   popupLeft = popupLeft.toString() + "px";
   popupTop = popupTop.toString() + "px";
 
   const popup = document.createElement('div');
-  popup.setAttribute("id","popup");
+  popup.setAttribute("id","parentingPopup");
   popup.setAttribute("fromtop",top.id);
   popup.classList.add("popup");
+  popup.classList.add("popup__parenting");
   popup.style.left = popupLeft;
   popup.style.top = popupTop;
 
@@ -194,7 +195,7 @@ const drawPopup = (top) => {
   popup.appendChild(descriptionH2);
 
   const munrosSelect = createMunrosSelectList(currentChart.munros,top.id);
-  munrosSelect.className = "popup__munrosSelect";
+  munrosSelect.className = "popup__select";
   munrosSelect.addEventListener("change",setTopGroupID,false);
   popup.appendChild(munrosSelect);
 
@@ -202,24 +203,102 @@ const drawPopup = (top) => {
   top.groupID? groupIDPara.textContent = top.groupID : groupIDPara.textContent = "(Not added into a group)";
   
   groupIDPara.setAttribute("id","groupIDPara");
-  groupIDPara.classList.add("popup__groupIDPara");
+  groupIDPara.classList.add("popup__para");
   popup.appendChild(groupIDPara);
 
   const okButton = document.createElement("button");
   okButton.setAttribute("id","popupOKButton");
   okButton.addEventListener("click",clearPopup,false);
   okButton.textContent = "Done";
-  okButton.classList.add("popup__OKbutton");
+  okButton.classList.add("popup__button");
   popup.appendChild(okButton);
 
   playArea.appendChild(popup);
-  popupCanvas.classList.remove("popupCanvas--hidden");  
+  popupCanvas.classList.remove("hidden");  
 }
 
-const clearPopup = (event) => {
-  event.stopPropagation();
-  document.getElementById("popupCanvas").classList.add("popupCanvas--hidden");
-  const popup = document.getElementById("popup");
+const drawThemePopup = (colourScheme) => {
+  const popup = document.createElement("div");
+  popup.setAttribute("id","themePopup");
+  popup.classList.add("popup");
+  popup.classList.add("popup__theme");
+// Add a wee label
+  const title = document.createElement("h2");
+  title.setAttribute("id","themePopupTitle");
+  title.classList.add("popup__h2");
+  title.textContent = "Select a theme...";
+  popup.appendChild(title);
+// Add a select
+  const select = document.createElement("select");
+  select.setAttribute("id","themeSelect");
+  select.classList.add("popup__theme-Select");
+  const themes = Object.keys(standardChartDescriptions);
+  const currentThemeName = themeNameFromColourScheme(colourScheme);
+  for (let i=0; i < themes.length; i++) {
+    const option = document.createElement("option");
+    option.setAttribute("id",themes[i]);
+    option.setAttribute("value",themes[i]);
+    option.textContent = themes[i];
+    if (themes[i].toLocaleLowerCase() == currentThemeName) {
+      option.selected = true;
+    }
+    select.appendChild(option);
+  }
+  select.addEventListener("change",() => {
+    document.getElementById("colourOnlyButton").classList.remove("hidden");
+    document.getElementById("overwriteButton").classList.remove("hidden");
+  },false)
+  popup.appendChild(select);
+// Add the colour-scheme button
+  const colourOnlyButton = document.createElement("button");
+  colourOnlyButton.setAttribute("id","colourOnlyButton");
+  colourOnlyButton.textContent = "Set colour only";
+  colourOnlyButton.classList.add("popup__button");
+  colourOnlyButton.classList.add("hidden");
+  colourOnlyButton.addEventListener("click",changeChartColour,false);
+  popup.appendChild(colourOnlyButton);
+// Add the overwrite button
+  const overwriteButton = document.createElement("button");
+  overwriteButton.setAttribute("id","overwriteButton");
+  overwriteButton.textContent = "Set all elements to default";
+  overwriteButton.classList.add("popup__button");
+  overwriteButton.classList.add("hidden");
+  overwriteButton.addEventListener("click",setChartElementsToDefault,false);
+  popup.appendChild(overwriteButton);
+// Add the OK button
+  const popupOKButton = document.createElement("button");
+  popupOKButton.classList.add("popup__button");
+  popupOKButton.textContent = "Cancel";
+  popupOKButton.addEventListener("click",clearPopup);
+  popup.appendChild(popupOKButton);
+//
+  return popup;
+}
+
+const changeChartColour = () => {
+  const theme = document.getElementById("themeSelect").value;
+  currentChart.colourScheme = setTemplateColourScheme(theme);
+  data_save(currentChart);
+  drawChart(currentChart.munros,currentChart.colourScheme);
+  clearPopup();
+}
+const setChartElementsToDefault = () => {
+  const template = document.getElementById("themeSelect").value;
+  const tempChart = buildStandardChart(template);
+  currentChart.munros = tempChart.munros;
+  currentChart.munroMeta = tempChart.munroMeta;
+  currentChart.colourScheme = setTemplateColourScheme(template);
+  data_save(currentChart)
+  drawChart(currentChart.munros,currentChart.colourScheme);
+  clearPopup();
+}
+
+const clearPopup = () => {
+// Slight brittleness: if there's ever more than one element with a class of .popup,
+// this will only delete one of them. Having more than one popup rendered at a time
+// would itself be an antipattern, mind.
+  document.getElementById("popupCanvas").classList.add("hidden");
+  const popup = document.getElementsByClassName("popup")[0];
   popup.parentNode.removeChild(popup);
 }
 
@@ -272,11 +351,11 @@ const assignTopInChartInfoDiv = (topToAssign) => {
     assignTopToCurrentChartGroup; it places the newly assigned top's corresponding li item in the right place in 
     chartInfoDiv at the time you assign it. 
 */
-const parentID = "list-" + topToAssign.groupID;
-const weanID = "list-" + topToAssign.id;
-const parentLi = document.getElementById(parentID);
-const weanLi = document.getElementById(weanID);
-parentLi.after(weanLi);
+  const parentID = "list-" + topToAssign.groupID;
+  const weanID = "list-" + topToAssign.id;
+  const parentLi = document.getElementById(parentID);
+  const weanLi = document.getElementById(weanID);
+  parentLi.after(weanLi);
 }
 
 const createMunrosSelectList = (munros,notThisYin = null) => {
@@ -355,7 +434,6 @@ const drawChart = (list,colourScheme = "playArea--default") => {
   chartActionList.innerHTML = '';
   for (let i=0; i<list.length; i++) {
     const munro = list[i];
-    const id = munro.id;
     drawMunro(munro);
     addChartListLine(munro);
   }
@@ -397,15 +475,8 @@ const getMunroFromStringID = (id) => {
   return null;
 }
 
-
-
 const emptyPlayArea = () => {
   playArea.innerHTML = '';
-//  playArea.appendChild(popup); Not using this yet
-}
-
-const emptyChartActionList = () => {
-  // provisional - may not use
 }
 
 /*****************************************************************************************
@@ -527,6 +598,18 @@ const chartInfoDivClick = (event) => {
       currentChart = newChart;
       nameField.value = currentChart.name;
       heading.textContent = currentChart.name;
+    },
+    changeThemeButton: () => {
+      let colourScheme = null;
+      if (currentChart) {
+        colourScheme = currentChart.colourScheme;
+      }
+      const themePopup = drawThemePopup(colourScheme);
+      popupCanvas.appendChild(themePopup);
+      popupCanvas.classList.remove("hidden");
+    },
+    createWeekButton: () => {
+
     }
   }
   if (event.target.tagName === 'BUTTON') {
@@ -541,11 +624,6 @@ const cmndS = (event) => {
   }
 }
 
-const chartNameInputProcessing = (event) => {
-  // may use this later. 
-  // which is a stupid reason for creating a function.
-}
-
 const newChartButtonClick = (event) => {
   // In case the user clicks the button first of all, when currentChart is null:
   if (currentChart) {
@@ -557,6 +635,108 @@ const newChartButtonClick = (event) => {
   currentChart = null;
   initialiseChartInfoDiv();
 }
+/**************************************************************************************
+ Create week's-worth of charts
+  - An array of standard week charts (8, including one for the week overall)
+  - A "new week" button
+  - An event-listener for the button that launches the mondays popup
+  - The mondays popup itself, with:
+    -- A function that works out the upcoming Mondays
+    -- A select list containing the relevant Mondays
+    -- A "close" button
+  - An event-listener for the select list that creates a chart based on the select value
+  - A buildStandardChart usage that adds the name
+  - A means of detecting duplicates
+***************************************************************************************/
+
+const createStandardWeekButtonClick = () => {
+  const popup = createStandardWeekPopup();
+  popupCanvas.appendChild(popup);
+  popupCanvas.classList.remove("hidden");
+}
+
+const createStandardWeekPopup = () => {
+  const popup = document.createElement("div");
+  popup.setAttribute("id","createStandardWeekPopup");
+  popup.classList.add("popup");
+  popup.classList.add("popup__standardWeek");
+  // Title
+  const title = document.createElement("h2");
+  title.classList.add("popup__h2");
+  title.textContent = "Select an upcoming Monday:";
+  popup.appendChild(title);
+  // Select list
+  const selectUpcomingMonday = document.createElement("select");
+  selectUpcomingMonday.setAttribute("id","selectUpcomingMonday");
+  selectUpcomingMonday.classList.add("popup__standardWeek-Select");
+  selectUpcomingMonday.classList.add("popup__select");
+  const upcomingMondays = showUpcomingMondays();
+  const nullOption = document.createElement("option");
+  nullOption.textContent = "Select a Monday...";
+  selectUpcomingMonday.appendChild(nullOption);
+  for (let i = 0; i < upcomingMondays.length; i++) {
+    const option = document.createElement("option");
+    option.value = upcomingMondays[i];
+    option.textContent = upcomingMondays[i];
+    selectUpcomingMonday.appendChild(option);
+  }
+  selectUpcomingMonday.addEventListener("change",selectMonday,false);
+  popup.appendChild(selectUpcomingMonday);
+  // Cancel button
+  const cancelButton = document.createElement("button");
+  cancelButton.setAttribute("id","cancelButton");
+  cancelButton.classList.add("popup__button");
+  cancelButton.addEventListener("click",clearPopup,false);
+  cancelButton.textContent = "Cancel";
+  popup.appendChild(cancelButton);
+  // Return
+  return popup;
+}
+
+const showUpcomingMondays = () => {
+  // If there are fewer than 3 Mondays left in this month, show next month's
+  // an' a'.
+  let theNoo = Temporal.Now.plainDateISO();
+  const gap = 8 - theNoo.dayOfWeek;
+  let nextMonday = theNoo.add({days:gap});
+  let upcomingMondays = [];
+  while (nextMonday.month === theNoo.month) {
+    upcomingMondays.push(chartNameFromTemporal(nextMonday));
+    nextMonday = nextMonday.add({days:7});
+  }
+  if (upcomingMondays.length < 3) {
+    const nextMonth = theNoo.month + 1;
+    while (nextMonday.month === nextMonth) {
+      upcomingMondays.push(chartNameFromTemporal(nextMonday));
+      nextMonday = nextMonday.add({days:7});
+    }
+  }
+  return upcomingMondays;
+}
+
+const selectMonday = (monday) => {
+// Time to finally use data_getByName in dataAccess!
+// Want some validation for when there are duplicates
+// Create an array of days as set by the standardWeek object declared in
+// js/standardWeek.js
+/*
+So, a lot happening here.
+ - A date comes in. 
+ - Create an array of 7 date-format chart names.
+ - Check for duplicates, and if any exist, delete them.
+ - If there's no chart for the next month, create one
+
+*/
+}
+
+const chartNameFromTemporal = (temporal) => {
+  const formatter = new Intl.DateTimeFormat("en-GB", {
+    day: "numeric",
+    weekday: "long"
+  });
+  const chartName = formatter.format(temporal);
+  return chartName;
+}
 
 /**************************************************************************************
  Template/standard charts
@@ -566,6 +746,12 @@ const setTemplateColourScheme = (template) => {
   template = template.toLowerCase();
   template = template.replace(" ","-");
   const colourScheme = "playArea--" + template;
+  return colourScheme;
+}
+
+const themeNameFromColourScheme = (colourScheme) => {
+  colourScheme = colourScheme.replace("playArea--","");
+  colourScheme = colourScheme.replace("-"," ");
   return colourScheme;
 }
 
@@ -638,6 +824,7 @@ initialiseChartInfoDiv = () => {
     '<input id="chartNameInput" type="text" name="chartDetails" placeholder="Enter a chart name">' +
     '<button id="saveChartButton">Save changes</button>' +
     '<button id="saveAsButton">Save chart as...</button>' +
+    '<button id="changeThemeButton">Change theme...</button>' +
     '<button id="deleteChartButton">Delete chart</button>';
 }
 
@@ -716,6 +903,12 @@ const loadChartList = () => {
   const selectList_standard = create_selectList_standard();
   chartListDiv.appendChild(selectList_standard);
 
+  const standardWeekButton = document.createElement("button");
+  standardWeekButton.setAttribute("id","newWeekButton");
+  standardWeekButton.textContent = "Standard week";
+  standardWeekButton.addEventListener("click",createStandardWeekButtonClick,false);
+  chartListDiv.appendChild(standardWeekButton);
+
   const selectFromExisting = document.getElementById("selectFromExisting");
   selectFromExisting.addEventListener('change',selectExistingChart,false);
 
@@ -762,11 +955,8 @@ const drawTodaysChart = (chartName) => {
 //****************************************************************************************
 // The "app" per se starts here.
 //****************************************************************************************
-console.log(currentChart); // null here
 setUpScreen();
-console.log(currentChart);
 loadChartList();
-console.log(currentChart);
 // const selectFromExisting = document.getElementById("selectFromExisting");
 // selectFromExisting.addEventListener('change',selectExistingChart,false);
 
@@ -778,8 +968,6 @@ playArea.addEventListener('contextmenu',playAreaRightClick,false);
 chartActionList.addEventListener('click',chartActionListClick,false);
 chartInfoDiv.addEventListener('click',chartInfoDivClick,false);
 // document.addEventListener('keydown',cmndS,false)
-// chartNameInput.addEventListener('input',chartNameInputProcessing,false);
-console.log(currentChart);
 
 document.addEventListener("keydown", function(e) {
   if ((window.navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)  && e.keyCode == 83) {

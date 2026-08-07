@@ -1,11 +1,9 @@
 .popup {
-  height: 300px;
-  width: 400px;
   border: 2px black solid;
   border-radius: 4px;
   background-color: #e0e0e0;
   z-index: 200;
-  position: relative;
+  padding: 10px 0 10px 0;
 }
 
 .popup__h2 {
@@ -13,7 +11,7 @@
   text-align: center;
 }
 
-.popup__groupIDPara {
+.popup__para {
   margin: 10px auto;
   text-align: center;
 }
@@ -21,27 +19,24 @@
 .popupCanvas {
   height: 100%;
   width: 100%;
-  background-color: #e0e0e0;
-  opacity: 0.5;
+  background-color: rgba(224, 224, 224, 0.5);
   z-index: 100;
   position: fixed;
   top: 0;
   left: 0;
 }
 
-.popup__munrosSelect {
+.popup__select {
   display: block;
-  width: 90%;
-  margin: auto;
+  width: 80%;
+  margin: 10px auto;
 }
 
-.popup__OKbutton {
-  border: 2px black solid;
+.popup__button {
+  border: 3px black solid;
   padding: 4px;
-  border-radius: 2px;
-  margin: 2px;
-}
-
-.popupCanvas--hidden {
-  display: none;
+  border-radius: 8px;
+  display: block;
+  margin: 10px auto;
+  min-width: 75px;
 }

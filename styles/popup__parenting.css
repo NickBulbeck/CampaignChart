@@ -1,0 +1,11 @@
+.popup__parenting {
+  height: 300px;
+  width: 400px;
+  position: relative;
+}
+
+.popup__parenting-munrosSelect {
+  display: block;
+  width: 90%;
+  margin: auto;
+}
