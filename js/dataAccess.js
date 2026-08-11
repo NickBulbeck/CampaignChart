@@ -9,7 +9,8 @@
 let dataBase = [];
 
 const data_save = (campaignChart) => {
-	const key = campaignChart.id;
+	const key = campaignChart.id + campaignChart.name;
+	console.log(key);
 	for (let i=0; i<dataBase.length; i++) {
 		if (dataBase[i].id === key) {
 			dataBase[i] = campaignChart;

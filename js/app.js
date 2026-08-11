@@ -675,12 +675,13 @@ const createStandardWeekPopup = () => {
   nullOption.textContent = "Select a Monday...";
   selectUpcomingMonday.appendChild(nullOption);
   for (let i = 0; i < upcomingMondays.length; i++) {
+  // The value is converted to a string implicitly here
     const option = document.createElement("option");
     option.value = upcomingMondays[i];
-    option.textContent = upcomingMondays[i];
+    option.textContent = chartNameFromTemporal(upcomingMondays[i]);
     selectUpcomingMonday.appendChild(option);
   }
-  selectUpcomingMonday.addEventListener("change",selectMonday,false);
+  selectUpcomingMonday.addEventListener("change",mondaySelected,false);
   popup.appendChild(selectUpcomingMonday);
   // Cancel button
   const cancelButton = document.createElement("button");
@@ -701,32 +702,51 @@ const showUpcomingMondays = () => {
   let nextMonday = theNoo.add({days:gap});
   let upcomingMondays = [];
   while (nextMonday.month === theNoo.month) {
-    upcomingMondays.push(chartNameFromTemporal(nextMonday));
+    upcomingMondays.push(nextMonday);
     nextMonday = nextMonday.add({days:7});
   }
   if (upcomingMondays.length < 3) {
     const nextMonth = theNoo.month + 1;
     while (nextMonday.month === nextMonth) {
-      upcomingMondays.push(chartNameFromTemporal(nextMonday));
+      upcomingMondays.push(nextMonday);
       nextMonday = nextMonday.add({days:7});
     }
   }
   return upcomingMondays;
 }
 
-const selectMonday = (monday) => {
-// Time to finally use data_getByName in dataAccess!
-// Want some validation for when there are duplicates
-// Create an array of days as set by the standardWeek object declared in
-// js/standardWeek.js
-/*
-So, a lot happening here.
- - A date comes in. 
- - Create an array of 7 date-format chart names.
- - Check for duplicates, and if any exist, delete them.
- - If there's no chart for the next month, create one
+const mondaySelected = (event) => {
+// Approach: store the basic week in standardWeek.js
+// Start with the opening Monday
+// - Create an array of seven days
+// - Remove any days that are not in standardWeek
+// - Remove any days that already have a chart
+// - If there isn't already a w/c chart, add w/c to the array
+// 
+  let referenceDate = Temporal.PlainDateTime.from(event.target.value);
+  const weekCommencing = "w/c " + chartNameFromTemporal(referenceDate);
+  let baseWeek = [weekCommencing];
+  for (let i = 1; i <= 7; i++) {
+    const weekday = weekdayFromTemporal(referenceDate);
+    if (Object.keys(standardWeek).includes(weekday)) {
+      baseWeek.push(chartNameFromTemporal(referenceDate));
+    }
+    referenceDate = referenceDate.add({ days : 1 });
+  }
+  console.log(baseWeek);
+  const deduplicatedWeek = removeDateClashes(baseWeek);
+  console.log(deduplicatedWeek);
+  createWeeksWorthOfCharts(deduplicatedWeek);
+}
 
-*/
+const removeDateClashes = (baseWeek) => {
+  let deduplicatedWeek = [];
+  for (let i = 0; i < baseWeek.length; i++) {
+    if (!data_getByName(baseWeek[i])) {
+      deduplicatedWeek.push(baseWeek[i]);
+    }
+  }
+  return deduplicatedWeek;
 }
 
 const chartNameFromTemporal = (temporal) => {
@@ -737,6 +757,42 @@ const chartNameFromTemporal = (temporal) => {
   const chartName = formatter.format(temporal);
   return chartName;
 }
+
+const weekdayFromTemporal = (temporal) => {
+  const formatter = new Intl.DateTimeFormat("en-GB", {
+    weekday: "long"
+  });
+  const weekday = formatter.format(temporal);
+  return weekday;
+}
+
+const createWeeksWorthOfCharts = (charts) => {
+  // If there's a w/c, it will always be the first item in the array.
+  // There may not be one, so check.
+  let workingChart;
+  let chartsCreated = 0;
+  if (charts.length === 0) {
+    console.log("All potential new charts were, apparently, duplicates.");
+    console.log(`${chartsCreated} charts created.`);
+    return null;
+  }
+  if (charts[0].includes("w/c")) {
+    workingChart = buildStandardChart("Week");
+    workingChart.name = charts[0];
+    data_save(workingChart);
+    chartsCreated++;
+    charts.shift(); 
+  }
+  for (let i = 0; i < charts.length; i++) {
+    const weekday = charts[i].split(" ")[0];
+    const template = standardWeek[weekday];
+    workingChart = buildStandardChart(template);
+    workingChart.name = charts[i];
+    data_save(workingChart);
+    chartsCreated++;
+  }
+  console.log(`${chartsCreated} charts created.`);
+} 
 
 /**************************************************************************************
  Template/standard charts
@@ -933,7 +989,6 @@ const detectToday = () => {
   return todayChart;
 }
 const inTodaysNews = () => {
-  console.log(currentChart);
   const today = detectToday();
   const chartOptions = (chartListDiv.querySelectorAll('option'));
   chartOptions.forEach(option => {
@@ -977,7 +1032,6 @@ document.addEventListener("keydown", function(e) {
       }
     }
 }, false);
-console.log(currentChart);
 
 // Detect today's chart, if there is one
 inTodaysNews();
