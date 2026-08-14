@@ -9,7 +9,7 @@
 let dataBase = [];
 
 const data_save = (campaignChart) => {
-	const key = campaignChart.id + campaignChart.name;
+	const key = campaignChart.id;
 	console.log(key);
 	for (let i=0; i<dataBase.length; i++) {
 		if (dataBase[i].id === key) {
@@ -59,6 +59,9 @@ const data_getByName = (searchName) => {
 
 const data_getByID = (searchID) => {
 	for (let i=0; i<dataBase.length; i++) {
+		if (typeof(dataBase[i].id) != "string") {
+			dataBase[i].id = dataBase[i].id.toString();
+		}
 		if (dataBase[i].id === searchID) {
 			return dataBase[i];
 		}

@@ -10,11 +10,17 @@ let todayHasAChart = false;
 
 class Chart {
   constructor(name,munros) {
-    this.id = new Date().toString();
+    // this.id = new Date().toString();
+    this.id = Date.now().toString();
     this.name = name || "(chart not named yet)";
     this.munros = munros || [];
     this.munroMeta = 1; // Currently used to increment the Munro id's.
     this.colourScheme = "";
+  }
+  createID () {
+    const date = new Date();
+    const id = date.toString() + " " + date.getMilliseconds.toString;
+    return id;
   }
 }
 class Munro {
@@ -487,11 +493,13 @@ dataAccess.js, which in turn is called from here.
 
 const selectExistingChart = (event) => {
   const chartID = event.target.value;
+  console.log(chartID);
   if (chartID === "Search for an existing chart") {
     return;
   }
   const chart = data_getByID(chartID);
   currentChart = chart;
+  console.log(chart);
   document.title = chart.name;
   heading.textContent = chart.name;
   const list = chart.munros;
@@ -766,7 +774,7 @@ const weekdayFromTemporal = (temporal) => {
   return weekday;
 }
 
-const createWeeksWorthOfCharts = (charts) => {
+const createWeeksWorthOfCharts = async (charts) => {
   // If there's a w/c, it will always be the first item in the array.
   // There may not be one, so check.
   let workingChart;
@@ -780,6 +788,7 @@ const createWeeksWorthOfCharts = (charts) => {
     workingChart = buildStandardChart("Week");
     workingChart.name = charts[0];
     data_save(workingChart);
+    await waitAMillisecond();
     chartsCreated++;
     charts.shift(); 
   }
@@ -789,10 +798,21 @@ const createWeeksWorthOfCharts = (charts) => {
     workingChart = buildStandardChart(template);
     workingChart.name = charts[i];
     data_save(workingChart);
+    await waitAMillisecond();
+    delay(10);
     chartsCreated++;
   }
+  loadChartList();
   console.log(`${chartsCreated} charts created.`);
 } 
+
+const waitAMillisecond = () => {
+  return new Promise((resolve) => {
+    setTimeout(resolve, 10);
+  });
+}
+
+const delay = ms => new Promise(res => setTimeout(res, ms));
 
 /**************************************************************************************
  Template/standard charts
@@ -826,6 +846,7 @@ const createTemplateChart = (event) => {
   heading.textContent = currentChart.name;
   document.title = "A new day...";
   drawChart(currentChart.munros,currentChart.colourScheme);
+  loadChartList();
 // See chart save as button aroon' line 227
 }
 
@@ -889,6 +910,7 @@ const create_selectList_existing = () => {
   const selectList_existing = document.createElement("select");
   selectList_existing.setAttribute("id","selectFromExisting");
   const chartList = data_getAll();
+  
   const defaultOption = document.createElement("option");
   defaultOption.textContent = "Search for an existing chart";
   selectList_existing.appendChild(defaultOption);

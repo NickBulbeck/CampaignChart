@@ -28,7 +28,7 @@ const standardChartDescriptions = {
                 [" - Hand nexercises",[885,30],"top"],
               ["Miscellaneous...",[720,120],"munro"]
   ],
-  "GJC day":[
+  "GJC Day":[
               ["Morning liturgy",[20,20],"munro"],
                 [" - Kettlebell exercises",[95,30],"top"],
                 [" - Check this month's chart and scribbles doc",[125,30],"top"],
@@ -88,13 +88,14 @@ const standardChartDescriptions = {
   ],
   "Sabbath":[
               ["Morning liturgy",[20,20],"munro"],
-                [" - Morning prayer",[95,30],"top"],
-                [" - Feed burrds",[125,30],"top"],
-                [" - Do washing",[155,30],"top"],
-                ["Gather locally",[100,100],"munro"],
-                ["Review kitchen calendar",[100,200],"munro"],
-                ["Read a book",[100,300],"munro"],
-                ["Gather non-locally",[100,400],"munro"]
+                [" - Kettlebells",[95,30],"top"],
+                [" - Bins",[125,30],"top"],
+                [" - Washing",[155,30],"top"],
+                [" - Physio",[185,30],"top"],
+              ["Gather locally",[100,100],"munro"],
+              ["Review kitchen calendar",[100,200],"munro"],
+              ["Read a book",[100,300],"munro"],
   ],
-  "Month":[]
+  "Month":[],
+  "Week":[]
 }
