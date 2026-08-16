@@ -26,6 +26,7 @@ const standardChartDescriptions = {
                 [" - 10 minutes Rachmaninov",[825,30],"top"],
                 [" - <= 5 minutes Debussy",[855,30],"top"],
                 [" - Hand nexercises",[885,30],"top"],
+                [" - LTL 20 reading",[915,30],"top"],
               ["Miscellaneous...",[720,120],"munro"]
   ],
   "GJC Day":[
