@@ -20,7 +20,7 @@ const standardChartDescriptions = {
                 [" - LTL10 on infrastructure, part 1",[490,200],"munro"],
                 [" - LTL20 piano practice",[490,260],"munro"],
                 [" - LTL10 on infrastructure, part 2",[490,320],"munro"],
-                [" - Closing prayer",[505,390],"top"],
+                [" - (Building the secret place) prayer",[505,390],"top"],
               ["Closing liturgy",[720,20],"munro"],  
                 [" - Finance admin",[795,30],"top"],
                 [" - Hand nexercises",[825,30],"top"],
