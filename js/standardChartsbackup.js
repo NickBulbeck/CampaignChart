@@ -63,7 +63,8 @@ const standardChartDescriptions = {
                 [" - Do washing",[215,30],"top"],
                 [" - Check kitchen calendar",[245,30],"top"],
                 [" - Kettlebell exercises",[275,30],"top"],
-              ["Challenges:",[20,120],"munro"],
+              ["Clear browser tabs",[20,120],"munro"],
+              ["Challenges:",[20,220],"munro"],
               ["Miscellaneous...",[700,20],"munro"]
   ],
   "Activity Day":[
